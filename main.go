@@ -7,7 +7,7 @@ import (
 
   "github.com/labstack/echo"
   "github.com/labstack/echo/middleware"
-  // "github.com/gorilla/context"
+  "github.com/gorilla/context"
 
   "array/controllers/auth"
   // "array/controllers/member"
@@ -32,7 +32,7 @@ func main() {
 
   e.Use(middleware.Logger())
   e.Use(middleware.Recover())
-  // e.Use(echo.WrapMiddleware(context.ClearHandler))
+  e.Use(echo.WrapMiddleware(context.ClearHandler))
 
   e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
     AllowOrigins: []string{"*"},

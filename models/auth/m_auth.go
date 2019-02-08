@@ -1,7 +1,7 @@
 package auth
 
 import (
-	"fmt"
+	// "fmt"
 	"array/db"
 )
 
@@ -18,7 +18,7 @@ type Users struct {
 
 func checkErr(err error){
   if err != nil {
-    fmt.Println("error")
+    panic(err.Error())
   }
 }
 

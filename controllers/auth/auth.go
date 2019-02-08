@@ -12,7 +12,7 @@ import (
 
 func checkErr(err error){
   if err != nil {
-    fmt.Println("error")
+    panic(err.Error())
   }
 }
 
@@ -27,7 +27,7 @@ func Index(c echo.Context) error{
   session, _ := store.Get(c.Request(), "session")
   //
   fmt.Println("session: ", len(session.Values))
-  fmt.Println(session.Values["email"])
+  // fmt.Println(session.Values["email"])
 
   if len(session.Values) == 0 {
     result := auth.Index()
