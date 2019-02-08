@@ -11,13 +11,14 @@ func Connect() *sql.DB {
 
   if err != nil {
 		fmt.Println(err.Error())
-	} else {
-		fmt.Println("db is connected")
 	}
+  // else {
+	// 	fmt.Println("db is connected")
+	// }
 
-  err = db.Ping()
+  // err = db.Ping()
 
-  fmt.Println(err)
+  // fmt.Println(err)
 	if err != nil {
 		fmt.Println("db is not connected")
 		fmt.Println(err.Error())
