@@ -1,16 +1,17 @@
 package main
 
 import (
+  // "net/http"
   "fmt"
   "html/template"
   "io"
-
+  //
   "github.com/labstack/echo"
   "github.com/labstack/echo/middleware"
   "github.com/gorilla/context"
 
   "array/controllers/auth"
-  // "array/controllers/member"
+  "array/controllers/member"
 )
 
 type Template struct {
@@ -30,7 +31,9 @@ func main() {
 
   e.Static("/static","assets")
 
-  e.Use(middleware.Logger())
+  // e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
+  //   Format: "method=${method}, uri=${uri}, status=${status}, error=${error}\n",
+  // }))
   e.Use(middleware.Recover())
   e.Use(echo.WrapMiddleware(context.ClearHandler))
 
@@ -39,16 +42,42 @@ func main() {
     AllowMethods: []string{echo.GET, echo.HEAD, echo.PUT, echo.PATCH, echo.POST, echo.DELETE},
   }))
 
-  e.Renderer = &Template{
-    templates: template.Must(template.ParseGlob("views/guest/*.html")),
-  }
-
   //  auth
-  e.GET("/", auth.Index)
-  e.POST("/login", auth.Login)
+  e.GET("/", func(c echo.Context) error{
+    e.Renderer = &Template{ templates: template.Must(template.ParseFiles("views/guest/index.html")), }
+    auth.Index(c)
+    return nil
+  })
+  
+  e.POST("/login", func(c echo.Context) error{
+    e.Renderer = &Template{ templates: template.Must(template.ParseFiles(
+      "views/guest/index.html",
+      "views/member/home.html",
+      "views/member/header.html",
+      "views/member/footer.html",
+      )),
+    }
+    auth.Login(c)
+    return nil
+  })
 
   //  member
-  e.GET("/logout", auth.Logout)
+  e.GET("/logout", func(c echo.Context) error{
+    e.Renderer = &Template{ templates: template.Must(template.ParseFiles("views/guest/index.html")), }
+    auth.Logout(c)
+    return nil
+  })
+
+  e.GET("/informasi", func(c echo.Context) error{
+    e.Renderer = &Template{ templates: template.Must(template.ParseFiles(
+      "views/member/home.html",
+      "views/member/header.html",
+      "views/member/footer.html",
+      )),
+    }
+    member.GetInfo(c)
+    return nil
+  })
 
   fmt.Println("server started at :9000")
   e.Logger.Fatal(e.Start(":9000"))

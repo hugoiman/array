@@ -4,10 +4,12 @@ import (
   "net/http"
   "fmt"
 	"array/models/auth"
+  "array/models/member"
   "github.com/labstack/echo"
   "crypto/sha1"
   "github.com/gorilla/sessions"
   "os"
+  // "reflect"
 )
 
 func checkErr(err error){
@@ -24,15 +26,15 @@ func Index(c echo.Context) error{
     "name":      "tes",
     "grade":     2,
   }
-  session, _ := store.Get(c.Request(), "session")
-  //
-  fmt.Println("session: ", len(session.Values))
-  // fmt.Println(session.Values["email"])
 
-  if len(session.Values) == 0 {
+  session := CheckSession(c)
+
+  if session == false {
     result := auth.Index()
     return c.Render(http.StatusOK, "index.html", result)
   }else {
+    informasi := member.GetInfo()
+    fmt.Printf("%+v\n",informasi)
     return c.Render(http.StatusOK, "home.html", data)
   }
 }
@@ -51,29 +53,52 @@ func Login(c echo.Context) error{
 
   if encryptedString == result.Password {
     fmt.Println("Login sukses")
-    dataSession := SetSession(c, result)
-    // fmt.Printf("%+v\n",dataSession)
-    return c.Render(http.StatusOK, "home.html", dataSession)
+    SetSession(c, result)
+
+    // informasi := member.GetInfo()
+
+    // session := Member{}
+    dataSession := auth.DataMember{}
+
+    dataSession.Id_member = result.Id_member
+    dataSession.Nama = result.Nama
+    dataSession.Email = result.Email
+    dataSession.Password = result.Password
+
+    // session.Member = append(session.Member,dataSession)
+    fmt.Printf("%+v\n",dataSession)
+    // fmt.Println(reflect.TypeOf(informasi))
+
+    // return c.Render(http.StatusOK, "home.html", informasi)
+    return c.Redirect(http.StatusMovedPermanently, "/informasi")
 	} else {
     fmt.Println("Login gagal")
 		//login failed
-		return c.Redirect(http.StatusTemporaryRedirect, "/")
+		// return c.Redirect(http.StatusTemporaryRedirect, "/")
+    return c.Redirect(http.StatusMovedPermanently, "/")
 	}
 
 }
 
-func SetSession(c echo.Context, data auth.User) *sessions.Session {
+func SetSession(c echo.Context, data auth.DataMember) {
   session, _ := store.Get(c.Request(), "session")
-  session.Values["id_user"] = data.Id_user
+  session.Values["id_member"] = data.Id_member
   session.Values["nama"] = data.Nama
   session.Values["email"] = data.Email
   session.Values["password"] = data.Password
   session.Save(c.Request(), c.Response())
 
-  fmt.Println(session.Values["email"])
   fmt.Println("session: ", len(session.Values))
+  // fmt.Println(session)
+}
 
-  return session
+func CheckSession(c echo.Context) bool {
+  session, _ := store.Get(c.Request(), "session")
+  if len(session.Values) == 0 {
+    return false
+  }else {
+    return true
+  }
 }
 
 func Logout(c echo.Context) error{

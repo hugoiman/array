@@ -5,26 +5,15 @@ import (
 	"array/db"
 )
 
-type User struct {
-	Id_user    int     `json:"id_user"`
-	Email      string  `json:"email"`
-	Nama       string  `json:"nama"`
-  Password   string  `json:"password"`
-}
-
-type Users struct {
-  Users    []User  `json:"user"`
-}
-
 func checkErr(err error){
   if err != nil {
     panic(err.Error())
   }
 }
 
-func Index() Users{
+func Index() Member{
   con     :=  db.Connect()
-  query   :=  "select id_user, nama, email, password from user"
+  query   :=  "select id_member, nama, email, password from member"
 
   rows, err := con.Query(query)
 
@@ -32,27 +21,26 @@ func Index() Users{
 
   defer rows.Close()
 
-  result := Users{}
-  user := User{}
+  result := Member{}
+  member := DataMember{}
 
   for rows.Next() {
-    err := rows.Scan(&user.Id_user, &user.Nama, &user.Email, &user.Password)
+    err := rows.Scan(&member.Id_member, &member.Nama, &member.Email, &member.Password)
     checkErr(err)
-    result.Users = append(result.Users, user)
+    result.Member = append(result.Member, member)
     // fmt.Println(result.Name)
-    // fmt.Println(result.Email)
   }
   defer con.Close()
 
   return result
 }
 
-func Login(email, password string) User {
+func Login(email, password string) DataMember {
   con     :=  db.Connect()
-  query   :=  "select id_user, email, nama, password from user where email = ?"
+  query   :=  "select id_member, email, nama, password from member where email = ?"
 
-  result  :=  User{}
-  err     :=  con.QueryRow(query, email).Scan(&result.Id_user, &result.Email,  &result.Nama, &result.Password)
+  result  :=  DataMember{}
+  err     :=  con.QueryRow(query, email).Scan(&result.Id_member, &result.Email,  &result.Nama, &result.Password)
 
   checkErr(err)
 
