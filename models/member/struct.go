@@ -5,30 +5,6 @@ type Member struct {
 }
 type DataMember struct {
   Id_member        int            `json:"id_member"`
-  Nama             string         `json:"nama"`
-  Email            string         `json:"email"`
-  Password         string         `json:"password"`
-}
-
-type Informasi struct {
-  Informasi        []DataInformasi     `json:"informasi"`
-}
-
-type DataInformasi struct {
-  Id_informasi     int            `json:"id_informasi"`
-  Judul            string         `json:"judul"`
-  Keterangan       string         `json:"keterangan"`
-  Foto             string         `json:"foto"`
-  Waktu            string         `json:"waktu"`
-  Status           string         `json:"status"`
-}
-
-// type Profil struct {
-//   Profil           []DataProfil   `json:"profil"`
-// }
-
-type DataProfil struct {
-  Id_member        int            `json:"id_member"`
   Id_lokasi        int            `json:"id_lokasi"`
   Nama             string         `json:"nama"`
   Email            string         `json:"email"`
@@ -57,6 +33,19 @@ type DataProfil struct {
   No_stnk          string         `json:"no_stnk"`
   Perusahaan       string         `json:"Perusahaan"`
   Jabatan          string         `json:"jabatan"`
+}
+
+type Informasi struct {
+  Informasi        []DataInformasi     `json:"informasi"`
+}
+
+type DataInformasi struct {
+  Id_informasi     int            `json:"id_informasi"`
+  Judul            string         `json:"judul"`
+  Keterangan       string         `json:"keterangan"`
+  Foto             string         `json:"foto"`
+  Waktu            string         `json:"waktu"`
+  Status           string         `json:"status"`
 }
 
 type Lokasi struct {

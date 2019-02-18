@@ -6,6 +6,6 @@ type Member struct {
 type DataMember struct {
   Id_member   int       `json:"id_member"`
   Nama        string    `json:"nama"`
-  Email       string    `json:"email"`
+  Slug        string    `json:"slug"`
   Password    string    `json:"password"`
 }

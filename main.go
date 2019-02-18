@@ -82,7 +82,7 @@ func main() {
       "views/member/footer.html",
       )),
     }
-    member.GetInfo(c)
+    member.ShowInfo(c)
     return nil
   })
 
@@ -93,7 +93,7 @@ func main() {
       "views/member/footer.html",
       )),
     }
-    member.GetProfil(c)
+    member.ShowProfil(c)
     return nil
   })
 

@@ -8,8 +8,9 @@ import (
   "crypto/sha1"
 )
 
-func GetProfil(c echo.Context) error {
+func ShowProfil(c echo.Context) error {
   slug        := c.Param("slug")
+  // dataMember  := GetMember(c, slug)
   dataProfil  := member.GetProfil(slug)
 
   // fmt.Printf("%+v\n",dataProfil)
@@ -32,6 +33,6 @@ func GantiPassword(c echo.Context) error {
   } else {
     fmt.Println("Berhasil mengubah password.")
   }
-  
+
   return c.JSON(http.StatusOK, encryptedString)
 }

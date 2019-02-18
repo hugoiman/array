@@ -5,6 +5,9 @@ import (
   "array/models/member"
   "github.com/labstack/echo"
   "fmt"
+  "github.com/gorilla/sessions"
+  "os"
+  // "reflect"
 )
 
 func checkErr(err error){
@@ -13,20 +16,24 @@ func checkErr(err error){
   }
 }
 
-func GetInfo(c echo.Context) error{
+var store = sessions.NewCookieStore([]byte(os.Getenv("SESSION_KEY")))
+
+func ShowInfo(c echo.Context) error{
+  session, _  := store.Get(c.Request(), "session")
+  id_member := fmt.Sprintf("%v", session.Values["id_member"])
+  // fmt.Println(reflect.TypeOf(id_member))
   informasi   := member.GetInfo()
-  dataMember  := GetMember(c)
+  dataMember  := member.GetMember(id_member)
 
   data := struct {
-    X member.Informasi
-    Y member.DataMember
+    Informasi member.Informasi
+    Member member.DataMember
   } {
     informasi,
     dataMember,
   }
 
-  fmt.Printf("%+v\n",data)
-  fmt.Printf("%+v\n",informasi)
+  // fmt.Printf("%+v\n",data)
   return c.Render(http.StatusOK, "home.html", data)
   // return c.JSON(http.StatusOK, data)
 }

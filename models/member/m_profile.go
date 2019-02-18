@@ -5,11 +5,11 @@ import (
   "fmt"
 )
 
-func GetProfil(slug string) DataProfil {
+func GetProfil(slug string) DataMember {
   con     :=  db.Connect()
   query   :=  "select * from member where slug = ?"
 
-  result  :=  DataProfil{}
+  result  :=  DataMember{}
   err     :=  con.QueryRow(query, slug).Scan(
     &result.Id_member, &result.Id_lokasi, &result.Email,  &result.Nama, &result.Password, &result.Nik,  &result.No_hp,
     &result.Foto, &result.Tgl_lahir,  &result.Pekerjaan, &result.Alamat_asal, &result.No_kamar,  &result.Tgl_gabung,

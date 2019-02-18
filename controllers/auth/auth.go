@@ -4,7 +4,7 @@ import (
   "net/http"
   "fmt"
 	"array/models/auth"
-  "array/models/member"
+  // "array/models/member"
   "github.com/labstack/echo"
   "crypto/sha1"
   "github.com/gorilla/sessions"
@@ -21,28 +21,24 @@ func checkErr(err error){
 var store = sessions.NewCookieStore([]byte(os.Getenv("SESSION_KEY")))
 
 func Index(c echo.Context) error{
-  var data map[string]interface{}
-  data = map[string]interface{}{
-    "name":      "tes",
-    "grade":     2,
+  session := CheckSession(c)
+  data := struct {
+    o string
+  }{
+    "1",
   }
 
-  session := CheckSession(c)
-
   if session == false {
-    result := auth.Index()
-    return c.Render(http.StatusOK, "index.html", result)
+    return c.Render(http.StatusOK, "index.html", data)
   }else {
-    informasi := member.GetInfo()
-    fmt.Printf("%+v\n",informasi)
-    return c.Render(http.StatusOK, "home.html", data)
+    return c.Redirect(http.StatusMovedPermanently, "/informasi")
   }
 }
 
 func Login(c echo.Context) error{
-	email := c.FormValue("email")
-  password := c.FormValue("password")
-  result := auth.Login(email, password)
+	email        := c.FormValue("email")
+  password     := c.FormValue("password")
+  result       := auth.Login(email, password)
 
   var sha = sha1.New()
   sha.Write([]byte(password))
@@ -59,19 +55,13 @@ func Login(c echo.Context) error{
 
     dataSession.Id_member = result.Id_member
     dataSession.Nama = result.Nama
-    dataSession.Email = result.Email
-    dataSession.Password = result.Password
+    dataSession.Slug = result.Slug
 
-    // session.Member = append(session.Member,dataSession)
     fmt.Printf("%+v\n",dataSession)
     // fmt.Println(reflect.TypeOf(informasi))
-
-    // return c.Render(http.StatusOK, "home.html", informasi)
     return c.Redirect(http.StatusMovedPermanently, "/informasi")
 	} else {
-    fmt.Println("Login gagal")
-		//login failed
-		// return c.Redirect(http.StatusTemporaryRedirect, "/")
+    fmt.Println("Maaf, username atau password salah.")
     return c.Redirect(http.StatusMovedPermanently, "/")
 	}
 
@@ -81,12 +71,10 @@ func SetSession(c echo.Context, data auth.DataMember) {
   session, _ := store.Get(c.Request(), "session")
   session.Values["id_member"] = data.Id_member
   session.Values["nama"] = data.Nama
-  session.Values["email"] = data.Email
-  session.Values["password"] = data.Password
+  session.Values["slug"] = data.Slug
   session.Save(c.Request(), c.Response())
 
-  fmt.Println("session: ", len(session.Values))
-  // fmt.Println(session)
+  // fmt.Println("session: ", len(session.Values))
 }
 
 func CheckSession(c echo.Context) bool {

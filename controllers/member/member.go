@@ -5,8 +5,7 @@ import (
   "github.com/labstack/echo"
 )
 
-func GetMember(c echo.Context) member.DataMember {
-  id_member := "13"
-  dataMember := member.GetMember(id_member)
-  return dataMember
-}
+// func GetMember(c echo.Context, id_member string) member.DataMember {
+//   dataMember := member.GetMember(id_member)
+//   return dataMember
+// }
