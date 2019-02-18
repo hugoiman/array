@@ -1,8 +1,6 @@
 package member
 
 import (
-  // "net/http"
-  // "fmt"
   "array/models/member"
   "github.com/labstack/echo"
 )

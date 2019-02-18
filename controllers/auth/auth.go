@@ -55,9 +55,6 @@ func Login(c echo.Context) error{
     fmt.Println("Login sukses")
     SetSession(c, result)
 
-    // informasi := member.GetInfo()
-
-    // session := Member{}
     dataSession := auth.DataMember{}
 
     dataSession.Id_member = result.Id_member
@@ -99,12 +96,4 @@ func CheckSession(c echo.Context) bool {
   }else {
     return true
   }
-}
-
-func Logout(c echo.Context) error{
-  session, _ := store.Get(c.Request(), "session")
-  session.Options.MaxAge = -1
-  session.Save(c.Request(), c.Response())
-
-  return c.Redirect(http.StatusTemporaryRedirect, "/")
 }

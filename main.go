@@ -1,17 +1,20 @@
 package main
 
 import (
-  // "net/http"
+  "net/http"
   "fmt"
   "html/template"
   "io"
-  //
+
   "github.com/labstack/echo"
   "github.com/labstack/echo/middleware"
   "github.com/gorilla/context"
 
   "array/controllers/auth"
   "array/controllers/member"
+
+  "github.com/gorilla/sessions"
+  "os"
 )
 
 type Template struct {
@@ -48,7 +51,7 @@ func main() {
     auth.Index(c)
     return nil
   })
-  
+
   e.POST("/login", func(c echo.Context) error{
     e.Renderer = &Template{ templates: template.Must(template.ParseFiles(
       "views/guest/index.html",
@@ -63,9 +66,13 @@ func main() {
 
   //  member
   e.GET("/logout", func(c echo.Context) error{
+    var store = sessions.NewCookieStore([]byte(os.Getenv("SESSION_KEY")))
     e.Renderer = &Template{ templates: template.Must(template.ParseFiles("views/guest/index.html")), }
-    auth.Logout(c)
-    return nil
+    session, _ := store.Get(c.Request(), "session")
+    session.Options.MaxAge = -1
+    session.Save(c.Request(), c.Response())
+
+    return c.Redirect(http.StatusMovedPermanently, "/")
   })
 
   e.GET("/informasi", func(c echo.Context) error{
@@ -76,6 +83,28 @@ func main() {
       )),
     }
     member.GetInfo(c)
+    return nil
+  })
+
+  e.GET("/profil/:slug", func(c echo.Context) error{
+    e.Renderer = &Template{ templates: template.Must(template.ParseFiles(
+      "views/member/profile.html",
+      "views/member/header.html",
+      "views/member/footer.html",
+      )),
+    }
+    member.GetProfil(c)
+    return nil
+  })
+
+  e.POST("/ganti-password", func(c echo.Context) error{
+    e.Renderer = &Template{ templates: template.Must(template.ParseFiles(
+      "views/member/profile.html",
+      "views/member/header.html",
+      "views/member/footer.html",
+      )),
+    }
+    member.GantiPassword(c)
     return nil
   })
 
