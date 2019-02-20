@@ -63,18 +63,18 @@
           <!-- Profile Image -->
           <div class="box box-primary">
             <div class="box-body box-profile">
-              <img id="img-profile" class="profile-user-img img-responsive img-circle" src="/static/images/user/{{.Foto}}" alt="User profile picture">
-              <h3 class="profile-username text-center">{{.Nama}}</h3>
-              <p class="text-muted text-center">{{.Pekerjaan}}</p>
+              <img id="img-profile" class="profile-user-img img-responsive img-circle" src="/static/images/user/{{.Member.Foto}}" alt="User profile picture">
+              <h3 class="profile-username text-center">{{.Member.Nama}}</h3>
+              <p class="text-muted text-center">{{.Member.Pekerjaan}}</p>
               <ul class="list-group list-group-unbordered">
                 <li class="list-group-item">
-                  <b>ID Member</b> <a class="pull-right">{{.Id_member}}</a>
+                  <b>ID Member</b> <a class="pull-right">{{.Member.Id_member}}</a>
                 </li>
                 <li class="list-group-item">
-                  <b>Email</b> <a class="pull-right">{{.Email}}</a>
+                  <b>Email</b> <a class="pull-right">{{.Member.Email}}</a>
                 </li>
                 <li class="list-group-item">
-                  <b>Status</b> <a class="pull-right">{{.Status_member}}</a>
+                  <b>Status</b> <a class="pull-right">{{.Member.Status_member}}</a>
                 </li>
               </ul>
             </div>
@@ -108,31 +108,31 @@
                   <div class="form-group">
                     <label for="inputName" class="col-sm-2 control-label">Nama</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" value="{{.Nama}}" readonly>
+                      <input type="text" class="form-control" value="{{.Member.Nama}}" readonly>
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="inputEmail" class="col-sm-2 control-label">No HP</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" value="{{.No_hp}}" readonly>
+                      <input type="text" class="form-control" value="{{.Member.No_hp}}" readonly>
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="inputName" class="col-sm-2 control-label">No Identitas</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" value="{{.Nik}}" readonly>
+                      <input type="text" class="form-control" value="{{.Member.Nik}}" readonly>
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="inputExperience" class="col-sm-2 control-label">Usia</label>
                     <div class="col-sm-10">
-                      <input class="form-control" value="{{.Tgl_lahir}}" readonly>
+                      <input class="form-control" value="{{.Member.Tgl_lahir}}" readonly>
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="inputSkills" class="col-sm-2 control-label">Alamat</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" value="{{.Alamat_asal}}" readonly>
+                      <input type="text" class="form-control" value="{{.Member.Alamat_asal}}" readonly>
                     </div>
                   </div>
                 </form>
@@ -143,39 +143,39 @@
                   <div class="form-group">
                     <label for="inputName" class="col-sm-2 control-label">Pekerjaan</label>
                     <div class="col-sm-10">
-                      <input type="pekerjaan" class="form-control" value="{{.Pekerjaan}}" readonly>
+                      <input type="pekerjaan" class="form-control" value="{{.Member.Pekerjaan}}" readonly>
                     </div>
                   </div>
-                  {{if ne .Universitas ""}}
+                  {{if ne .Member.Universitas ""}}
                   <div class="form-group">
                     <label for="inputEmail" class="col-sm-2 control-label">Universitas</label>
                     <div class="col-sm-10">
-                      <input type="universitas" class="form-control" value="{{.Universitas}}" readonly>
+                      <input type="universitas" class="form-control" value="{{.Member.Universitas}}" readonly>
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="inputName" class="col-sm-2 control-label">Jurusan</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" value="{{.Jurusan}}" readonly>
+                      <input type="text" class="form-control" value="{{.Member.Jurusan}}" readonly>
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="inputExperience" class="col-sm-2 control-label">Angkatan</label>
                     <div class="col-sm-10">
-                      <input class="form-control" value="{{.Angkatan}}" readonly>
+                      <input class="form-control" value="{{.Member.Angkatan}}" readonly>
                     </div>
                   </div>
-                  {{else if ne .Perusahaan ""}}
+                  {{else if ne .Member.Perusahaan ""}}
                   <div class="form-group">
                     <label for="inputName" class="col-sm-2 control-label">Perusahaan</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" value="{{.Perusahaan}}" readonly>
+                      <input type="text" class="form-control" value="{{.Member.Perusahaan}}" readonly>
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="inputExperience" class="col-sm-2 control-label">Jabatan</label>
                     <div class="col-sm-10">
-                      <input class="form-control" value="{{.Jabatan}}" readonly>
+                      <input class="form-control" value="{{.Member.Jabatan}}" readonly>
                     </div>
                   </div>
                   {{end}}
@@ -187,38 +187,38 @@
                   <div class="form-group">
                     <label for="inputName" class="col-sm-2 control-label">Nama Kerabat 1</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" value="{{.Nama_kerabat1}}" readonly>
+                      <input type="text" class="form-control" value="{{.Member.Nama_kerabat1}}" readonly>
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="inputEmail" class="col-sm-2 control-label">Hubungan</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" value="{{.Hubungan1}}" readonly>
+                      <input type="text" class="form-control" value="{{.Member.Hubungan1}}" readonly>
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="inputName" class="col-sm-2 control-label">No HP</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" value="{{.No_hp1}}" readonly>
+                      <input type="text" class="form-control" value="{{.Member.No_hp1}}" readonly>
                     </div>
                   </div>
-                  {{if ne .Nama_kerabat2 ""}}
+                  {{if ne .Member.Nama_kerabat2 ""}}
                   <div class="form-group">
                     <label for="inputName" class="col-sm-2 control-label">Nama Kerabat 2</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" value="{{.Nama_kerabat2}}" readonly>
+                      <input type="text" class="form-control" value="{{.Member.Nama_kerabat2}}" readonly>
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="inputEmail" class="col-sm-2 control-label">Hubungan</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" value="{{.Hubungan2}}" readonly>
+                      <input type="text" class="form-control" value="{{.Member.Hubungan2}}" readonly>
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="inputName" class="col-sm-2 control-label">No HP</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" value="{{.No_hp2}}" readonly>
+                      <input type="text" class="form-control" value="{{.Member.No_hp2}}" readonly>
                     </div>
                   </div>
                   {{end}}
@@ -230,32 +230,32 @@
                   <div class="form-group">
                     <label for="inputName" class="col-sm-2 control-label">Tipe Pembayaran</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" value="{{.Tipe_pembayaran}}" readonly>
+                      <input type="text" class="form-control" value="{{.Member.Tipe_pembayaran}}" readonly>
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="inputName" class="col-sm-2 control-label">No Kamar</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" value="{{.No_kamar}}" readonly>
+                      <input type="text" class="form-control" value="{{.Member.No_kamar}}" readonly>
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="inputName" class="col-sm-2 control-label">Username Wifi</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" value="{{.Username_wifi}}" readonly>
+                      <input type="text" class="form-control" value="{{.Member.Username_wifi}}" readonly>
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="inputName" class="col-sm-2 control-label">Bergabung Sejak</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" value="{{.Tgl_gabung}}" readonly>
+                      <input type="text" class="form-control" value="{{.Member.Tgl_gabung}}" readonly>
                     </div>
                   </div>
-                  {{if ne .No_stnk ""}}
+                  {{if ne .Member.No_stnk ""}}
                   <div class="form-group">
                     <label for="inputEmail" class="col-sm-2 control-label">No STNK</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" value="{{.No_stnk}}" readonly>
+                      <input type="text" class="form-control" value="{{.Member.No_stnk}}" readonly>
                     </div>
                   </div>
                   {{end}}
@@ -263,12 +263,15 @@
               </div>
               <!-- /.tab-pane -->
               <div class="tab-pane" id="foto">
-                <form class="form-horizontal" action="" enctype="multipart/form-data" method="post" id="myform">
+                <form class="form-horizontal" action="/ganti-foto" enctype="multipart/form-data" method="POST" id="myform">
                   <div class="form-group">
                     <div class="col-sm-10">
-                    <small>*Maksimal 1 mb</small>
-                      <input type="file" id="file" name="file"/><br>
-                      <button type="reset" class="btn btn-danger btn-sm">Reset</button>
+                      <div class="btn btn-default">
+                        <!-- <i class="fa fa-paperclip"></i> Attachment -->
+                        <input type="file" id="file" name="file">
+                      </div>
+                      <button type="reset" class="btn btn-default"><i class="fa fa-times"></i></button>
+                      <p class="help-block">Max. 1MB</p>
                       <input type="button" class="btn btn-primary btn-sm" id="simpan_foto" value="Upload">
                     </div>
                   </div>
@@ -280,6 +283,7 @@
                   <div id="warning"></div>
                   <div id="success"></div>
                 </div>
+                <p class="message"></p>
                 <form class="form-horizontal">
                   <input type="hidden" name="id_member" id="id_member" value="13">
                   <div class="form-group">
@@ -307,7 +311,6 @@
           </div>
           <!-- /.nav-tabs-custom -->
         </div>
-        <!-- <?php } ?> -->
         <!-- /.col -->
       </div>
       <!-- /.row -->
@@ -345,26 +348,35 @@
       }
       if(konfirmasi_password != "" && konfirmasi_password == password_baru &&
         jumlah_pass_baru >= 6 && jumlah_pass_baru <= 18 && jumlah_konfirmasi_pass >= 6 && jumlah_konfirmasi_pass <= 18){
-          bootoast.toast({
-            message: 'Berhasil ganti password.',
-            type: 'success'
-          });
+
         $.ajax({
-          url:"/ganti-password",
+          url:"/update-password",
           type : 'POST',
           data : {'id_member':id_member,'password_baru':password_baru},
-          success:function(respons){
+          success:function(response){
             $("#password_baru").val("");
             $("#konfirmasi_password").val("");
+            if (response == "false") {
+              bootoast.toast({
+                message: "Gagal! Password baru tidak boleh sama dengan password lama.",
+                type: 'warning'
+              });
+            } else {
+              bootoast.toast({
+                message: "Berhasil ganti password.",
+                type: 'success'
+              });
+            }
           },
           error:function(error){
-            alert("gagal ganti password");
+            alert("Gagal ganti password");
           }
         });
       }
     });
   });
   </script>
+
   <script>
     $(document).ready(function(){
       $("#simpan_foto").click(function(){
@@ -373,7 +385,7 @@
         fd.append('file',files);
 
         $.ajax({
-          url: "/ganti-foto",
+          url: "/update-foto",
           type: 'POST',
           data: fd,
           contentType: false,

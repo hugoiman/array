@@ -86,7 +86,7 @@ func main() {
     return nil
   })
 
-  e.GET("/profil/:slug", func(c echo.Context) error{
+  e.GET("/profil", func(c echo.Context) error{
     e.Renderer = &Template{ templates: template.Must(template.ParseFiles(
       "views/member/profile.html",
       "views/member/header.html",
@@ -97,16 +97,9 @@ func main() {
     return nil
   })
 
-  e.POST("/ganti-password", func(c echo.Context) error{
-    e.Renderer = &Template{ templates: template.Must(template.ParseFiles(
-      "views/member/profile.html",
-      "views/member/header.html",
-      "views/member/footer.html",
-      )),
-    }
-    member.GantiPassword(c)
-    return nil
-  })
+  e.POST("/update-password", member.UpdatePassword)
+
+  e.POST("/update-foto", member.UpdatePassword)
 
   fmt.Println("server started at :9000")
   e.Logger.Fatal(e.Start(":9000"))

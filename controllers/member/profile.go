@@ -9,15 +9,25 @@ import (
 )
 
 func ShowProfil(c echo.Context) error {
-  slug        := c.Param("slug")
-  // dataMember  := GetMember(c, slug)
-  dataProfil  := member.GetProfil(slug)
+  session, _  := store.Get(c.Request(), "session")
+  id_member   := fmt.Sprintf("%v", session.Values["id_member"])
 
-  // fmt.Printf("%+v\n",dataProfil)
-  return c.Render(http.StatusOK, "profile.html", dataProfil)
+  dataMember  := member.GetMember(id_member)
+  // fmt.Printf("%+v\n",dataMember)
+
+  data := struct {
+    Member    member.DataMember
+    Nav       string
+  } {
+    dataMember,
+    "profil",
+  }
+
+  return c.Render(http.StatusOK, "profile.html", data)
+    // return c.JSON(http.StatusOK, data)
 }
 
-func GantiPassword(c echo.Context) error {
+func UpdatePassword(c echo.Context) error{
   id_member   := c.FormValue("id_member")
   newPassword := c.FormValue("password_baru")
   oldPassword := member.GetPassword(id_member)
@@ -29,10 +39,10 @@ func GantiPassword(c echo.Context) error {
   var encryptedString = fmt.Sprintf("%x", encrypted)
 
   if encryptedString == oldPassword {
-    fmt.Println("Gagal! Password baru tidak boleh sama dengan password lama.")
+    message := "false"
+    return c.String(http.StatusOK, message)
   } else {
-    fmt.Println("Berhasil mengubah password.")
+    message := "true"
+    return c.String(http.StatusOK, message)
   }
-
-  return c.JSON(http.StatusOK, encryptedString)
 }
