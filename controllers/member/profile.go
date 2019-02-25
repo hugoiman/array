@@ -46,3 +46,8 @@ func UpdatePassword(c echo.Context) error{
     return c.String(http.StatusOK, message)
   }
 }
+
+// func UpdateFoto(c echo.Context) error {
+//   id_member   := c.FormValue("id_member")
+//   newPassword := c.FormValue("password_baru")
+// }

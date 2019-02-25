@@ -56,3 +56,20 @@ type DataLokasi struct {
   Cabang           string         `json:"cabang"`
   Alamat           string         `json:"alamat"`
 }
+
+type Administrasi struct {
+  Administrasi        []DataAdministrasi     `json:"administrasi"`
+}
+
+type DataAdministrasi struct {
+  Id_administrasi     int         `json:"Id_administrasi"`
+  Id_member           int         `json:"id_member"`
+  Tipe_pembayaran     string      `json:"tipe_pembayaran"`
+  Check_in            string      `json:"check_in"`
+  Check_out           string      `json:"check_out"`
+  Tgl_pembayaran      string      `json:"tgl_pembayaran"`
+  Jumlah_pembayaran   int         `json:"jumlah_pembayaran"`
+  Total               int         `json:"total"`
+  Tagihan             int         `json:"tagihan"`
+  Status              string      `json:"status"`
+}

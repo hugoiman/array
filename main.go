@@ -97,6 +97,19 @@ func main() {
     return nil
   })
 
+  e.GET("/administrasi", func(c echo.Context) error{
+    e.Renderer = &Template{ templates: template.Must(template.ParseFiles(
+      "views/member/administrasi.html",
+      "views/member/header.html",
+      "views/member/footer.html",
+      )),
+    }
+    member.ShowAdministrasi(c)
+    return nil
+  })
+
+  // e.GET("/administrasi", member.ShowAdministrasi)
+
   e.POST("/update-password", member.UpdatePassword)
 
   e.POST("/update-foto", member.UpdatePassword)
