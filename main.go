@@ -78,6 +78,7 @@ func main() {
   e.GET("/informasi", func(c echo.Context) error{
     e.Renderer = &Template{ templates: template.Must(template.ParseFiles(
       "views/member/home.html",
+      "views/member/head.html",
       "views/member/header.html",
       "views/member/footer.html",
       )),
@@ -89,6 +90,7 @@ func main() {
   e.GET("/profil", func(c echo.Context) error{
     e.Renderer = &Template{ templates: template.Must(template.ParseFiles(
       "views/member/profile.html",
+      "views/member/head.html",
       "views/member/header.html",
       "views/member/footer.html",
       )),
@@ -100,6 +102,7 @@ func main() {
   e.GET("/administrasi", func(c echo.Context) error{
     e.Renderer = &Template{ templates: template.Must(template.ParseFiles(
       "views/member/administrasi.html",
+      "views/member/head.html",
       "views/member/header.html",
       "views/member/footer.html",
       )),
