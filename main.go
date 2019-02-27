@@ -29,6 +29,10 @@ func (t *Template) Render(w io.Writer, name string, data interface{}, c echo.Con
   return t.templates.ExecuteTemplate(w, name, data)
 }
 
+func counter(x, y int) int {
+  return x + y
+}
+
 func main() {
   e := echo.New()
 
@@ -100,7 +104,8 @@ func main() {
   })
 
   e.GET("/administrasi", func(c echo.Context) error{
-    e.Renderer = &Template{ templates: template.Must(template.ParseFiles(
+    funcs := template.FuncMap{"counter": counter}
+    e.Renderer = &Template{ templates: template.Must(template.New("views/member/administrasi.html").Funcs(funcs).ParseFiles(
       "views/member/administrasi.html",
       "views/member/head.html",
       "views/member/header.html",
@@ -110,8 +115,6 @@ func main() {
     member.ShowAdministrasi(c)
     return nil
   })
-
-  // e.GET("/administrasi", member.ShowAdministrasi)
 
   e.POST("/update-password", member.UpdatePassword)
 

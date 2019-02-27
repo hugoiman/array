@@ -7,7 +7,7 @@ import (
 )
 
 func Connect() *sql.DB {
-  db, err := sql.Open("mysql", "root:@tcp(127.0.0.1:3306)/array")
+  db, err := sql.Open("mysql", "root:@tcp(127.0.0.1:3306)/array?parseTime=true")
 
   if err != nil {
     fmt.Println("db is not connected")

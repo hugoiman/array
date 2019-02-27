@@ -58,28 +58,15 @@
               <div class="active tab-pane" id="biodata">
                 <form class="form-horizontal">
                   <div class="form-group">
-                    <label for="inputName" class="col-sm-2 control-label">Tipe Pembayaran</label>
-                    <div class="col-sm-10">
-                      <!-- <?php foreach ($info_user as $data){ ?> -->
-                      <input type="text" class="form-control" value="" readonly>
-                      <!-- <?php } ?> -->
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="inputEmail" class="col-sm-2 control-label">Tagihan</label>
-                    <div class="col-sm-10">
-                      <!-- <?php foreach ($tagihan as $data){ ?> -->
-                      <input type="email" class="form-control" value="Rp " readonly>
-                      <!-- <?php } ?> -->
-                    </div>
-                  </div>
-                  <div class="form-group">
                     <label for="inputName" class="col-sm-2 control-label">Status Pembayaran</label>
-                      <!-- <?php foreach ($status_pembayaran as $data){
-                        if ($data['status'] == 'Belum Lunas') {
-                      ?> -->
-                    <div class="col-sm-3">
-                      <input type="text" class="form-control" value="" readonly>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" value="{{.Status}}" readonly>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputName" class="col-sm-2 control-label">Tagihan</label>
+                    <div class="col-sm-5">
+                      <input type="text" class="form-control" value="Rp {{.Tagihan}}" readonly>
                     </div>
                     <div class="col-sm-3">
                       <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#detail_tagihan">Detail</button>
@@ -105,21 +92,19 @@
                                         </tr>
                                       </thead>
                                       <tbody>
-                                      <!-- <?php foreach ($detail_tagihan as $data){ ?> -->
+                                      {{range .InfoTagihan.InfoTagihan}}
                                       <tr>
-                                        <!-- <td><?php echo $data['jangka_waktu']; ?></td> --><td></td><td></td>
-                                        <!-- <td>Rp <?php echo number_format($data['tagihan'],0,',','.'); ?></td> -->
+                                        <td>{{.Check_in}} - {{.Check_out}}</td>
+                                        <td>{{.Tagihan}}</td>
                                       </tr>
-                                      <!-- <?php } ?> -->
+                                      {{end}}
                                       <tr>
                                         <td></td>
                                         <td></td>
                                       </tr>
                                       <tr>
                                         <td><b>Total<b></td>
-                                        <!-- <?php foreach ($tagihan as $data){ ?> -->
-                                        <!-- <td><b>Rp <?php echo number_format($data['tagihan'],0,',','.'); ?><b></td> -->
-                                        <!-- <?php } ?> -->
+                                        <td><b>Rp {{.Tagihan}}<b></td>
                                       </tr>
                                     </tbody>
                                   </table>
@@ -180,11 +165,10 @@
                         </tr>
                         </thead>
                         <tbody>
-                          {{range .Administrasi.Administrasi}}
-                            {{$no := 1}}
+                          {{range $index, $value := .Administrasi.Administrasi}}
                         <tr>
-                          <td>{{$no}}</td>
-                          <td>{{.Check_in}}</td>
+                          <td>{{counter $index 1}}</td>
+                          <td>{{.Check_in}} s.d {{.Check_out}}</td>
                           <td>{{.Tgl_pembayaran}}</td>
                           <td>Rp {{.Total}}</td>
                           <td>Rp {{.Tagihan}}</td>
