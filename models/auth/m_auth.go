@@ -11,12 +11,30 @@ func checkErr(err error){
   }
 }
 
-func Login(email, password string) DataMember {
-  con     :=  db.Connect()
-  query   :=  "select id_member, nama, password, slug from member where email = ?"
+func Auth(email, password string) bool {
+	var authEmail string
+	con     :=  db.Connect()
+  query   :=  "SELECT email FROM member WHERE email = ? AND password = ?"
 
-  result  :=  DataMember{}
-  err     :=  con.QueryRow(query, email).Scan(&result.Id_member,  &result.Nama, &result.Password, &result.Slug)
+  err     :=  con.QueryRow(query, email, password).Scan(&authEmail)
+
+	// checkErr(err)
+	// fmt.Println(err)
+	defer con.Close()
+
+	if err == nil {
+		return true
+	} else {
+		return false
+	}
+}
+
+func GetSession(email string) DataSession {
+  con     :=  db.Connect()
+  query   :=  "SELECT id_member, nama, slug FROM member WHERE email = ?"
+
+  result  :=  DataSession{}
+  err     :=  con.QueryRow(query, email).Scan(&result.Id_member, &result.Nama, &result.Slug)
 
   checkErr(err)
 
@@ -24,28 +42,3 @@ func Login(email, password string) DataMember {
 
   return result
 }
-
-//
-// func Index() Member{
-//   con     :=  db.Connect()
-//   query   :=  "select id_member, nama, email, password, slug from member"
-//
-//   rows, err := con.Query(query)
-//
-//   checkErr(err)
-//
-//   defer rows.Close()
-//
-//   result := Member{}
-//   member := DataMember{}
-//
-//   for rows.Next() {
-//     err := rows.Scan(&member.Id_member, &member.Nama, &member.Email, &member.Password, &member.Slug)
-//     checkErr(err)
-//     result.Member = append(result.Member, member)
-//     // fmt.Println(result.Name)
-//   }
-//   defer con.Close()
-//
-//   return result
-// }

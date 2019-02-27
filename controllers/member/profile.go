@@ -42,6 +42,7 @@ func UpdatePassword(c echo.Context) error{
     message := "false"
     return c.String(http.StatusOK, message)
   } else {
+    member.UpdatePassword(id_member,encryptedString)
     message := "true"
     return c.String(http.StatusOK, message)
   }

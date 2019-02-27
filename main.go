@@ -51,22 +51,16 @@ func main() {
 
   //  auth
   e.GET("/", func(c echo.Context) error{
-    e.Renderer = &Template{ templates: template.Must(template.ParseFiles("views/guest/index.html")), }
+    e.Renderer = &Template{ templates: template.Must(template.ParseFiles(
+      "views/guest/index.html",
+      "views/guest/head.html",
+      )),
+    }
     auth.Index(c)
     return nil
   })
 
-  e.POST("/login", func(c echo.Context) error{
-    e.Renderer = &Template{ templates: template.Must(template.ParseFiles(
-      "views/guest/index.html",
-      "views/member/home.html",
-      "views/member/header.html",
-      "views/member/footer.html",
-      )),
-    }
-    auth.Login(c)
-    return nil
-  })
+  e.POST("/login", auth.Login)
 
   //  member
   e.GET("/logout", func(c echo.Context) error{
