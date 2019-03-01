@@ -7,11 +7,9 @@ import (
 func GetInfo() Informasi{
   con     :=  db.Connect()
   query   :=  "select id_informasi, judul, keterangan, foto, waktu, status from informasi"
-
   rows, err := con.Query(query)
 
   checkErr(err)
-
   defer rows.Close()
 
   info := Informasi{}

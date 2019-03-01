@@ -7,7 +7,6 @@ import (
 func GetMember(id_member string) DataMember {
   con     :=  db.Connect()
   query   :=  "select * from member where id_member = ?"
-
   result  :=  DataMember{}
   err     :=  con.QueryRow(query, id_member).Scan(
     &result.Id_member, &result.Id_lokasi, &result.Email,  &result.Nama, &result.Password, &result.Nik,  &result.No_hp,
@@ -19,7 +18,6 @@ func GetMember(id_member string) DataMember {
   )
 
   checkErr(err)
-
   defer con.Close()
 
   return result

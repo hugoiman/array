@@ -15,11 +15,9 @@ func Auth(email, password string) bool {
 	var authEmail string
 	con     :=  db.Connect()
   query   :=  "SELECT email FROM member WHERE email = ? AND password = ?"
-
   err     :=  con.QueryRow(query, email, password).Scan(&authEmail)
 
 	// checkErr(err)
-	// fmt.Println(err)
 	defer con.Close()
 
 	if err == nil {
@@ -37,7 +35,6 @@ func GetSession(email string) SessionMember {
   err     :=  con.QueryRow(query, email).Scan(&result.Id_member, &result.Nama, &result.Slug)
 
   checkErr(err)
-
   defer con.Close()
 
   return result

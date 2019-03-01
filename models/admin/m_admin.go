@@ -11,11 +11,10 @@ func GetAdmin(id_admin string) DataAdmin {
   result  :=  DataAdmin{}
   err     :=  con.QueryRow(query, id_admin).Scan(
     &result.Id_admin, &result.Email,  &result.Nama, &result.Password, &result.Nik,
-    &result.No_hp, &result.Alamat, &result.Foto, &result.Tgl_lahir,  &result.Slug,
+    &result.Foto, &result.No_hp, &result.Alamat, &result.Tgl_lahir,  &result.Slug,
   )
-
+  
   checkErr(err)
-
   defer con.Close()
 
   return result

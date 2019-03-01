@@ -38,7 +38,6 @@ func LoginAdmin(c echo.Context) error{
   if authentic == true {
     result       := auth.GetSessionAdmin(email)
     SetSessionAdmin(c, result)
-
     dataSession := auth.SessionAdmin{}
 
     dataSession.Id_admin = result.Id_admin
@@ -51,7 +50,6 @@ func LoginAdmin(c echo.Context) error{
     message := "false"
     return c.String(http.StatusOK, message)
 	}
-
 }
 
 func SetSessionAdmin(c echo.Context, data auth.SessionAdmin) {

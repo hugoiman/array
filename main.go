@@ -77,21 +77,18 @@ func main() {
   e.GET("/informasi", func(c echo.Context) error{
     e.Renderer = &Template{ templates: template.Must(template.ParseFiles(
       "views/member/home.html",
-      "views/member/head.html",
-      "views/member/header.html",
-      "views/member/footer.html",
+      "views/member/head.html", "views/member/header.html","views/member/footer.html",
       )),
     }
-    e.GET("/profil", func(c echo.Context) error{
     member.ShowInfo(c)
     return nil
   })
 
+
+  e.GET("/profil", func(c echo.Context) error{
     e.Renderer = &Template{ templates: template.Must(template.ParseFiles(
       "views/member/profile.html",
-      "views/member/head.html",
-      "views/member/header.html",
-      "views/member/footer.html",
+      "views/member/head.html", "views/member/header.html", "views/member/footer.html",
       )),
     }
     member.ShowProfil(c)
@@ -102,9 +99,7 @@ func main() {
     funcs := template.FuncMap{"counter": counter}
     e.Renderer = &Template{ templates: template.Must(template.New("views/member/administrasi.html").Funcs(funcs).ParseFiles(
       "views/member/administrasi.html",
-      "views/member/head.html",
-      "views/member/header.html",
-      "views/member/footer.html",
+      "views/member/head.html", "views/member/header.html", "views/member/footer.html",
       )),
     }
     member.ShowAdministrasi(c)
@@ -131,14 +126,26 @@ func main() {
   e.GET("/dashboard", func(c echo.Context) error{
     e.Renderer = &Template{ templates: template.Must(template.ParseFiles(
       "views/admin/dashboard.html",
-      "views/admin/head.html",
-      "views/admin/header.html",
-      "views/admin/footer.html",
+      "views/admin/head.html", "views/admin/header.html", "views/admin/footer.html",
       )),
     }
     admin.ShowDashboard(c)
     return nil
   })
+
+  e.GET("/admin/profil", func(c echo.Context) error{
+    e.Renderer = &Template{ templates: template.Must(template.ParseFiles(
+      "views/admin/profile.html",
+      "views/admin/head.html", "views/admin/header.html", "views/admin/footer.html",
+      )),
+    }
+    admin.ShowProfil(c)
+    return nil
+  })
+
+  e.POST("/admin/update-password", admin.UpdatePassword)
+
+  e.POST("/admin/update-foto", admin.UpdatePassword)
 
   echo.NotFoundHandler = func(c echo.Context) error {
     e.Renderer = &Template{ templates: template.Must(template.ParseFiles(
@@ -147,10 +154,6 @@ func main() {
       )),
     }
     auth.Err404(c)
-    // user_input  :=  c.Request().URL    //  http.URL
-    // msg, _      :=   "s", user_input
-    // render your 404 page
-    // return c.String(http.StatusNotFound, msg)
     return nil
   }
 

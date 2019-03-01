@@ -1,35 +1,33 @@
-package member
+package admin
 
 import (
   "fmt"
   "net/http"
-  "array/models/member"
+  "array/models/admin"
   "github.com/labstack/echo"
   "crypto/sha1"
 )
 
 func ShowProfil(c echo.Context) error {
   session, _  := store.Get(c.Request(), "session")
-  id_member   := fmt.Sprintf("%v", session.Values["id_member"])
-  data_member  := member.GetMember(id_member)
-  // fmt.Printf("%+v\n",dataMember)
+  id_admin    := fmt.Sprintf("%v", session.Values["id_admin"])
+  data_admin  := admin.GetAdmin(id_admin)
 
   data := struct {
-    Member    member.DataMember
+    Admin    admin.DataAdmin
     Nav       string
   } {
-    data_member,
+    data_admin,
     "profil",
   }
 
   return c.Render(http.StatusOK, "profile.html", data)
-    // return c.JSON(http.StatusOK, data)
 }
 
 func UpdatePassword(c echo.Context) error{
-  id_member   := c.FormValue("id_member")
+  id_admin    := c.FormValue("id_admin")
   newPassword := c.FormValue("password_baru")
-  oldPassword := member.GetPassword(id_member)
+  oldPassword := admin.GetPassword(id_admin)
 
   var sha = sha1.New()
   sha.Write([]byte(newPassword))
@@ -40,13 +38,8 @@ func UpdatePassword(c echo.Context) error{
     message := "false"
     return c.String(http.StatusOK, message)
   } else {
-    member.UpdatePassword(id_member,encryptedString)
+    admin.UpdatePassword(id_admin,encryptedString)
     message := "true"
     return c.String(http.StatusOK, message)
   }
 }
-
-// func UpdateFoto(c echo.Context) error {
-//   id_member   := c.FormValue("id_member")
-//   newPassword := c.FormValue("password_baru")
-// }

@@ -31,14 +31,13 @@ func Index(c echo.Context) error{
 
   if session == false {
     return c.Render(http.StatusOK, "index.html", data)
-  }else {
+  } else {
     session, _ := store.Get(c.Request(), "session")
     if session.Values["id_member"] != "" {
       return c.Redirect(http.StatusMovedPermanently, "/informasi")
     } else {
       return c.Redirect(http.StatusMovedPermanently, "/dashboard")
     }
-
   }
 }
 
@@ -50,8 +49,7 @@ func Login(c echo.Context) error{
   sha.Write([]byte(password))
   var encrypted = sha.Sum(nil)
   var encryptedString = fmt.Sprintf("%x", encrypted)
-
-  authentic       := auth.Auth(email, encryptedString)
+  authentic    := auth.Auth(email, encryptedString)
 
   // fmt.Println("%T\n", result)
   fmt.Println(authentic)
@@ -59,7 +57,6 @@ func Login(c echo.Context) error{
   if authentic == true {
     result       := auth.GetSession(email)
     SetSession(c, result)
-
     dataSession := auth.SessionMember{}
 
     dataSession.Id_member = result.Id_member
@@ -84,7 +81,6 @@ func SetSession(c echo.Context, data auth.SessionMember) {
   session.Values["nama"] = data.Nama
   session.Values["slug"] = data.Slug
   session.Save(c.Request(), c.Response())
-
   // fmt.Println("session: ", len(session.Values))
 }
 
@@ -92,7 +88,7 @@ func CheckSession(c echo.Context) bool {
   session, _ := store.Get(c.Request(), "session")
   if len(session.Values) == 0 {
     return false
-  }else {
+  } else {
     return true
   }
 }

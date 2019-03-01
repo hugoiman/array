@@ -61,7 +61,6 @@ func GetTagihan(id_member string) (string, int) {
   err     :=  con.QueryRow(query, id_member, id_member).Scan(&tagihan, &status)
 
   checkErr(err)
-
   defer con.Close()
 
   return status, tagihan

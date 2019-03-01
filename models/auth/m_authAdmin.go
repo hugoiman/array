@@ -27,7 +27,6 @@ func GetSessionAdmin(email string) SessionAdmin {
   err     :=  con.QueryRow(query, email).Scan(&result.Id_admin, &result.Nama, &result.Slug)
 
   checkErr(err)
-
   defer con.Close()
 
   return result

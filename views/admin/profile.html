@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {{template "_head" .}}
+
+  <!-- External -->
+  <link href="/static/ex/bootoast.css" rel="stylesheet" type="text/css">
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+  {{template "_header" .}}
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Profil
+      </h1>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <!-- Small boxes (Stat box) -->
+      <div class="row">
+        <div class="col-md-3">
+          <!-- Profile Image -->
+          <div class="box box-primary">
+            <div class="box-body box-profile">
+              <img id="img-profile" class="profile-user-img img-responsive img-circle" src="/static/images/admin/{{.Admin.Foto}}" alt="{{.Admin.Foto}}">
+              <h3 class="profile-username text-center">{{.Admin.Nama}}</h3>
+              <ul class="list-group list-group-unbordered">
+                <li class="list-group-item">
+                  <b>ID Admin</b> <a class="pull-right">{{.Admin.Id_admin}}</a>
+                </li>
+                <li class="list-group-item">
+                  <b>Email</b> <a class="pull-right">{{.Admin.Email}}</a>
+                </li>
+              </ul>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-9">
+          <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+              <li class="active"><a href="#biodata" data-toggle="tab">Biodata</a></li>
+              <li><a href="#foto" data-toggle="tab">Foto</a></li>
+              <li><a href="#password" data-toggle="tab">Ganti Password</a></li>
+            </ul>
+            <div class="tab-content">
+              <div class="active tab-pane" id="biodata">
+                <form class="form-horizontal">
+                  <div class="form-group">
+                    <label for="inputName" class="col-sm-2 control-label">Nama</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" value="{{.Admin.Nama}}" readonly>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputEmail" class="col-sm-2 control-label">No HP</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" value="{{.Admin.No_hp}}" readonly>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputName" class="col-sm-2 control-label">No Identitas</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" value="{{.Admin.Nik}}" readonly>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputExperience" class="col-sm-2 control-label">Tgl Lahir</label>
+                    <div class="col-sm-10">
+                      <input class="form-control" value="{{.Admin.Tgl_lahir}}" readonly>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputSkills" class="col-sm-2 control-label">Alamat</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" value="{{.Admin.Alamat}}" readonly>
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+              <!-- /.tab-pane -->
+              <div class="tab-pane" id="foto">
+                <form class="form-horizontal" action="/ganti-foto" enctype="multipart/form-data" method="POST" id="myform">
+                  <div class="form-group">
+                    <div class="col-sm-10">
+                      <div class="btn btn-default">
+                        <!-- <i class="fa fa-paperclip"></i> Attachment -->
+                        <input type="file" id="file" name="file">
+                      </div>
+                      <button type="reset" class="btn btn-default"><i class="fa fa-times"></i></button>
+                      <p class="help-block">Max. 1MB</p>
+                      <input type="button" class="btn btn-primary btn-sm" id="simpan_foto" value="Upload">
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <!-- /.tab-pane -->
+              <div class="tab-pane" id="password">
+                <div>
+                  <div id="warning"></div>
+                  <div id="success"></div>
+                </div>
+                <p class="message"></p>
+                <form class="form-horizontal">
+                  <input type="hidden" name="id_admin" id="id_admin" value="{{.Admin.Id_admin}}">
+                  <div class="form-group">
+                    <label for="inputName" class="col-sm-2 control-label">Password Baru</label>
+                    <div class="col-sm-10">
+                      <input type="password" class="form-control" id="password_baru" name="password_baru" required>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputName" class="col-sm-2 control-label">Konfirmasi Pass</label>
+                    <div class="col-sm-10">
+                      <input type="password" class="form-control" id="konfirmasi_password" name="konfirmasi_password" required>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-sm-12">
+                      <p class="btn btn-primary btn-sm pull-right" id="simpan_password">Simpan</p>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <!-- /.tab-pane -->
+            </div>
+            <!-- /.tab-content -->
+          </div>
+          <!-- /.nav-tabs-custom -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  <script>
+  $(document).ready(function(){
+    $("#simpan_password").click(function(){
+      var id_admin = $("#id_admin").val();
+      var password_baru = $("#password_baru").val();
+      var konfirmasi_password = $("#konfirmasi_password").val();
+      var jumlah_pass_baru = $('#password_baru').val().length;
+      var jumlah_konfirmasi_pass = $('#konfirmasi_password').val().length;
+      // var encrypt_pass = md5(password_baru);
+      if (password_baru == "" || konfirmasi_password == "") {
+        bootoast.toast({
+          message: 'Mohon lengkapi isi form terlebih dahulu.',
+      	  type: 'warning'
+        });
+      }
+      if(konfirmasi_password != password_baru){
+        bootoast.toast({
+          message: 'Konfirmasi password tidak sesuai.',
+      	  type: 'warning'
+        });
+      }
+      if(jumlah_pass_baru < 6 || jumlah_pass_baru > 18 || jumlah_konfirmasi_pass < 6 || jumlah_konfirmasi_pass > 18){
+        bootoast.toast({
+          message: 'Password harus berjumlah 6-18 karakter.',
+      	  type: 'warning'
+        });
+      }
+      if(konfirmasi_password != "" && konfirmasi_password == password_baru &&
+        jumlah_pass_baru >= 6 && jumlah_pass_baru <= 18 && jumlah_konfirmasi_pass >= 6 && jumlah_konfirmasi_pass <= 18){
+
+        $.ajax({
+          url:"/admin/update-password",
+          type : 'POST',
+          data : {'id_admin':id_admin,'password_baru':password_baru},
+          success:function(response){
+            $("#password_baru").val("");
+            $("#konfirmasi_password").val("");
+            if (response == "false") {
+              bootoast.toast({
+                message: "Gagal! Password baru tidak boleh sama dengan password lama.",
+                type: 'warning'
+              });
+            } else {
+              bootoast.toast({
+                message: "Berhasil ganti password.",
+                type: 'success'
+              });
+            }
+          },
+          error:function(error){
+            alert("Gagal ganti password");
+          }
+        });
+      }
+    });
+  });
+  </script>
+
+  <script>
+    $(document).ready(function(){
+      $("#simpan_foto").click(function(){
+        var fd = new FormData();
+        var files = $('#file')[0].files[0];
+        fd.append('file',files);
+
+        $.ajax({
+          url: "/admin/update-foto",
+          type: 'POST',
+          data: fd,
+          contentType: false,
+          processData: false,
+          success: function(response){
+            if(response.substr(response.length - 4) == "foto"){
+              $("#img").attr("src",response.slice(0,-4));
+              $("#img-profile").attr("src",response.slice(0,-4));
+              $("#file").val("");
+              bootoast.toast({
+                message: 'Berhasil ganti foto',
+                type: 'success'
+              });
+            }
+            else{
+              bootoast.toast({
+                message: '<h4>Failed :</h4>'+response,
+                type: 'warning'
+              });
+            }
+            // alert("berhasil ganti foto");
+          },
+          error:function(error){
+            alert(error);
+          }
+        });
+      });
+    });
+  </script>
+
+  {{template "_footer" .}}
+
+  <!-- External -->
+  <script src="/static/ex/bootoast.min.js"></script>
+
+  </body>
+  </html>

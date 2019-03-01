@@ -12,10 +12,8 @@ func GetPassword(id_member string) string {
   err     :=  con.QueryRow(query, id_member).Scan(&password)
 
   checkErr(err)
-
   defer con.Close()
 
-  fmt.Println(password)
   return password
 }
 
@@ -23,6 +21,7 @@ func UpdatePassword(id_member, password string) {
   con     :=  db.Connect()
   query   :=  "UPDATE member SET password = ? WHERE id_member = ?"
   _, err  :=  con.Exec(query, password, id_member)
+  
   checkErr(err)
 
   defer con.Close()
