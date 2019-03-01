@@ -4,6 +4,8 @@ import (
   "net/http"
   "fmt"
 	"array/models/auth"
+  "array/models/member"
+  "array/models/admin"
   "github.com/labstack/echo"
   "crypto/sha1"
   "github.com/gorilla/sessions"
@@ -30,7 +32,13 @@ func Index(c echo.Context) error{
   if session == false {
     return c.Render(http.StatusOK, "index.html", data)
   }else {
-    return c.Redirect(http.StatusMovedPermanently, "/informasi")
+    session, _ := store.Get(c.Request(), "session")
+    if session.Values["id_member"] != "" {
+      return c.Redirect(http.StatusMovedPermanently, "/informasi")
+    } else {
+      return c.Redirect(http.StatusMovedPermanently, "/dashboard")
+    }
+
   }
 }
 
@@ -52,7 +60,7 @@ func Login(c echo.Context) error{
     result       := auth.GetSession(email)
     SetSession(c, result)
 
-    dataSession := auth.DataSession{}
+    dataSession := auth.SessionMember{}
 
     dataSession.Id_member = result.Id_member
     dataSession.Nama = result.Nama
@@ -70,7 +78,7 @@ func Login(c echo.Context) error{
 
 }
 
-func SetSession(c echo.Context, data auth.DataSession) {
+func SetSession(c echo.Context, data auth.SessionMember) {
   session, _ := store.Get(c.Request(), "session")
   session.Values["id_member"] = data.Id_member
   session.Values["nama"] = data.Nama
@@ -87,4 +95,37 @@ func CheckSession(c echo.Context) bool {
   }else {
     return true
   }
+}
+
+func Err404(c echo.Context) error {
+  session, _ := store.Get(c.Request(), "session")
+  if session.Values["id_member"] != nil {
+    id_member :=  fmt.Sprintf("%v", session.Values["id_member"])
+    data_member := member.GetMember(id_member)
+    data := struct {
+      Member         member.DataMember
+      Nav            string
+    } {
+      data_member,
+      "no nav",
+    }
+    return c.Render(http.StatusOK, "error404.html", data)
+
+  } else if session.Values["id_admin"] != nil {
+    id_admin :=  fmt.Sprintf("%v", session.Values["id_admin"])
+    data_admin := admin.GetAdmin(id_admin)
+    data := struct {
+      Admin         admin.DataAdmin
+      Nav           string
+    } {
+      data_admin,
+      "no nav",
+    }
+    return c.Render(http.StatusOK, "err404.html", data)
+
+  } else {
+    fmt.Println("auu")
+    return c.JSON(http.StatusOK, "err404 boy")
+  }
+  return nil
 }

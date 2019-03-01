@@ -12,7 +12,7 @@ func ShowAdministrasi(c echo.Context) error {
   session, _      :=  store.Get(c.Request(), "session")
   id_member       :=  fmt.Sprintf("%v", session.Values["id_member"])
 
-  dataMember      :=  member.GetMember(id_member)
+  data_member      :=  member.GetMember(id_member)
   administrasi    :=  member.GetAdministrasi(id_member)
   infoTagihan     :=  member.GetDetailTagihan(id_member)
   status, tagihan :=  member.GetTagihan(id_member)
@@ -26,7 +26,7 @@ func ShowAdministrasi(c echo.Context) error {
     Nav            string
   } {
     administrasi,
-    dataMember,
+    data_member,
     infoTagihan,
     status,
     tagihan,

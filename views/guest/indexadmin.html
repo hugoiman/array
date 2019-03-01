@@ -56,12 +56,12 @@
 
       if (email != "" && password != "") {
       $.ajax({
-        url:"/login",
+        url:"/login-admin",
         type : 'POST',
         data : {'email':email,'password':password},
         success:function(response) {
           if (response == "true") {
-            window.location.href = "/informasi";
+            window.location.href = "/dashboard";
           } else {
             $("#password").val("");
             bootoast.toast({

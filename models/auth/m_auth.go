@@ -29,11 +29,11 @@ func Auth(email, password string) bool {
 	}
 }
 
-func GetSession(email string) DataSession {
+func GetSession(email string) SessionMember {
   con     :=  db.Connect()
   query   :=  "SELECT id_member, nama, slug FROM member WHERE email = ?"
 
-  result  :=  DataSession{}
+  result  :=  SessionMember{}
   err     :=  con.QueryRow(query, email).Scan(&result.Id_member, &result.Nama, &result.Slug)
 
   checkErr(err)

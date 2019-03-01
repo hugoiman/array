@@ -12,6 +12,7 @@ import (
 
   "array/controllers/auth"
   "array/controllers/member"
+  "array/controllers/admin"
 
   "github.com/gorilla/sessions"
   "os"
@@ -49,7 +50,7 @@ func main() {
     AllowMethods: []string{echo.GET, echo.HEAD, echo.PUT, echo.PATCH, echo.POST, echo.DELETE},
   }))
 
-  //  auth
+  //  Auth
   e.GET("/", func(c echo.Context) error{
     e.Renderer = &Template{ templates: template.Must(template.ParseFiles(
       "views/guest/index.html",
@@ -62,7 +63,7 @@ func main() {
 
   e.POST("/login", auth.Login)
 
-  //  member
+  //  Member
   e.GET("/logout", func(c echo.Context) error{
     var store = sessions.NewCookieStore([]byte(os.Getenv("SESSION_KEY")))
     e.Renderer = &Template{ templates: template.Must(template.ParseFiles("views/guest/index.html")), }
@@ -81,11 +82,11 @@ func main() {
       "views/member/footer.html",
       )),
     }
+    e.GET("/profil", func(c echo.Context) error{
     member.ShowInfo(c)
     return nil
   })
 
-  e.GET("/profil", func(c echo.Context) error{
     e.Renderer = &Template{ templates: template.Must(template.ParseFiles(
       "views/member/profile.html",
       "views/member/head.html",
@@ -113,6 +114,45 @@ func main() {
   e.POST("/update-password", member.UpdatePassword)
 
   e.POST("/update-foto", member.UpdatePassword)
+
+  //  Admin
+  e.GET("/admin", func(c echo.Context) error {
+    e.Renderer = &Template{ templates: template.Must(template.ParseFiles(
+      "views/guest/indexadmin.html",
+      "views/guest/head.html",
+      )),
+    }
+    auth.IndexAdmin(c)
+    return nil
+  })
+
+  e.POST("/login-admin", auth.LoginAdmin)
+
+  e.GET("/dashboard", func(c echo.Context) error{
+    e.Renderer = &Template{ templates: template.Must(template.ParseFiles(
+      "views/admin/dashboard.html",
+      "views/admin/head.html",
+      "views/admin/header.html",
+      "views/admin/footer.html",
+      )),
+    }
+    admin.ShowDashboard(c)
+    return nil
+  })
+
+  echo.NotFoundHandler = func(c echo.Context) error {
+    e.Renderer = &Template{ templates: template.Must(template.ParseFiles(
+      "views/admin/err404.html","views/admin/head.html","views/admin/header.html","views/admin/footer.html",
+      "views/member/error404.html","views/member/head.html","views/member/header.html","views/member/footer.html",
+      )),
+    }
+    auth.Err404(c)
+    // user_input  :=  c.Request().URL    //  http.URL
+    // msg, _      :=   "s", user_input
+    // render your 404 page
+    // return c.String(http.StatusNotFound, msg)
+    return nil
+  }
 
   fmt.Println("server started at :9000")
   e.Logger.Fatal(e.Start(":9000"))
