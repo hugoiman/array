@@ -171,18 +171,18 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">Menu</li>
-        <li class="nav" id="informasi">
-          <a href="/informasi" id="link_informasi">
-            <i class="fa fa-bullhorn"> </i></i> <span>Informasi</span>
+        <li class="nav" id="dashboard">
+          <a href="/dashboard/{{.Admin.Slug}}" id="link_dashboard">
+            <i class="fa fa-dashboard"> </i></i> <span>Dashboard</span>
           </a>
         </li>
         <li  class="nav" id="administrasi">
-          <a href="/administrasi" id="link_administrasi">
+          <a href="#" id="link_administrasi">
             <i class="fa fa-list-alt"></i> <span>Administrasi</span>
           </a>
         </li>
         <li  class="nav" id="profil">
-          <a href="/profil" id="link_profil">
+          <a href="/admin/profil/{{.Admin.Slug}}" id="link_profil">
             <i class="fa fa-user"></i> <span>Profil</span>
           </a>
         </li>

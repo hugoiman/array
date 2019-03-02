@@ -123,7 +123,7 @@ func main() {
 
   e.POST("/login-admin", auth.LoginAdmin)
 
-  e.GET("/dashboard", func(c echo.Context) error{
+  e.GET("/dashboard/:slug", func(c echo.Context) error{
     e.Renderer = &Template{ templates: template.Must(template.ParseFiles(
       "views/admin/dashboard.html",
       "views/admin/head.html", "views/admin/header.html", "views/admin/footer.html",
@@ -133,7 +133,7 @@ func main() {
     return nil
   })
 
-  e.GET("/admin/profil", func(c echo.Context) error{
+  e.GET("/admin/profil/:slug", func(c echo.Context) error{
     e.Renderer = &Template{ templates: template.Must(template.ParseFiles(
       "views/admin/profile.html",
       "views/admin/head.html", "views/admin/header.html", "views/admin/footer.html",
@@ -147,12 +147,27 @@ func main() {
 
   e.POST("/admin/update-foto", admin.UpdatePassword)
 
+  var store = sessions.NewCookieStore([]byte(os.Getenv("SESSION_KEY")))
+  
   echo.NotFoundHandler = func(c echo.Context) error {
-    e.Renderer = &Template{ templates: template.Must(template.ParseFiles(
-      "views/admin/err404.html","views/admin/head.html","views/admin/header.html","views/admin/footer.html",
-      "views/member/error404.html","views/member/head.html","views/member/header.html","views/member/footer.html",
-      )),
+    session, _ := store.Get(c.Request(), "session")
+    if session.Values["id_member"] != nil {
+      e.Renderer = &Template{ templates: template.Must(template.ParseFiles(
+        "views/member/error404.html","views/member/head.html","views/member/header.html","views/member/footer.html",
+        )),
+      }
+    } else if session.Values["id_admin"] != nil {
+      e.Renderer = &Template{ templates: template.Must(template.ParseFiles(
+        "views/admin/err404.html","views/admin/head.html","views/admin/header.html","views/admin/footer.html",
+        )),
+      }
+    } else {
+      e.Renderer = &Template{ templates: template.Must(template.ParseFiles(
+        "views/guest/index.html","views/guest/head.html",
+        )),
+      }
     }
+
     auth.Err404(c)
     return nil
   }

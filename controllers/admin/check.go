@@ -1,4 +1,4 @@
-package member
+package admin
 
 import(
   "github.com/labstack/echo"
@@ -14,7 +14,7 @@ func checkErr(err error) {
 func checkSlug(c echo.Context, slug string) error {
   session, _  :=  store.Get(c.Request(), "session")
   sessSlug    :=  fmt.Sprintf("%v", session.Values["slug"])
-
+  
   if slug == sessSlug {
     return nil
   } else {

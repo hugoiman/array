@@ -32,11 +32,12 @@ func Index(c echo.Context) error{
   if session == false {
     return c.Render(http.StatusOK, "index.html", data)
   } else {
-    session, _ := store.Get(c.Request(), "session")
+    session, _  :=  store.Get(c.Request(), "session")
+    slug        :=  fmt.Sprintf("%v", session.Values["slug"])
     if session.Values["id_member"] != "" {
-      return c.Redirect(http.StatusMovedPermanently, "/informasi")
+      return c.Redirect(http.StatusMovedPermanently, "/informasi/" + slug)
     } else {
-      return c.Redirect(http.StatusMovedPermanently, "/dashboard")
+      return c.Redirect(http.StatusMovedPermanently, "/dashboard/" + slug)
     }
   }
 }
@@ -52,7 +53,7 @@ func Login(c echo.Context) error{
   authentic    := auth.Auth(email, encryptedString)
 
   // fmt.Println("%T\n", result)
-  fmt.Println(authentic)
+  // fmt.Println(authentic)
 
   if authentic == true {
     result       := auth.GetSession(email)
@@ -65,8 +66,8 @@ func Login(c echo.Context) error{
 
     // fmt.Printf("%+v\n",dataSession)
     // fmt.Println(reflect.TypeOf(informasi))
-    message := "true"
-    return c.String(http.StatusOK, message)
+
+    return c.String(http.StatusOK, result.Slug)
     // return c.Redirect(http.StatusMovedPermanently, "/informasi")
 	} else {
     message := "false"
@@ -95,8 +96,8 @@ func CheckSession(c echo.Context) bool {
 
 func Err404(c echo.Context) error {
   session, _ := store.Get(c.Request(), "session")
+  slug :=  fmt.Sprintf("%v", session.Values["slug"])
   if session.Values["id_member"] != nil {
-    slug :=  fmt.Sprintf("%v", session.Values["slug"])
     data_member := member.GetMember(slug)
     data := struct {
       Member         member.DataMember
@@ -106,9 +107,7 @@ func Err404(c echo.Context) error {
       "no nav",
     }
     return c.Render(http.StatusOK, "error404.html", data)
-
   } else if session.Values["id_admin"] != nil {
-    slug :=  fmt.Sprintf("%v", session.Values["slug"])
     data_admin := admin.GetAdmin(slug)
     data := struct {
       Admin         admin.DataAdmin
@@ -117,8 +116,8 @@ func Err404(c echo.Context) error {
       data_admin,
       "no nav",
     }
+    fmt.Println("eroorrrr")
     return c.Render(http.StatusOK, "err404.html", data)
-
   } else {
     fmt.Println("auu")
     return c.JSON(http.StatusOK, "err404 boy")

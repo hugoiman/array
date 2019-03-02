@@ -17,7 +17,6 @@ func ShowInfo(c echo.Context) error{
   data_member := member.GetMember(slug)
   informasi   := member.GetInfo()
   // fmt.Println(reflect.TypeOf(id_member))
-
   data := struct {
     Informasi member.Informasi
     Member    member.DataMember

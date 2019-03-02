@@ -9,9 +9,9 @@ import (
 )
 
 func ShowProfil(c echo.Context) error {
-  session, _  := store.Get(c.Request(), "session")
-  id_admin    := fmt.Sprintf("%v", session.Values["id_admin"])
-  data_admin  := admin.GetAdmin(id_admin)
+  slug := c.Param("slug")
+  checkSlug(c, slug)
+  data_admin  := admin.GetAdmin(slug)
 
   data := struct {
     Admin    admin.DataAdmin

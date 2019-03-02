@@ -4,24 +4,23 @@ import (
   "net/http"
   "array/models/admin"
   "github.com/labstack/echo"
-  "fmt"
   "github.com/gorilla/sessions"
   "os"
 )
 
 var store = sessions.NewCookieStore([]byte(os.Getenv("SESSION_KEY")))
 
-func ShowDashboard(c echo.Context) error{
-  session, _ := store.Get(c.Request(), "session")
-  id_admin   := fmt.Sprintf("%v", session.Values["id_admin"])
-  dataAdmin  := admin.GetAdmin(id_admin)
+func ShowDashboard(c echo.Context) error {
+  slug := c.Param("slug")
+  checkSlug(c, slug)
+  data_admin  := admin.GetAdmin(slug)
 
   data := struct {
     Admin     admin.DataAdmin
     Nav       string
   } {
-    dataAdmin,
-    "informasi",
+    data_admin,
+    "dashboard",
   }
 
   // fmt.Printf("%+v\n",data)

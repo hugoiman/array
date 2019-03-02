@@ -60,14 +60,14 @@
         type : 'POST',
         data : {'email':email,'password':password},
         success:function(response) {
-          if (response == "true") {
-            window.location.href = "/informasi";
-          } else {
+          if (response == "false") {
             $("#password").val("");
             bootoast.toast({
               message: "Maaf email/password salah! Silahkan coba lagi.",
               type: 'warning'
             });
+          } else {
+            window.location.href = "/informasi/"+response;
           }
         },
         error:function(error){
