@@ -96,8 +96,8 @@ func CheckSession(c echo.Context) bool {
 func Err404(c echo.Context) error {
   session, _ := store.Get(c.Request(), "session")
   if session.Values["id_member"] != nil {
-    id_member :=  fmt.Sprintf("%v", session.Values["id_member"])
-    data_member := member.GetMember(id_member)
+    slug :=  fmt.Sprintf("%v", session.Values["slug"])
+    data_member := member.GetMember(slug)
     data := struct {
       Member         member.DataMember
       Nav            string
@@ -108,8 +108,8 @@ func Err404(c echo.Context) error {
     return c.Render(http.StatusOK, "error404.html", data)
 
   } else if session.Values["id_admin"] != nil {
-    id_admin :=  fmt.Sprintf("%v", session.Values["id_admin"])
-    data_admin := admin.GetAdmin(id_admin)
+    slug :=  fmt.Sprintf("%v", session.Values["slug"])
+    data_admin := admin.GetAdmin(slug)
     data := struct {
       Admin         admin.DataAdmin
       Nav           string

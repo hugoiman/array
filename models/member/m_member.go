@@ -4,11 +4,11 @@ import (
   "array/db"
 )
 
-func GetMember(id_member string) DataMember {
+func GetMember(slug string) DataMember {
   con     :=  db.Connect()
-  query   :=  "select * from member where id_member = ?"
+  query   :=  "select * from member where slug = ?"
   result  :=  DataMember{}
-  err     :=  con.QueryRow(query, id_member).Scan(
+  err     :=  con.QueryRow(query, slug).Scan(
     &result.Id_member, &result.Id_lokasi, &result.Email,  &result.Nama, &result.Password, &result.Nik,  &result.No_hp,
     &result.Foto, &result.Tgl_lahir,  &result.Pekerjaan, &result.Alamat_asal, &result.No_kamar,  &result.Tgl_gabung,
     &result.Status_member, &result.Tipe_pembayaran,  &result.Username_wifi, &result.Slug,

@@ -2,7 +2,6 @@ package member
 
 import (
   "array/db"
-  "fmt"
 )
 
 func GetPassword(id_member string) string {
@@ -21,7 +20,7 @@ func UpdatePassword(id_member, password string) {
   con     :=  db.Connect()
   query   :=  "UPDATE member SET password = ? WHERE id_member = ?"
   _, err  :=  con.Exec(query, password, id_member)
-  
+
   checkErr(err)
 
   defer con.Close()

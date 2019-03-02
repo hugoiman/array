@@ -74,7 +74,7 @@ func main() {
     return c.Redirect(http.StatusMovedPermanently, "/")
   })
 
-  e.GET("/informasi", func(c echo.Context) error{
+  e.GET("/informasi/:slug", func(c echo.Context) error{
     e.Renderer = &Template{ templates: template.Must(template.ParseFiles(
       "views/member/home.html",
       "views/member/head.html", "views/member/header.html","views/member/footer.html",
@@ -85,7 +85,7 @@ func main() {
   })
 
 
-  e.GET("/profil", func(c echo.Context) error{
+  e.GET("/profil/:slug", func(c echo.Context) error{
     e.Renderer = &Template{ templates: template.Must(template.ParseFiles(
       "views/member/profile.html",
       "views/member/head.html", "views/member/header.html", "views/member/footer.html",
@@ -95,7 +95,7 @@ func main() {
     return nil
   })
 
-  e.GET("/administrasi", func(c echo.Context) error{
+  e.GET("/administrasi/:slug", func(c echo.Context) error{
     funcs := template.FuncMap{"counter": counter}
     e.Renderer = &Template{ templates: template.Must(template.New("views/member/administrasi.html").Funcs(funcs).ParseFiles(
       "views/member/administrasi.html",

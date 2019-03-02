@@ -172,17 +172,17 @@
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">Menu</li>
         <li class="nav" id="informasi">
-          <a href="/informasi" id="link_informasi">
+          <a href="/informasi/{{.Member.Slug}}" id="link_informasi">
             <i class="fa fa-bullhorn"> </i></i> <span>Informasi</span>
           </a>
         </li>
         <li  class="nav" id="administrasi">
-          <a href="/administrasi" id="link_administrasi">
+          <a href="/administrasi/{{.Member.Slug}}" id="link_administrasi">
             <i class="fa fa-list-alt"></i> <span>Administrasi</span>
           </a>
         </li>
         <li  class="nav" id="profil">
-          <a href="/profil" id="link_profil">
+          <a href="/profil/{{.Member.Slug}}" id="link_profil">
             <i class="fa fa-user"></i> <span>Profil</span>
           </a>
         </li>

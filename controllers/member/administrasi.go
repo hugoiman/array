@@ -8,9 +8,11 @@ import (
 )
 
 func ShowAdministrasi(c echo.Context) error {
+  slug := c.Param("slug")
+  checkSlug(c, slug)
   session, _      :=  store.Get(c.Request(), "session")
   id_member       :=  fmt.Sprintf("%v", session.Values["id_member"])
-  data_member     :=  member.GetMember(id_member)
+  data_member     :=  member.GetMember(slug)
   administrasi    :=  member.GetAdministrasi(id_member)
   infoTagihan     :=  member.GetDetailTagihan(id_member)
   status, tagihan :=  member.GetTagihan(id_member)
