@@ -24,7 +24,7 @@ func ShowInfo(c echo.Context) error{
   } {
     informasi,
     data_member,
-    "informasi",
+    "Informasi",
   }
 
   // fmt.Printf("%+v\n",data)

@@ -30,7 +30,7 @@ func ShowAdministrasi(c echo.Context) error {
     infoTagihan,
     status,
     tagihan,
-    "administrasi",
+    "Administrasi",
   }
 
   return c.Render(http.StatusOK, "administrasi.html", data)

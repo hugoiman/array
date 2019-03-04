@@ -133,7 +133,7 @@ func main() {
     return nil
   })
 
-  e.GET("/admin/profil/:slug", func(c echo.Context) error{
+  e.GET("/profile/:slug", func(c echo.Context) error{
     e.Renderer = &Template{ templates: template.Must(template.ParseFiles(
       "views/admin/profile.html",
       "views/admin/head.html", "views/admin/header.html", "views/admin/footer.html",
@@ -148,7 +148,7 @@ func main() {
   e.POST("/admin/update-foto", admin.UpdatePassword)
 
   var store = sessions.NewCookieStore([]byte(os.Getenv("SESSION_KEY")))
-  
+
   echo.NotFoundHandler = func(c echo.Context) error {
     session, _ := store.Get(c.Request(), "session")
     if session.Values["id_member"] != nil {

@@ -20,7 +20,7 @@ func ShowDashboard(c echo.Context) error {
     Nav       string
   } {
     data_admin,
-    "dashboard",
+    "Dashboard",
   }
 
   // fmt.Printf("%+v\n",data)

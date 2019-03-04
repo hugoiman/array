@@ -18,7 +18,7 @@ func ShowProfil(c echo.Context) error {
     Nav       string
   } {
     data_member,
-    "profil",
+    "Profil",
   }
 
   return c.Render(http.StatusOK, "profile.html", data)
