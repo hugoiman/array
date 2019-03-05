@@ -68,7 +68,9 @@ func main() {
     var store = sessions.NewCookieStore([]byte(os.Getenv("SESSION_KEY")))
     e.Renderer = &Template{ templates: template.Must(template.ParseFiles("views/guest/index.html")), }
     session, _ := store.Get(c.Request(), "session")
-    session.Options.MaxAge = -1
+    session.Options = &sessions.Options {
+      MaxAge: -1,
+    }
     session.Save(c.Request(), c.Response())
 
     return c.Redirect(http.StatusMovedPermanently, "/")
@@ -83,7 +85,6 @@ func main() {
     member.ShowInfo(c)
     return nil
   })
-
 
   e.GET("/profil/:slug", func(c echo.Context) error{
     e.Renderer = &Template{ templates: template.Must(template.ParseFiles(
@@ -156,6 +157,17 @@ func main() {
       )),
     }
     admin.ShowMembers(c)
+    return nil
+  })
+
+  e.GET("/member/:slug", func(c echo.Context) error {
+    funcs := template.FuncMap{"counter": counter}
+    e.Renderer = &Template{ templates: template.Must(template.New("views/admin/profile_member.html").Funcs(funcs).ParseFiles(
+      "views/admin/profile_member.html",
+      "views/admin/head.html", "views/admin/header.html", "views/admin/footer.html",
+      )),
+    }
+    admin.ShowProfilMember(c)
     return nil
   })
 

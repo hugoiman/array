@@ -17,9 +17,10 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1>
-        Profil
-      </h1>
+      {{template "_title" .}}
+      <ol class="breadcrumb">
+        {{template "_breadcrumb" .}}
+      </ol>
     </section>
 
     <!-- Main content -->

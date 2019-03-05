@@ -17,7 +17,9 @@
     <section class="content-header">
       {{template "_title" .}}
       <ol class="breadcrumb">
-        {{template "_breadcrumb" .}}
+        <li><a href="/dashboard/{{.Admin.Slug}}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="/members">{{.Nav}}</a></li>
+        <li class="active">{{.Member.Nama}}</li>
       </ol>
     </section>
 
@@ -49,14 +51,7 @@
           <!-- /.box -->
         </div>
         <!-- /.col -->
-        <!-- <?php
-          foreach ($info_user as $data){
-            $tgl_lahir = new DateTime($data['tgl_lahir']);
-            $today = new DateTime('today');
-            $tahun = $today->diff($tgl_lahir)->y;
-            $bulan = $today->diff($tgl_lahir)->m;
-            $hari = $today->diff($tgl_lahir)->d;
-        ?> -->
+
         <div class="col-md-9">
           <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">

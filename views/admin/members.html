@@ -16,9 +16,10 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1>
-        Member
-      </h1>
+      {{template "_title" .}}
+      <ol class="breadcrumb">
+        {{template "_breadcrumb" .}}
+      </ol>
     </section>
     <!-- Main content -->
     <section class="content">
@@ -38,19 +39,23 @@
                     <tr>
                       <th>No</th>
                       <th>Nama</th>
+                      <th>Pekerjaan</th>
+                      <th>No HP</th>
+                      <th>No Kamar</th>
                       <th>Lokasi</th>
                       <th>Status</th>
-                      <th></th>
                     </tr>
                     </thead>
                     <tbody>
                       {{range $index, $value := .Member.Member}}
                     <tr>
                       <td>{{counter $index 1}}</td>
-                      <td>{{.Nama}}</td>
+                      <td><a href="/member/{{.Slug}}">{{.Nama}}</a></td>
+                      <td>{{.Pekerjaan}}</td>
+                      <td>{{.No_hp}}</td>
+                      <td>{{.No_kamar}}</td>
                       <td>{{.Lokasi.Cabang}}</td>
                       <td>{{.Status_member}}</td>
-                      <td></td>
                     </tr>
                     {{end}}
                     </tbody>
@@ -58,9 +63,11 @@
                     <tr>
                       <th>No</th>
                       <th>Nama</th>
+                      <th>Pekerjaan</th>
+                      <th>No HP</th>
+                      <th>No Kamar</th>
                       <th>Lokasi</th>
                       <th>Status</th>
-                      <th></th>
                     </tr>
                     </tfoot>
                   </table>

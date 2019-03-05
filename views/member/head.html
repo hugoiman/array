@@ -19,3 +19,14 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 {{end}}
+
+{{define "_title"}}
+<h1>
+  {{.Nav}}
+</h1>
+{{end}}
+
+{{define "_breadcrumb"}}
+<li><a href="informasi/{{.Member.Slug}}"><i class="fa fa-dashboard"></i> Home</a></li>
+<li class="active">{{.Nav}}</li>
+{{end}}
