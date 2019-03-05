@@ -148,9 +148,9 @@ func main() {
   e.POST("/admin/update-password", admin.UpdatePassword)
   e.POST("/admin/update-foto", admin.UpdatePassword)
 
-  e.GET("/members", func(c echo.Context) error{
+  e.GET("/members", func(c echo.Context) error {
     funcs := template.FuncMap{"counter": counter}
-    e.Renderer = &Template{ templates: template.Must(template.New("views/member/members.html").Funcs(funcs).ParseFiles(
+    e.Renderer = &Template{ templates: template.Must(template.New("views/admin/members.html").Funcs(funcs).ParseFiles(
       "views/admin/members.html",
       "views/admin/head.html", "views/admin/header.html", "views/admin/footer.html",
       )),

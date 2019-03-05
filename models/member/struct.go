@@ -35,8 +35,10 @@ type DataMember struct {
   No_hp1                string         `json:"no_hp1"`
   No_hp2                string         `json:"no_hp2"`
   No_stnk               string         `json:"no_stnk"`
-  Perusahaan            string         `json:"Perusahaan"`
+  Perusahaan            string         `json:"perusahaan"`
   Jabatan               string         `json:"jabatan"`
+
+  Lokasi                DataLokasi     `json:"lokasi"`
 }
 
 type Informasi struct {
@@ -51,9 +53,6 @@ type DataInformasi struct {
   Status                string         `json:"status"`
 }
 
-type Lokasi struct {
-  Lokasi                []DataLokasi   `json:"lokasi"`
-}
 type DataLokasi struct {
   Id_lokasi             int            `json:"id_lokasi"`
   Cabang                string         `json:"cabang"`

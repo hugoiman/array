@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {{template "_head" .}}
+
+  <!-- External -->
+  <!-- DataTables -->
+  <link rel="stylesheet" href="/static/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+  {{template "_header" .}}
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Member
+      </h1>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+      <!-- /.row -->
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">Daftar Member</h3>
+            </div>
+            <div class="nav-tabs-custom">
+              <div class="table-responsive">
+                <!-- /.box-header -->
+                <div class="box-body">
+                  <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                      <th>No</th>
+                      <th>Nama</th>
+                      <th>Lokasi</th>
+                      <th>Status</th>
+                      <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                      {{range $index, $value := .Member.Member}}
+                    <tr>
+                      <td>{{counter $index 1}}</td>
+                      <td>{{.Nama}}</td>
+                      <td>{{.Lokasi.Cabang}}</td>
+                      <td>{{.Status_member}}</td>
+                      <td></td>
+                    </tr>
+                    {{end}}
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                      <th>No</th>
+                      <th>Nama</th>
+                      <th>Lokasi</th>
+                      <th>Status</th>
+                      <th></th>
+                    </tr>
+                    </tfoot>
+                  </table>
+                </div>
+                <!-- /.box-body -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  {{template "_footer" .}}
+
+  <!-- External -->
+  <!-- DataTables -->
+  <script src="/static/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+  <script src="/static/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+
+  <script>
+    $(function () {
+      $('#example1').DataTable()
+      $('#example2').DataTable({
+        'paging'      : true,
+        'lengthChange': false,
+        'searching'   : false,
+        'ordering'    : true,
+        'info'        : true,
+        'autoWidth'   : false
+      })
+    })
+  </script>
+
+  </body>
+  </html>
