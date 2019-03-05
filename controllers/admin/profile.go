@@ -6,6 +6,7 @@ import (
   "array/models/admin"
   "github.com/labstack/echo"
   "crypto/sha1"
+  "encoding/json"
 )
 
 func ShowProfil(c echo.Context) error {
@@ -42,4 +43,39 @@ func UpdatePassword(c echo.Context) error{
     message := "true"
     return c.String(http.StatusOK, message)
   }
+}
+
+func CheckEmail(c echo.Context) error {
+  new_email := c.FormValue("new_email")
+  isValid   := admin.CheckEmail(new_email)
+  fmt.Println(isValid)
+  if isValid == true {
+    message := "true"
+    return c.String(http.StatusOK, message)
+  } else {
+    message := "false"
+    return c.String(http.StatusOK, message)
+  }
+}
+
+func UpdateBiodata(c echo.Context) error {
+  decoder := json.NewDecoder(c.Request().Body)
+  biodata := struct {
+    Id_admin              int            `json:"id_admin"`
+    Nama                  string         `json:"nama"`
+    Email                 string         `json:"email"`
+    Password              string         `json:"password"`
+    Nik                   string         `json:"nik"`
+    No_hp                 string         `json:"no_hp"`
+    Alamat                string         `json:"alamat"`
+  }{}
+
+  err := decoder.Decode(&biodata);
+  checkErr(err)
+  fmt.Println(biodata)
+
+  admin.UpdateBiodata(biodata.Id_admin, biodata.Nama)
+
+  message := "true"
+  return c.String(http.StatusOK, message)
 }

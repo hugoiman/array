@@ -81,11 +81,11 @@ func SetSession(c echo.Context, data auth.SessionMember) {
   session.Values["id_member"] = data.Id_member
   session.Values["nama"] = data.Nama
   session.Values["slug"] = data.Slug
-  session.Options = &sessions.Options{
-    Path:     "/",
-    MaxAge:   5,
-    HttpOnly: true,
-  }
+  // session.Options = &sessions.Options{   // Atur expired
+  //   Path:     "/",
+  //   MaxAge:   86400 * 7,
+  //   HttpOnly: true,
+  // }
   session.Save(c.Request(), c.Response())
   // fmt.Println("session: ", len(session.Values))
 }
