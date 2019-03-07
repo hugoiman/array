@@ -17,7 +17,21 @@ func Auth(email, password string) bool {
   query   :=  "SELECT email FROM member WHERE email = ? AND password = ?"
   err     :=  con.QueryRow(query, email, password).Scan(&authEmail)
 
-	// checkErr(err)
+	defer con.Close()
+
+	if err == nil {
+		return true
+	} else {
+		return false
+	}
+}
+
+func CheckEmail(email string) bool {
+	var isAny string
+	con     :=  db.Connect()
+  query   :=  "SELECT email FROM member WHERE email = ?"
+  err     :=  con.QueryRow(query, email).Scan(&isAny)
+
 	defer con.Close()
 
 	if err == nil {

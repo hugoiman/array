@@ -10,6 +10,8 @@ import (
   "crypto/sha1"
   "github.com/gorilla/sessions"
   "os"
+  // "gopkg.in/gomail.v2"
+  setRandom "github.com/sethvargo/go-password/password"
   // "reflect"
 )
 
@@ -74,6 +76,37 @@ func Login(c echo.Context) error{
     return c.String(http.StatusOK, message)
 	}
 
+}
+
+// const CONFIG_SMTP_HOST = "smtp.gmail.com"
+// const CONFIG_SMTP_PORT = 587
+// const CONFIG_EMAIL = "nanonymoux@gmail.com"
+// const CONFIG_PASSWORD = "kudaponi10080"
+
+func ResetPassword(c echo.Context) error {
+  email :=  c.FormValue("email")
+  isAny :=  auth.CheckEmail(email)
+
+  if isAny == true {
+    random_password, _  :=  setRandom.Generate(12, 8, 0, true, true)
+
+    // mailer := gomail.NewMessage()
+    // mailer.SetHeader("From", CONFIG_EMAIL)
+    // mailer.SetHeader("To", "ogeno17@gmail.com")
+    // mailer.SetHeader("Subject", "[Array] Password Reset")
+    // mailer.SetBody("text/html", "Hello, <b>you</b>, your password is wkwkwk")
+    //
+    // dialer := gomail.NewDialer(CONFIG_SMTP_HOST, CONFIG_SMTP_PORT, CONFIG_EMAIL, CONFIG_PASSWORD)
+    //
+    // err := dialer.DialAndSend(mailer)
+    // checkErr(err)
+
+    fmt.Println(random_password)
+
+    return c.String(http.StatusOK, "true")
+  } else {
+    return c.String(http.StatusOK, "false")
+  }
 }
 
 func SetSession(c echo.Context, data auth.SessionMember) {

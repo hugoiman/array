@@ -60,21 +60,19 @@ func CheckEmail(c echo.Context) error {
 
 func UpdateBiodata(c echo.Context) error {
   decoder := json.NewDecoder(c.Request().Body)
-  biodata := struct {
-    Id_admin              int            `json:"id_admin"`
-    Nama                  string         `json:"nama"`
-    Email                 string         `json:"email"`
-    Password              string         `json:"password"`
-    Nik                   string         `json:"nik"`
-    No_hp                 string         `json:"no_hp"`
-    Alamat                string         `json:"alamat"`
-  }{}
+  biodata := admin.Biodata{}
 
   err := decoder.Decode(&biodata);
   checkErr(err)
-  fmt.Println(biodata)
+  
+  // nama := biodata.Nama
+  // fmt.Printf("%+v\n",biodata)
+  //
+  // biodata.Slug = nama
 
-  admin.UpdateBiodata(biodata.Id_admin, biodata.Nama)
+  fmt.Printf("%+v\n",biodata)
+
+  // admin.UpdateBiodata(biodata.Id_admin, biodata.Nama)
 
   message := "true"
   return c.String(http.StatusOK, message)

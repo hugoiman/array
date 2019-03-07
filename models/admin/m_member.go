@@ -1,7 +1,6 @@
 package admin
 
 import (
-  // "fmt"
 	"array/db"
 )
 
@@ -33,4 +32,43 @@ func GetMembers() Member {
   defer con.Close()
 
   return member
+}
+
+// func CreateMember(data struct) {
+// 	con     :=  db.Connect()
+// 	_, err 	:=  con.Exec("INSERT INTO ... VALUES ?", data)
+//
+// 	checkErr(err)
+// 	defer con.Close()
+// }
+
+// func UpdateMember(id_member int, data struct) {
+// 	con     :=  db.Connect()
+// 	_, err 	:=  con.Exec("UPDATE member SET ... WHERE id_member = ?", id_member)
+//
+// 	checkErr(err)
+// 	defer con.Close()
+// }
+
+func DeleteMember(id_member int) {
+	con     :=  db.Connect()
+	_, err 	:=  con.Exec("Delete FROM member WHERE id_member = ?", id_member)
+
+	checkErr(err)
+	defer con.Close()
+}
+
+func CheckUniqueSlug(slug string) bool {
+	var result_slug string
+  con     :=  db.Connect()
+  query   :=  "SELECT slug FROM member WHERE slug = ?"
+  err     :=  con.QueryRow(query, slug).Scan(&result_slug)
+
+  defer con.Close()
+
+  if err == nil {
+    return false
+  } else {
+    return true
+  }
 }

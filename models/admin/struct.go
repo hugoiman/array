@@ -54,6 +54,16 @@ type DataAdmin struct {
   Slug                  string         `json:"slug"`
 }
 
+type Biodata struct {
+  Id_admin              int            `json:"id_admin"`
+  Nama                  string         `json:"nama"`
+  Email                 string         `json:"email"`
+  Password              string         `json:"password"`
+  Nik                   string         `json:"nik"`
+  No_hp                 string         `json:"no_hp"`
+  Alamat                string         `json:"alamat"`
+}
+
 type Informasi struct {
   Informasi             []DataInformasi     `json:"informasi"`
 }
