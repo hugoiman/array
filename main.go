@@ -193,6 +193,9 @@ func main() {
   // e.POST("/admin/update-member", admin.UpdateMember)        // blom
   e.DELETE("/admin/delete-member/:id_member", admin.DeleteMember)  // blom
 
+  e.POST("/admin/create-informasi", admin.CreateInformasi)
+  e.GET("/admin/delete-informasi/:id_informasi", admin.DeleteInformasi)
+
   e.GET("/members", func(c echo.Context) error {
     funcs := template.FuncMap{"counter": counter}
     e.Renderer = &Template{ templates: template.Must(template.New("views/admin/members.html").Funcs(funcs).ParseFiles(
@@ -224,6 +227,49 @@ func main() {
     admin.ShowRegistrationMember(c)
     return nil
   })
+
+  e.GET("/administration/:periode", func(c echo.Context) error{
+    funcs := template.FuncMap{"counter": counter}
+    e.Renderer = &Template{ templates: template.Must(template.New("views/admin/administration.html").Funcs(funcs).ParseFiles(
+      "views/admin/administration.html",
+      "views/admin/head.html", "views/admin/header.html", "views/admin/footer.html",
+      )),
+    }
+    admin.ShowAdministrasi(c)
+    return nil
+  })
+
+  e.GET("/information/status/:status", func(c echo.Context) error{
+    e.Renderer = &Template{ templates: template.Must(template.ParseFiles(
+      "views/admin/informations.html",
+      "views/admin/head.html", "views/admin/header.html", "views/admin/footer.html",
+      )),
+    }
+    admin.ShowAllInformasi(c)
+    return nil
+  })
+
+  e.GET("/information/:id_informasi", func(c echo.Context) error{
+    e.Renderer = &Template{ templates: template.Must(template.ParseFiles(
+      "views/admin/information.html",
+      "views/admin/head.html", "views/admin/header.html", "views/admin/footer.html",
+      )),
+    }
+    admin.ShowInformasi(c)
+    return nil
+  })
+
+  e.GET("/new-information", func(c echo.Context) error{
+    e.Renderer = &Template{ templates: template.Must(template.ParseFiles(
+      "views/admin/create_information.html",
+      "views/admin/head.html", "views/admin/header.html", "views/admin/footer.html",
+      )),
+    }
+    admin.ShowNewInformasi(c)
+    return nil
+  })
+
+  e.POST("/count-information", admin.CountInformasi)
 
   fmt.Println("server started at :9000")
   e.Logger.Fatal(e.Start(":9000"))

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {{template "_head" .}}
+
+  <!-- External -->
+  <link href="/static/ex/bootoast.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/static/ex/delete_modal.css">
+  <!-- bootstrap wysihtml5 - text editor -->
+  <link rel="stylesheet" href="/static/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+  {{template "_header" .}}
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      {{template "_title" .}}
+      <ol class="breadcrumb">
+        {{template "_breadcrumb" .}}
+      </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+      <!-- Small boxes (Stat box) -->
+      <div class="row">
+        {{template "_navinfo" .}}
+        <!-- /.col -->
+        <div class="col-md-9">
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Buat Informasi</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <div class="form-group">
+                <input id="judul" class="form-control" placeholder="Subject:" required>
+              </div>
+              <div class="form-group">
+                <textarea id="compose-textarea" class="form-control" style="height: 300px">
+
+                </textarea>
+              </div>
+              <div class="form-group">
+                <div class="btn btn-default">
+                  <!-- <i class="fa fa-paperclip"></i> Attachment -->
+                  <input type="file" id="files" name="file">
+                </div>
+                <button type="button" id="reset" class="btn btn-default"><i class="fa fa-times"></i></button>
+                <p class="help-block">Max. 2MB</p>
+              </div>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+              <div class="pull-right">
+                <button type="button" class="btn btn-default"><i class="fa fa-pencil"></i> Draft</button>
+                <button type="submit" id="submit" class="btn btn-primary"><i class="fa fa-envelope-o"></i> Kirim</button>
+              </div>
+              <button type="reset" class="btn btn-default"><i class="fa fa-times"></i> Batal</button>
+            </div>
+            <!-- /.box-footer -->
+          </div>
+          <!-- /. box -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  {{template "_footer" .}}
+
+  <!-- External -->
+  <script src="/static/ex/bootoast.min.js"></script>
+  <!-- Bootstrap WYSIHTML5 -->
+  <script src="/static/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+
+  <!-- Page Script -->
+  <script>
+    $(function () {
+      //Add text editor
+      $("#compose-textarea").wysihtml5();
+
+      $("#reset").click(function(){
+        $("#files").val("");
+      });
+
+      $("#submit").on("click", function(e){
+    		e.preventDefault();
+        var judul = $("#judul").val();
+        var keterangan =  $("#compose-textarea").val();
+
+        // var informasi =  JSON.stringify({
+        //   judul     :  $("#judul").val(),
+        //   keterangan :  $("#compose-textarea").val()
+        // });
+
+        $.ajax({
+          url:"/admin/create-informasi",
+          type : 'POST',
+          data : {'judul':judul, 'keterangan':keterangan},
+          success:function(response){
+            if (response == "true") {
+              bootoast.toast({
+                message: "Informasi telah di kirim.",
+                type: 'success'
+              });
+              window.location.href = "/information/status/aktif";
+            } else {
+              bootoast.toast({
+                message: "Informasi gagal di kirim.",
+                type: 'warning'
+              });
+            }
+          },
+          error:function(error){
+            $('#succes').hide();
+            $('#error').show();
+          }
+        });
+      });
+    });
+  </script>
+  </body>
+  </html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {{template "_head" .}}
+
+  <!-- External -->
+  <link href="/static/ex/bootoast.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/static/ex/delete_modal.css">
+  <!-- bootstrap wysihtml5 - text editor -->
+  <link rel="stylesheet" href="/static/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+  {{template "_header" .}}
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      {{template "_title" .}}
+      <ol class="breadcrumb">
+        {{template "_breadcrumb" .}}
+      </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+      <!-- Small boxes (Stat box) -->
+      <div class="row">
+        {{template "_navinfo" .}}
+        <!-- /.col -->
+        <div class="col-md-9">
+          <div class="box box-primary">
+            <div class="box-body">
+                <!-- Informasi -->
+                {{range .Informasi.Informasi}}
+                <div class="post">
+                  <div class="user-block">
+                    <img class="img-circle img-bordered-sm" src="/static/images/admin/admin.png" alt="User Image">
+
+                    <div class="pull-right">
+                      <a href="/information/{{.Id_informasi}}"><button type="button" class="btn btn-default btn-sm"><i class="fa fa-edit"></i></button></a>
+                      <button type="button" class="btn btn-default btn-sm" role="dialog" aria-hidden="true" data-toggle="modal" data-target="#delete" data-href="/admin/delete-informasi/{{.Id_informasi}}"><i class="fa fa-trash-o"></i></button>
+                      <!-- /.btn-group -->
+                    </div>
+                      <span class="username">
+                        <a href="#">{{.Judul}}</a>
+                      </span>
+                    <span class="description"><i class="fa fa-clock-o"></i> {{.Waktu}} ({{.Status}})</span>
+                  </div>
+                  <!-- /.user-block -->
+                  <div class="mailbox-read-message">
+                    {{.Keterangan}}
+                  </div>
+                </div>
+                {{end}}
+                <!-- /.post -->
+              <!-- /.tab-pane -->
+            </div>
+            <!-- /.tab-content -->
+          </div>
+          <!-- /.nav-tabs-custom -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  <!-- Modal HTML -->
+  <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <!-- <div id="confirm_delete" class="modal fade"> -->
+    <div class="modal-dialog modal-confirm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="icon-box">
+            <i class="fa fa-close"></i>
+          </div>
+          <h4 class="modal-title">Apakah anda yakin?</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p>Apakah anda ingin menghapus karyawan ini ?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-info" data-dismiss="modal">Batal</button>
+          <a class="btn-ok"><button type="button" class="btn btn-danger btn-ok">Ya</button></a>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- END -->
+
+  {{template "_footer" .}}
+
+  <!-- External -->
+  <script src="/static/ex/bootoast.min.js"></script>
+  <!-- Bootstrap WYSIHTML5 -->
+  <script src="/static/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+
+  <!-- Page Script -->
+  <script>
+    $(function () {
+      //Add text editor
+      $("#compose-textarea").wysihtml5();
+
+      $("#reset").click(function(){
+        $("#files").val("");
+      });
+
+      $(document).ready(function() {
+        $('#delete').on('show.bs.modal', function(e) {
+            $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+        });
+      });
+    });
+  </script>
+  </body>
+  </html>
