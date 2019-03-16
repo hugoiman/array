@@ -48,3 +48,12 @@ func UpdateBiodata(id_admin int, nama string) {
   checkErr(err)
   defer con.Close()
 }
+
+func UpdateFoto(id_admin, new_foto string) {
+  con     :=  db.Connect()
+  query   :=  "UPDATE admin SET foto = ? WHERE id_admin = ?"
+  _, err  :=  con.Exec(query, new_foto, id_admin)
+
+  checkErr(err)
+  defer con.Close()
+}

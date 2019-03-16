@@ -187,7 +187,7 @@ func main() {
   e.POST("/admin/check-email", admin.CheckEmail)
   e.POST("/admin/update-biodata", admin.UpdateBiodata)
   e.POST("/admin/update-password", admin.UpdatePassword)
-  // e.POST("/admin/update-foto", admin.UpdateFoto)            // blom
+  e.POST("/admin/update-foto", admin.UpdateFoto)            // blom
   //
   e.POST("/admin/create-member", admin.CreateMember)        // blom
   // e.POST("/admin/update-member", admin.UpdateMember)        // blom

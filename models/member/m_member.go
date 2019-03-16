@@ -18,6 +18,9 @@ func GetMember(slug string) DataMember {
     &result.Lokasi.Id_lokasi, &result.Lokasi.Cabang, &result.Lokasi.Alamat,
   )
 
+  result.CustTgl_lahir   = result.Tgl_lahir.Format("02 January 2006")
+  result.CustTgl_gabung  = result.Tgl_gabung.Format("02 January 2006")
+
   checkErr(err)
   defer con.Close()
 

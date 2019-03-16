@@ -25,6 +25,8 @@ func GetMembers() Member {
       &data.No_stnk, &data.Perusahaan, &data.Jabatan,
       &data.Lokasi.Id_lokasi, &data.Lokasi.Cabang, &data.Lokasi.Alamat,
     )
+    data.CustTgl_lahir   = data.Tgl_lahir.Format("02 January 2006")
+    data.CustTgl_gabung  = data.Tgl_gabung.Format("02 January 2006")
 
     checkErr(err)
     member.Member = append(member.Member, data)

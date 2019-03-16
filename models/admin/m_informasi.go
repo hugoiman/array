@@ -20,7 +20,7 @@ func GetAllInformasi(status string) Informasi {
 
   for rows.Next() {
     err := rows.Scan(&data.Id_informasi, &data.Judul, &data.Keterangan, &data.Foto, &data.Waktu, &data.Status)
-    data.CustomTime = data.Waktu.Format("02 Jan 2006")
+    data.CustWaktu = data.Waktu.Format("02 Jan 2006")
     checkErr(err)
     informasi.Informasi = append(informasi.Informasi, data)
   }

@@ -38,6 +38,8 @@ type DataMember struct {
   Perusahaan            string         `json:"perusahaan"`
   Jabatan               string         `json:"jabatan"`
 
+  CustTgl_lahir         string
+  CustTgl_gabung        string
   Lokasi                DataLokasi     `json:"lokasi"`
 }
 
@@ -52,6 +54,8 @@ type DataAdmin struct {
   Foto                  string         `json:"foto"`
   Tgl_lahir             time.Time      `json:"tgl_lahir"`
   Slug                  string         `json:"slug"`
+
+  CustTgl_lahir         string
 }
 
 type Biodata struct {
@@ -74,7 +78,8 @@ type DataInformasi struct {
   Foto                  string         `json:"foto"`
   Waktu                 time.Time      `json:"waktu"`
   Status                string         `json:"status"`
-  CustomTime            string
+
+  CustWaktu             string
 }
 
 type DataLokasi struct {
@@ -99,4 +104,6 @@ type DataAdministrasi struct {
   Status                string      `json:"status"`
 
   Member                DataMember  `json:"member"`
+  CustCheck_in          string
+  CustCheck_out         string
 }

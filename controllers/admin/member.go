@@ -74,7 +74,7 @@ func CreateMember(c echo.Context) error {
   err       :=  decoder.Decode(&data)
   checkErr(err)
 
-  data.Password = setRandom.Generate(12, 8, 0, true, true)
+  data.Password, _ = setRandom.Generate(12, 8, 0, true, true)
   slug      :=  strings.Replace(data.Nama," ","-",-1)
   isUnique  :=  admin.CheckUniqueSlug(slug)
 

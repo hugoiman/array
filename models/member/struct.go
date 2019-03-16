@@ -39,6 +39,8 @@ type DataMember struct {
   Jabatan               string         `json:"jabatan"`
 
   Lokasi                DataLokasi     `json:"lokasi"`
+  CustTgl_lahir         string
+  CustTgl_gabung        string
 }
 
 type Informasi struct {

@@ -161,7 +161,7 @@
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="/static/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+          <img src="/static/images/admin/{{.Admin.Foto}}" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
           <p>{{.Admin.Nama}}</p>
@@ -179,6 +179,11 @@
         <li  class="nav" id="Administrasi">
           <a href="#" id="link_Administrasi">
             <i class="fa fa-list-alt"></i> <span>Administrasi</span>
+          </a>
+        </li>
+        <li class="nav" id="Informasi">
+          <a href="/information/status/aktif" id="link_Informasi">
+            <i class="fa fa-bullhorn"> </i></i> <span>Informasi</span>
           </a>
         </li>
         <li  class="nav" id="Profil">
@@ -211,6 +216,26 @@
       var nav = $("#nav").val();
       $('.nav active').removeClass('nav active');
       $('#'+nav).addClass('nav active');
+
+      var month = new Array();
+      month[0] = "January";
+      month[1] = "February";
+      month[2] = "March";
+      month[3] = "April";
+      month[4] = "May";
+      month[5] = "June";
+      month[6] = "July";
+      month[7] = "August";
+      month[8] = "September";
+      month[9] = "October";
+      month[10] = "November";
+      month[11] = "December";
+
+      var d = new Date();
+      var m = month[d.getMonth()];
+      var y = d.getFullYear();
+
+      $("#link_Administrasi").attr("href", "/administration/"+m+"-"+y);
     });
   </script>
 

@@ -14,6 +14,8 @@ func GetAdmin(slug string) DataAdmin {
     &result.Foto, &result.No_hp, &result.Alamat, &result.Tgl_lahir,  &result.Slug,
   )
 
+  result.CustTgl_lahir = result.Tgl_lahir.Format("02 January 2006")
+
   checkErr(err)
   defer con.Close()
 
