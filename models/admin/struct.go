@@ -74,6 +74,7 @@ type DataInformasi struct {
   Foto                  string         `json:"foto"`
   Waktu                 time.Time      `json:"waktu"`
   Status                string         `json:"status"`
+  CustomTime            string
 }
 
 type DataLokasi struct {
@@ -96,4 +97,6 @@ type DataAdministrasi struct {
   Total                 int         `json:"total"`
   Tagihan               int         `json:"tagihan"`
   Status                string      `json:"status"`
+
+  Member                DataMember  `json:"member"`
 }
