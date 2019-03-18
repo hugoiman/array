@@ -4,6 +4,7 @@ import (
   "fmt"
   "net/http"
   "array/models/member"
+  "array/structs"
   "github.com/labstack/echo"
   "crypto/sha1"
 )
@@ -14,7 +15,7 @@ func ShowProfil(c echo.Context) error {
   data_member    := member.GetMember(slug)
 
   data := struct {
-    Member    member.DataMember
+    Member    structs.DataMember
     Nav       string
   } {
     data_member,

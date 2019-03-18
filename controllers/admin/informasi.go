@@ -4,6 +4,7 @@ import (
   "net/http"
   "fmt"
   "array/models/admin"
+  "array/structs"
   "github.com/labstack/echo"
   // "encoding/json"
   "time"
@@ -17,8 +18,8 @@ func ShowAllInformasi(c echo.Context) error {
   informasi  := admin.GetAllInformasi(status)
 
   data := struct {
-    Informasi   admin.Informasi
-    Admin       admin.DataAdmin
+    Informasi   structs.Informasi
+    Admin       structs.DataAdmin
     Nav         string
     Nav_info    string
   } {
@@ -40,8 +41,8 @@ func ShowInformasi(c echo.Context) error {
   informasi  := admin.GetInformasi(id_informasi)
 
   data := struct {
-    Informasi   admin.DataInformasi
-    Admin       admin.DataAdmin
+    Informasi   structs.DataInformasi
+    Admin       structs.DataAdmin
     Nav         string
   } {
     informasi,
@@ -59,7 +60,7 @@ func ShowNewInformasi(c echo.Context) error {
   data_admin := admin.GetAdmin(slug)
 
   data := struct {
-    Admin       admin.DataAdmin
+    Admin       structs.DataAdmin
     Nav         string
     Nav_info    string
   } {

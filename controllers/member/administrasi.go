@@ -4,6 +4,7 @@ import (
   "fmt"
   "net/http"
   "array/models/member"
+  "array/structs"
   "github.com/labstack/echo"
 )
 
@@ -18,9 +19,9 @@ func ShowAdministrasi(c echo.Context) error {
   status, tagihan :=  member.GetTagihan(id_member)
 
   data := struct {
-    Administrasi   member.Administrasi
-    Member         member.DataMember
-    InfoTagihan    member.InfoTagihan
+    Administrasi   structs.Administrasi
+    Member         structs.DataMember
+    InfoTagihan    structs.InfoTagihan
     Status         string
     Tagihan        int
     Nav            string

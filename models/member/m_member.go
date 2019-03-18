@@ -2,12 +2,13 @@ package member
 
 import (
   "array/db"
+  "array/structs"
 )
 
-func GetMember(slug string) DataMember {
+func GetMember(slug string) structs.DataMember {
   con     :=  db.Connect()
   query   :=  "SELECT * FROM member JOIN lokasi_kos ON member.id_lokasi = lokasi_kos.id_lokasi WHERE slug = ?"
-  result  :=  DataMember{}
+  result  :=  structs.DataMember{}
   err     :=  con.QueryRow(query, slug).Scan(
     &result.Id_member, &result.Id_lokasi, &result.Email, &result.Nama, &result.Password, &result.Nik,  &result.No_hp,
     &result.Foto, &result.Tgl_lahir, &result.Pekerjaan, &result.Alamat_asal, &result.No_kamar, &result.Tgl_gabung,

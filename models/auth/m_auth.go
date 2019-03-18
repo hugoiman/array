@@ -3,6 +3,7 @@ package auth
 import (
 	// "fmt"
 	"array/db"
+	"array/structs"
 )
 
 func checkErr(err error){
@@ -41,11 +42,11 @@ func CheckEmail(email string) bool {
 	}
 }
 
-func GetSession(email string) SessionMember {
+func GetSession(email string) structs.SessionMember {
   con     :=  db.Connect()
   query   :=  "SELECT id_member, nama, slug FROM member WHERE email = ?"
 
-  result  :=  SessionMember{}
+  result  :=  structs.SessionMember{}
   err     :=  con.QueryRow(query, email).Scan(&result.Id_member, &result.Nama, &result.Slug)
 
   checkErr(err)

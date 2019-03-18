@@ -1,8 +1,14 @@
-package member
+package structs
 
 import(
   "time"
 )
+
+type SessionMember struct {
+  Id_member   int       `json:"id_member"`
+  Nama        string    `json:"nama"`
+  Slug        string    `json:"slug"`
+}
 
 type Member struct {
   Member                []DataMember   `json:"member"`
@@ -38,50 +44,13 @@ type DataMember struct {
   Perusahaan            string         `json:"perusahaan"`
   Jabatan               string         `json:"jabatan"`
 
-  Lokasi                DataLokasi     `json:"lokasi"`
   CustTgl_lahir         string
   CustTgl_gabung        string
+  Lokasi                DataLokasi     `json:"lokasi"`
 }
-
-// type Informasi struct {
-//   Informasi             []DataInformasi     `json:"informasi"`
-// }
-// type DataInformasi struct {
-//   Id_informasi          int            `json:"id_informasi"`
-//   Judul                 string         `json:"judul"`
-//   Keterangan            string         `json:"keterangan"`
-//   Foto                  string         `json:"foto"`
-//   Waktu                 time.Time      `json:"waktu"`
-//   Status                string         `json:"status"`
-// }
 
 type DataLokasi struct {
   Id_lokasi             int            `json:"id_lokasi"`
   Cabang                string         `json:"cabang"`
   Alamat                string         `json:"alamat"`
-}
-
-type Administrasi struct {
-  Administrasi          []DataAdministrasi     `json:"administrasi"`
-}
-type DataAdministrasi struct {
-  Id_administrasi       int         `json:"id_administrasi"`
-  Id_member             int         `json:"id_member"`
-  Tipe_pembayaran       string      `json:"tipe_pembayaran"`
-  Check_in              time.Time   `json:"check_in"`
-  Check_out             time.Time   `json:"check_out"`
-  Tgl_pembayaran        time.Time   `json:"tgl_pembayaran"`
-  Jumlah_pembayaran     int         `json:"jumlah_pembayaran"`
-  Total                 int         `json:"total"`
-  Tagihan               int         `json:"tagihan"`
-  Status                string      `json:"status"`
-}
-
-type InfoTagihan struct {
-  InfoTagihan           []DataTagihan `json:"info_tagihan"`
-}
-type DataTagihan struct {
-  Check_in              time.Time   `json:"check_in"`
-  Check_out             time.Time   `json:"check_out"`
-  Tagihan               int         `json:"tagihan"`
 }

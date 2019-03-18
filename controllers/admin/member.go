@@ -5,6 +5,7 @@ import (
   "net/http"
   "array/models/admin"
   "array/models/member"
+  "array/structs"
   "github.com/labstack/echo"
   "strconv"
   "strings"
@@ -19,8 +20,8 @@ func ShowMembers(c echo.Context) error {
   data_members  :=  admin.GetMembers()
 
   data := struct {
-    Admin     admin.DataAdmin
-    Member    admin.Member
+    Admin     structs.DataAdmin
+    Member    structs.Member
     Nav       string
   } {
     data_admin,
@@ -40,8 +41,8 @@ func ShowProfilMember(c echo.Context) error {
   data_member   :=  member.GetMember(slug_member)
 
   data := struct {
-    Admin     admin.DataAdmin
-    Member    member.DataMember
+    Admin     structs.DataAdmin
+    Member    structs.DataMember
     Nav       string
   } {
     data_admin,
@@ -58,7 +59,7 @@ func ShowRegistrationMember(c echo.Context) error {
   data_admin    :=  admin.GetAdmin(slug)
 
   data := struct {
-    Admin     admin.DataAdmin
+    Admin     structs.DataAdmin
     Nav       string
   } {
     data_admin,
@@ -70,7 +71,7 @@ func ShowRegistrationMember(c echo.Context) error {
 
 func CreateMember(c echo.Context) error {
   decoder   :=  json.NewDecoder(c.Request().Body)
-  data      :=  admin.DataMember{}
+  data      :=  structs.DataMember{}
   err       :=  decoder.Decode(&data)
   checkErr(err)
 
@@ -92,7 +93,7 @@ func CreateMember(c echo.Context) error {
 
 func UpdateMember(c echo.Context) error {
   decoder   :=  json.NewDecoder(c.Request().Body)
-  data      :=  admin.DataMember{}
+  data      :=  structs.DataMember{}
   err       :=  decoder.Decode(&data)
   checkErr(err)
 

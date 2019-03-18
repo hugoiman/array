@@ -2,6 +2,7 @@ package auth
 
 import (
 	"array/db"
+	"array/structs"
 )
 
 func AuthAdmin(email, password string) bool {
@@ -19,11 +20,11 @@ func AuthAdmin(email, password string) bool {
 	}
 }
 
-func GetSessionAdmin(email string) SessionAdmin {
+func GetSessionAdmin(email string) structs.SessionAdmin {
   con     :=  db.Connect()
   query   :=  "SELECT id_admin, nama, slug FROM admin WHERE email = ?"
 
-  result  :=  SessionAdmin{}
+  result  :=  structs.SessionAdmin{}
   err     :=  con.QueryRow(query, email).Scan(&result.Id_admin, &result.Nama, &result.Slug)
 
   checkErr(err)

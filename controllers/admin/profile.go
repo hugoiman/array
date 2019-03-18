@@ -4,9 +4,12 @@ import (
   "fmt"
   "net/http"
   "array/models/admin"
+  "array/structs"
   "github.com/labstack/echo"
   "crypto/sha1"
   "encoding/json"
+  "os"
+  "io"
 )
 
 func ShowProfil(c echo.Context) error {
@@ -15,7 +18,7 @@ func ShowProfil(c echo.Context) error {
   data_admin  := admin.GetAdmin(slug)
 
   data := struct {
-    Admin    admin.DataAdmin
+    Admin     structs.DataAdmin
     Nav       string
   } {
     data_admin,
@@ -60,11 +63,11 @@ func CheckEmail(c echo.Context) error {
 
 func UpdateBiodata(c echo.Context) error {
   decoder := json.NewDecoder(c.Request().Body)
-  biodata := admin.Biodata{}
+  biodata := structs.Biodata{}
 
   err := decoder.Decode(&biodata);
   checkErr(err)
-  
+
   // nama := biodata.Nama
   // fmt.Printf("%+v\n",biodata)
   //
@@ -76,4 +79,29 @@ func UpdateBiodata(c echo.Context) error {
 
   message := "true"
   return c.String(http.StatusOK, message)
+}
+
+func UpdateFoto(c echo.Context) error {
+  session, _ := store.Get(c.Request(), "session")
+  id_admin   := fmt.Sprintf("%v", session.Values["id_admin"])
+  slug       := fmt.Sprintf("%v", session.Values["slug"])
+  old_foto   := admin.GetAdmin(slug)
+  path       := "assets/images/admin/"+old_foto.Foto
+
+  fmt.Println(path)
+	file, handler, _ := c.Request().FormFile("file")
+  defer file.Close()
+
+  file_name := id_admin+"_"+handler.Filename
+
+  dst, _ := os.OpenFile("assets/images/admin/"+file_name, os.O_WRONLY|os.O_CREATE, 0666)
+  defer dst.Close()
+
+  io.Copy(dst, file)
+
+  os.Remove(path)
+
+  admin.UpdateFoto(id_admin, file_name)
+
+  return c.Redirect(http.StatusMovedPermanently, "/profile/" + slug)
 }

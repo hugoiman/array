@@ -2,9 +2,10 @@ package admin
 
 import (
   "array/db"
+  "array/structs"
 )
 
-func GetAllInformasi(status string) Informasi {
+func GetAllInformasi(status string) structs.Informasi {
   con     :=  db.Connect()
   if status == "semua" {
     status = "%tif"
@@ -15,8 +16,8 @@ func GetAllInformasi(status string) Informasi {
   checkErr(err)
   defer rows.Close()
 
-  informasi := Informasi{}
-  data := DataInformasi{}
+  informasi := structs.Informasi{}
+  data := structs.DataInformasi{}
 
   for rows.Next() {
     err := rows.Scan(&data.Id_informasi, &data.Judul, &data.Keterangan, &data.Foto, &data.Waktu, &data.Status)
@@ -29,11 +30,11 @@ func GetAllInformasi(status string) Informasi {
   return informasi
 }
 
-func GetInformasi(id_informasi string) DataInformasi {
+func GetInformasi(id_informasi string) structs.DataInformasi {
   con     :=  db.Connect()
   query   :=  "SELECT * FROM informasi WHERE id_informasi = ?"
 
-  data    :=  DataInformasi{}
+  data    :=  structs.DataInformasi{}
   err     :=  con.QueryRow(query, id_informasi).Scan(&data.Id_informasi, &data.Judul, &data.Keterangan, &data.Foto, &data.Waktu, &data.Status)
 
   checkErr(err)

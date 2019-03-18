@@ -3,6 +3,7 @@ package member
 import (
   "net/http"
   "array/models/member"
+  "array/structs"
   "github.com/labstack/echo"
   "github.com/gorilla/sessions"
   "os"
@@ -18,8 +19,8 @@ func ShowInfo(c echo.Context) error{
   informasi   := member.GetInfo()
   // fmt.Println(reflect.TypeOf(id_member))
   data := struct {
-    Informasi member.Informasi
-    Member    member.DataMember
+    Informasi structs.Informasi
+    Member    structs.DataMember
     Nav       string
   } {
     informasi,

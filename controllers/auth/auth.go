@@ -6,6 +6,7 @@ import (
 	"array/models/auth"
   "array/models/member"
   "array/models/admin"
+  "array/structs"
   "github.com/labstack/echo"
   "crypto/sha1"
   "github.com/gorilla/sessions"
@@ -60,7 +61,7 @@ func Login(c echo.Context) error{
   if authentic == true {
     result       := auth.GetSession(email)
     SetSession(c, result)
-    dataSession := auth.SessionMember{}
+    dataSession := structs.SessionMember{}
 
     dataSession.Id_member = result.Id_member
     dataSession.Nama = result.Nama
@@ -109,7 +110,7 @@ func ResetPassword(c echo.Context) error {
   }
 }
 
-func SetSession(c echo.Context, data auth.SessionMember) {
+func SetSession(c echo.Context, data structs.SessionMember) {
   session, _ := store.Get(c.Request(), "session")
   session.Values["id_member"] = data.Id_member
   session.Values["nama"] = data.Nama
@@ -139,7 +140,7 @@ func Err404(c echo.Context) error {
   if session.Values["id_member"] != nil {
     data_member := member.GetMember(slug)
     data := struct {
-      Member         member.DataMember
+      Member         structs.DataMember
       Nav            string
     } {
       data_member,
@@ -151,7 +152,7 @@ func Err404(c echo.Context) error {
   } else if session.Values["id_admin"] != nil {
     data_admin := admin.GetAdmin(slug)
     data := struct {
-      Admin         admin.DataAdmin
+      Admin         structs.DataAdmin
       Nav           string
     } {
       data_admin,

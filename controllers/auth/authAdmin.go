@@ -4,6 +4,7 @@ import (
   "net/http"
   "fmt"
 	"array/models/auth"
+  "array/structs"
   "github.com/labstack/echo"
   "crypto/sha1"
   // "github.com/gorilla/sessions"
@@ -44,7 +45,7 @@ func LoginAdmin(c echo.Context) error{
   if authentic == true {
     result       := auth.GetSessionAdmin(email)
     SetSessionAdmin(c, result)
-    dataSession := auth.SessionAdmin{}
+    dataSession := structs.SessionAdmin{}
 
     dataSession.Id_admin = result.Id_admin
     dataSession.Nama = result.Nama
@@ -57,7 +58,7 @@ func LoginAdmin(c echo.Context) error{
 	}
 }
 
-func SetSessionAdmin(c echo.Context, data auth.SessionAdmin) {
+func SetSessionAdmin(c echo.Context, data structs.SessionAdmin) {
   session, _ := store.Get(c.Request(), "session")
   session.Values["id_admin"] = data.Id_admin
   session.Values["nama"] = data.Nama

@@ -3,6 +3,7 @@ package admin
 import (
   "net/http"
   "array/models/admin"
+  "array/structs"
   "github.com/labstack/echo"
   "github.com/gorilla/sessions"
   "os"
@@ -16,7 +17,7 @@ func ShowDashboard(c echo.Context) error {
   data_admin  := admin.GetAdmin(slug)
 
   data := struct {
-    Admin     admin.DataAdmin
+    Admin     structs.DataAdmin
     Nav       string
   } {
     data_admin,

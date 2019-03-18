@@ -2,9 +2,10 @@ package admin
 
 import (
 	"array/db"
+	"array/structs"
 )
 
-func GetMembers() Member {
+func GetMembers() structs.Member {
   con     :=  db.Connect()
   query   :=  "SELECT * FROM member JOIN lokasi_kos ON member.id_lokasi = lokasi_kos.id_lokasi"
   rows, err := con.Query(query)
@@ -12,8 +13,8 @@ func GetMembers() Member {
   checkErr(err)
   defer rows.Close()
 
-  member := Member{}
-  data := DataMember{}
+  member := structs.Member{}
+  data := structs.DataMember{}
 
   for rows.Next() {
     err := rows.Scan(

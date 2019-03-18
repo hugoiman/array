@@ -2,17 +2,18 @@ package member
 
 import (
   "array/db"
+  "array/structs"
 )
 
-func GetAdministrasi(id_member string) Administrasi {
+func GetAdministrasi(id_member string) structs.Administrasi {
   con         :=  db.Connect()
   query       :=  "SELECT * FROM administrasi where id_member = ?"
   rows, err   :=  con.Query(query, id_member)
 
   checkErr(err)
 
-  data    :=  DataAdministrasi{}
-  info    :=  Administrasi{}
+  data    :=  structs.DataAdministrasi{}
+  info    :=  structs.Administrasi{}
 
   for rows.Next() {
     err   :=  rows.Scan(
@@ -31,15 +32,15 @@ func GetAdministrasi(id_member string) Administrasi {
   return info
 }
 
-func GetDetailTagihan(id_member string) InfoTagihan {
+func GetDetailTagihan(id_member string) structs.InfoTagihan {
   con       :=  db.Connect()
   query     :=  "SELECT check_in, check_out, tagihan FROM administrasi WHERE id_member = ? AND status = 'Belum Lunas'"
   rows, err :=  con.Query(query, id_member)
 
   checkErr(err)
 
-  data    :=  DataTagihan{}
-  info    :=  InfoTagihan{}
+  data    :=  structs.DataTagihan{}
+  info    :=  structs.InfoTagihan{}
 
   for rows.Next() {
     err   :=  rows.Scan(&data.Check_in, &data.Check_out, &data.Tagihan,)
