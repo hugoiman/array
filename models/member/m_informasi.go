@@ -5,7 +5,7 @@ import (
   "array/structs"
 )
 
-func GetInfo() structs.Informasi{
+func GetAllInformasi() structs.Informasi{
   con     :=  db.Connect()
   query   :=  "select id_informasi, judul, keterangan, foto, waktu, status from informasi"
   rows, err := con.Query(query)
@@ -18,6 +18,7 @@ func GetInfo() structs.Informasi{
 
   for rows.Next() {
     err := rows.Scan(&data.Id_informasi, &data.Judul, &data.Keterangan, &data.Foto, &data.Waktu, &data.Status)
+    data.CustWaktu = data.Waktu.Format("02 Jan 2006")
     checkErr(err)
     info.Informasi = append(info.Informasi, data)
   }

@@ -23,6 +23,11 @@ func GetAdministrasi(id_member string) structs.Administrasi {
       &data.Jumlah_pembayaran, &data.Total,
       &data.Tagihan, &data.Status,
     )
+
+    data.CustCheck_in   = data.Check_in.Format("02-Jan-2006")
+    data.CustCheck_out  = data.Check_out.Format("02-Jan-2006")
+    data.CustTgl_pembayaran  = data.Tgl_pembayaran.Format("02-Jan-2006")
+
     checkErr(err)
     info.Administrasi = append(info.Administrasi, data)
   }
@@ -44,6 +49,10 @@ func GetDetailTagihan(id_member string) structs.InfoTagihan {
 
   for rows.Next() {
     err   :=  rows.Scan(&data.Check_in, &data.Check_out, &data.Tagihan,)
+
+    data.CustCheck_in   = data.Check_in.Format("02-Jan-2006")
+    data.CustCheck_out  = data.Check_out.Format("02-Jan-2006")
+
     checkErr(err)
     info.InfoTagihan = append(info.InfoTagihan, data)
   }

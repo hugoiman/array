@@ -123,7 +123,7 @@ func main() {
       "views/member/head.html", "views/member/header.html","views/member/footer.html",
       )),
     }
-    member.ShowInfo(c)
+    member.ShowAllInformasi(c)
     return nil
   })
 

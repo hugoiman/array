@@ -22,6 +22,7 @@ type DataAdministrasi struct {
   Member                DataMember  `json:"member"`
   CustCheck_in          string
   CustCheck_out         string
+  CustTgl_pembayaran    string
 }
 
 type InfoTagihan struct {
@@ -31,4 +32,7 @@ type DataTagihan struct {
   Check_in              time.Time   `json:"check_in"`
   Check_out             time.Time   `json:"check_out"`
   Tagihan               int         `json:"tagihan"`
+
+  CustCheck_in          string
+  CustCheck_out         string
 }

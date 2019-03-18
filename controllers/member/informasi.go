@@ -12,11 +12,11 @@ import (
 
 var store = sessions.NewCookieStore([]byte(os.Getenv("SESSION_KEY")))
 
-func ShowInfo(c echo.Context) error{
+func ShowAllInformasi(c echo.Context) error{
   slug := c.Param("slug")
   checkSlug(c, slug)
   data_member := member.GetMember(slug)
-  informasi   := member.GetInfo()
+  informasi   := member.GetAllInformasi()
   // fmt.Println(reflect.TypeOf(id_member))
   data := struct {
     Informasi structs.Informasi

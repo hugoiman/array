@@ -95,7 +95,7 @@
                                       <tbody>
                                       {{range .InfoTagihan.InfoTagihan}}
                                       <tr>
-                                        <td>{{.Check_in}} - {{.Check_out}}</td>
+                                        <td>{{.CustCheck_in}} s.d {{.CustCheck_out}}</td>
                                         <td>{{.Tagihan}}</td>
                                       </tr>
                                       {{end}}
@@ -163,8 +163,8 @@
                           {{range $index, $value := .Administrasi.Administrasi}}
                         <tr>
                           <td>{{counter $index 1}}</td>
-                          <td>{{.Check_in}} s.d {{.Check_out}}</td>
-                          <td>{{.Tgl_pembayaran}}</td>
+                          <td>{{.CustCheck_in}} s.d {{.CustCheck_out}}</td>
+                          <td>{{.CustTgl_pembayaran}}</td>
                           <td>Rp {{.Total}}</td>
                           <td>Rp {{.Tagihan}}</td>
                           <td>{{.Status}}</td>
