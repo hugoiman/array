@@ -7,6 +7,8 @@ import (
   "array/structs"
   "github.com/labstack/echo"
   "crypto/sha1"
+  "os"
+  "io"
 )
 
 func ShowProfil(c echo.Context) error {
@@ -46,7 +48,26 @@ func UpdatePassword(c echo.Context) error{
   }
 }
 
-// func UpdateFoto(c echo.Context) error {
-//   id_member   := c.FormValue("id_member")
-//   newPassword := c.FormValue("password_baru")
-// }
+func UpdateFoto(c echo.Context) error {
+  session, _ := store.Get(c.Request(), "session")
+  id_member  := fmt.Sprintf("%v", session.Values["id_member"])
+  slug       := fmt.Sprintf("%v", session.Values["slug"])
+  old_foto   := member.GetMember(slug)
+  path       := "assets/images/user/"+old_foto.Foto
+
+	file, handler, _ := c.Request().FormFile("file")
+  defer file.Close()
+
+  file_name := id_member+"_"+handler.Filename
+
+  dst, _ := os.OpenFile("assets/images/user/"+file_name, os.O_WRONLY|os.O_CREATE, 0666)
+  defer dst.Close()
+
+  io.Copy(dst, file)
+
+  os.Remove(path)
+
+  member.UpdateFoto(id_member, file_name)
+
+  return c.Redirect(http.StatusMovedPermanently, "/profil/" + slug)
+}

@@ -149,7 +149,7 @@ func main() {
   })
 
   e.POST("/update-password", member.UpdatePassword)
-  e.POST("/update-foto", member.UpdatePassword)       // blom
+  e.POST("/update-foto", member.UpdateFoto)
 
   //  Admin
   e.GET("/admin", func(c echo.Context) error {

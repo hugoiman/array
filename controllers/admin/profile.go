@@ -88,7 +88,6 @@ func UpdateFoto(c echo.Context) error {
   old_foto   := admin.GetAdmin(slug)
   path       := "assets/images/admin/"+old_foto.Foto
 
-  fmt.Println(path)
 	file, handler, _ := c.Request().FormFile("file")
   defer file.Close()
 

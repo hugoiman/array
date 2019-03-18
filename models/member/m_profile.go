@@ -22,6 +22,14 @@ func UpdatePassword(id_member, password string) {
   _, err  :=  con.Exec(query, password, id_member)
 
   checkErr(err)
+  defer con.Close()
+}
 
+func UpdateFoto(id_member, new_foto string) {
+  con     :=  db.Connect()
+  query   :=  "UPDATE member SET foto = ? WHERE id_member = ?"
+  _, err  :=  con.Exec(query, new_foto, id_member)
+
+  checkErr(err)
   defer con.Close()
 }

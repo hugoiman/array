@@ -96,7 +96,9 @@
                                       {{range .InfoTagihan.InfoTagihan}}
                                       <tr>
                                         <td>{{.CustCheck_in}} s.d {{.CustCheck_out}}</td>
-                                        <td>{{.Tagihan}}</td>
+                                        <td>{{if eq .Tagihan 0}} -
+                                            {{else}} Rp {{.Tagihan}} {{end}}
+                                        </td>
                                       </tr>
                                       {{end}}
                                       <tr>
@@ -105,7 +107,9 @@
                                       </tr>
                                       <tr>
                                         <td><b>Total<b></td>
-                                        <td><b>Rp {{.Tagihan}}<b></td>
+                                        <td>{{if eq .Tagihan 0}} -
+                                            {{else}} Rp <b>{{.Tagihan}} {{end}}<b>
+                                        </td>
                                       </tr>
                                     </tbody>
                                   </table>
