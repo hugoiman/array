@@ -215,7 +215,11 @@
                   <div class="form-group">
                     <label for="inputName" class="col-sm-2 control-label">Bergabung</label>
                     <div class="col-sm-10">
+                      {{if eq .Member.CustTgl_gabung "01 January 0001"}}
+                      <input type="text" class="form-control" value="-" readonly>
+                      {{else}}
                       <input type="text" class="form-control" value="{{.Member.CustTgl_gabung}}" readonly>
+                      {{end}}
                     </div>
                   </div>
                   {{if ne .Member.No_stnk ""}}

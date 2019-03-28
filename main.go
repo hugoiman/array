@@ -185,6 +185,7 @@ func main() {
   })
 
   e.POST("/admin/check-email", admin.CheckEmail)
+  e.POST("/admin/check-email-member", admin.CheckEmailMember)
   e.POST("/admin/update-biodata", admin.UpdateBiodata)
   e.POST("/admin/update-password", admin.UpdatePassword)
   e.POST("/admin/update-foto", admin.UpdateFoto)            // blom
@@ -227,6 +228,9 @@ func main() {
     admin.ShowRegistrationMember(c)
     return nil
   })
+
+  // e.POST("/getKamar",admin.GetKamar)
+  e.GET("/getKamarJson",admin.GetKamarJson)
 
   e.GET("/administration/:periode", func(c echo.Context) error{
     funcs := template.FuncMap{"counter": counter}

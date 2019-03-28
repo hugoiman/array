@@ -336,7 +336,7 @@
 
     $("#file").bind('change', function() {
       var fSize = $('#file')[0].files[0].size/1024/1024;
-      
+
       if (fSize > 2) {
         $('#file').val("");
         bootoast.toast({

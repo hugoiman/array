@@ -44,13 +44,7 @@ type DataMember struct {
   Perusahaan            string         `json:"perusahaan"`
   Jabatan               string         `json:"jabatan"`
 
-  CustTgl_lahir         string
+  CustTgl_lahir         string         `json:"custTgl_lahir"`
   CustTgl_gabung        string
   Lokasi                DataLokasi     `json:"lokasi"`
-}
-
-type DataLokasi struct {
-  Id_lokasi             int            `json:"id_lokasi"`
-  Cabang                string         `json:"cabang"`
-  Alamat                string         `json:"alamat"`
 }
