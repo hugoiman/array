@@ -195,7 +195,7 @@ func main() {
   e.DELETE("/admin/delete-member/:id_member", admin.DeleteMember)  // blom
 
   e.POST("/admin/create-informasi", admin.CreateInformasi)
-  e.GET("/admin/delete-informasi/:id_informasi", admin.DeleteInformasi)
+  e.DELETE("/admin/delete-informasi/:id_informasi", admin.DeleteInformasi)
 
   e.POST("/admin/create-lokasi", admin.CreateLokasi)
   e.PUT("/admin/update-lokasi", admin.UpdateLokasi)

@@ -97,7 +97,7 @@ func CreateInformasi(c echo.Context) error {
 func DeleteInformasi(c echo.Context) error {
   id_informasi  :=  c.Param("id_informasi")
   admin.DeleteInformasi(id_informasi)
-  return c.Redirect(http.StatusMovedPermanently, "/information/status/semua")
+  return nil
 }
 
 func CountInformasi(c echo.Context) error {

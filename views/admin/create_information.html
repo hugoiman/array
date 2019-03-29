@@ -4,8 +4,7 @@
   {{template "_head" .}}
 
   <!-- External -->
-  <link href="/static/ex/bootoast.css" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" href="/static/ex/delete_modal.css">
+  <link rel="stylesheet" href="/static/ex/swal.css">
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="/static/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
 </head>
@@ -76,7 +75,7 @@
   {{template "_footer" .}}
 
   <!-- External -->
-  <script src="/static/ex/bootoast.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
   <!-- Bootstrap WYSIHTML5 -->
   <script src="/static/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
 
@@ -95,26 +94,27 @@
         var judul = $("#judul").val();
         var keterangan =  $("#compose-textarea").val();
 
-        // var informasi =  JSON.stringify({
-        //   judul     :  $("#judul").val(),
-        //   keterangan :  $("#compose-textarea").val()
-        // });
-
         $.ajax({
           url:"/admin/create-informasi",
           type : 'POST',
           data : {'judul':judul, 'keterangan':keterangan},
           success:function(response){
             if (response == "true") {
-              bootoast.toast({
-                message: "Informasi telah di kirim.",
-                type: 'success'
+              Swal.fire({
+                title: "Informasi Terkirim!",
+                type: "success",
+                customClass: 'swal-wide'
               });
-              window.location.href = "/information/status/aktif";
+              setTimeout(function () {
+                window.location.href = "/information/status/aktif";
+              }, 1500);
             } else {
-              bootoast.toast({
-                message: "Informasi gagal di kirim.",
-                type: 'warning'
+              Swal.fire({
+                title: "Oops!",
+                text: 'Informasi Gagal Terkirim!',
+                type: 'error',
+                customClass: 'swal-wide',
+                timer: '1500'
               });
             }
           },

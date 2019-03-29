@@ -4,7 +4,7 @@
   {{template "_head" .}}
 
   <!-- External -->
-  <link rel="stylesheet" href="/static/ex/delete_modal.css">
+  <link rel="stylesheet" href="/static/ex/swal.css">
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="/static/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
 </head>
@@ -39,8 +39,9 @@
 
                     <div class="pull-right">
                       <a href="/information/{{.Id_informasi}}"><button type="button" class="btn btn-default btn-sm"><i class="fa fa-edit"></i></button></a>
-                      <button type="button" class="btn btn-default btn-sm" role="dialog" aria-hidden="true" data-toggle="modal" data-target="#delete" data-href="/admin/delete-informasi/{{.Id_informasi}}"><i class="fa fa-trash-o"></i></button>
+                      <!-- <button type="button" class="btn btn-default btn-sm" role="dialog" aria-hidden="true" data-toggle="modal" data-target="#delete" data-href="/admin/delete-informasi/{{.Id_informasi}}"><i class="fa fa-trash-o"></i></button> -->
                       <!-- /.btn-group -->
+                      <a class="btn btn-default btn-sm" title="delete" onclick="delete_informasi({{.Id_informasi}})"><i class="fa fa-trash-o"></i></a>
                     </div>
                       <span class="username">
                         <a href="#">{{.Judul}}</a>
@@ -68,33 +69,10 @@
   </div>
   <!-- /.content-wrapper -->
 
-  <!-- Modal HTML -->
-  <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <!-- <div id="confirm_delete" class="modal fade"> -->
-    <div class="modal-dialog modal-confirm">
-      <div class="modal-content">
-        <div class="modal-header">
-          <div class="icon-box">
-            <i class="fa fa-close"></i>
-          </div>
-          <h4 class="modal-title">Apakah anda yakin?</h4>
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        </div>
-        <div class="modal-body">
-          <p>Apakah anda ingin menghapus karyawan ini ?</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-info" data-dismiss="modal">Batal</button>
-          <a class="btn-ok"><button type="button" class="btn btn-danger btn-ok">Ya</button></a>
-        </div>
-      </div>
-    </div>
-  </div>
-    <!-- END -->
-
   {{template "_footer" .}}
 
   <!-- External -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
   <!-- Bootstrap WYSIHTML5 -->
   <script src="/static/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
 
@@ -107,13 +85,46 @@
       $("#reset").click(function(){
         $("#files").val("");
       });
-
-      $(document).ready(function() {
-        $('#delete').on('show.bs.modal', function(e) {
-            $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
-        });
-      });
     });
+
+    function delete_informasi(id_informasi) {
+      Swal.fire({
+        title: 'Apakah anda yakin?',
+        text: "Apakah anda ingin menghapus informasi ini?",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes',
+        customClass: 'swal-wide'
+      }).then((result) => {
+        if (result.value) {
+          $.ajax({
+            type: "DELETE",
+            url: "/admin/delete-informasi/"+id_informasi,
+            success: function(response){
+              Swal.fire({
+                title: "Informasi Berhasil Dihapus!",
+                type: "success",
+                customClass: 'swal-wide'
+              });
+              setTimeout(function () {
+                location.reload();
+              }, 1500);
+            },
+            error: function (error) {
+              Swal.fire({
+                title: "Oops!",
+                text: 'error!',
+                type: 'error',
+                customClass: 'swal-wide',
+                timer: '1500'
+              });
+            }
+          })
+        }
+      })
+    }
   </script>
   </body>
   </html>
