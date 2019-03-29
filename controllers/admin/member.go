@@ -58,7 +58,7 @@ func ShowRegistrationMember(c echo.Context) error {
   session, _    :=  store.Get(c.Request(), "session")
   slug          :=  fmt.Sprintf("%v", session.Values["slug"])
   data_admin    :=  admin.GetAdmin(slug)
-  data_lokasi   :=  admin.GetLokasi()
+  data_lokasi   :=  admin.GetAllLokasi()
 
   data := struct {
     Admin     structs.DataAdmin
@@ -82,7 +82,7 @@ func CreateMember(c echo.Context) error {
 
   var password, _ = setRandom.Generate(12, 8, 0, true, true)
   fmt.Println(password)
-  
+
   var sha = sha1.New()
   sha.Write([]byte(password))
   var encrypted = sha.Sum(nil)

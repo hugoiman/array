@@ -197,6 +197,10 @@ func main() {
   e.POST("/admin/create-informasi", admin.CreateInformasi)
   e.GET("/admin/delete-informasi/:id_informasi", admin.DeleteInformasi)
 
+  e.POST("/admin/create-lokasi", admin.CreateLokasi)
+  e.PUT("/admin/update-lokasi", admin.UpdateLokasi)
+  e.DELETE("/admin/delete-lokasi/:id_lokasi", admin.DeleteLokasi)
+
   e.GET("/members", func(c echo.Context) error {
     funcs := template.FuncMap{"counter": counter}
     e.Renderer = &Template{ templates: template.Must(template.New("views/admin/members.html").Funcs(funcs).ParseFiles(
@@ -270,6 +274,17 @@ func main() {
       )),
     }
     admin.ShowNewInformasi(c)
+    return nil
+  })
+
+  e.GET("/locations", func(c echo.Context) error {
+    funcs := template.FuncMap{"counter": counter}
+    e.Renderer = &Template{ templates: template.Must(template.New("views/admin/locations.html").Funcs(funcs).ParseFiles(
+      "views/admin/locations.html",
+      "views/admin/head.html", "views/admin/header.html", "views/admin/footer.html",
+      )),
+    }
+    admin.ShowAllLokasi(c)
     return nil
   })
 
