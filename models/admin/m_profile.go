@@ -2,6 +2,7 @@ package admin
 
 import (
   "array/db"
+  "array/structs"
 )
 
 func GetPassword(id_admin string) string {
@@ -40,10 +41,10 @@ func CheckEmail(new_email string) bool {
   }
 }
 
-func UpdateBiodata(id_admin int, nama string) {
+func UpdateProfil(data structs.DataAdmin) {
   con     :=  db.Connect()
-  query   :=  "UPDATE admin SET nama = ? WHERE id_admin = ?"
-  _, err  :=  con.Exec(query, nama, id_admin)
+  query   :=  "UPDATE admin SET nama = ?, email = ?, no_hp = ?, nik = ?, tgl_lahir = ?, alamat = ? WHERE id_admin = ?"
+  _, err  :=  con.Exec(query, data.Nama, data.Email, data.No_hp, data.Nik, data.CustTgl_lahir, data.Alamat, data.Id_admin)
 
   checkErr(err)
   defer con.Close()

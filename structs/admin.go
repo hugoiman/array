@@ -22,7 +22,7 @@ type DataAdmin struct {
   Tgl_lahir             time.Time      `json:"tgl_lahir"`
   Slug                  string         `json:"slug"`
 
-  CustTgl_lahir         string
+  CustTgl_lahir         string          `json:custTgl_lahir`
 }
 
 type Biodata struct {

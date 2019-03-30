@@ -29,11 +29,10 @@
           <div class="box">
             <div class="box-header">
               <a href="/registrasi">
-              <button type="button" class="btn btn-success">
-                <i class="fa fa-user-plus"></i> Member Baru
-              </button>
+                <button type="button" class="btn btn-success">
+                  <i class="fa fa-user-plus"></i> Member Baru
+                </button>
               </a>
-              <button type="submit" class="btn btn-success" id="send">send</button>
             </div>
             <div class="nav-tabs-custom">
               <div class="table-responsive">
@@ -106,38 +105,6 @@
         'info'        : true,
         'autoWidth'   : false
       })
-
-      $("#send").on("click", function(e){
-        e.preventDefault();
-        var biodata  =  JSON.stringify({
-          id_member :  parseInt(10),
-          nama      :  "ani budi",
-          nik       :  "155150200"
-        });
-
-        $.ajax({
-          url:"/admin/create-member",
-          type : 'POST',
-          data : biodata,
-          contentType: 'application/json',
-          success:function(response){
-            if (response == "true") {
-              bootoast.toast({
-                message: "Biodata berhasil di edit.",
-                type: 'success'
-              });
-              // setTimeout(function () {
-    					// 	location.reload();
-    					// }, 1500);
-            } else {
-              //  error message
-            }
-          },
-          error:function(error){
-            alert("erorr")
-          }
-        });
-      });
     })
   </script>
 

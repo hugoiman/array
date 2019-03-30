@@ -52,7 +52,6 @@ func DeleteLokasi(c echo.Context) error {
   id_lokasi := c.Param("id_lokasi")
 
   admin.DeleteLokasi(id_lokasi)
-  fmt.Println(id_lokasi)
 
   return nil
 }

@@ -114,7 +114,7 @@
                       <p class="btn btn-danger btn-sm pull-right" id="batal">Batal</p>
                     </div>
                     <div class="col-sm-1">
-                      <button type="submit" class="btn btn-primary btn-sm pull-right" id="simpan_biodata">Simpan</button>
+                      <button type="submit" class="btn btn-primary btn-sm pull-right" id="update_profile">Simpan</button>
                     </div>
                   </div>
                 </form>
@@ -159,7 +159,7 @@
                   </div>
                   <div class="form-group">
                     <div class="col-sm-12">
-                      <p class="btn btn-primary btn-sm pull-right" id="simpan_password">Simpan</p>
+                      <p class="btn btn-primary btn-sm pull-right" id="update_password">Simpan</p>
                     </div>
                   </div>
                 </form>
@@ -191,7 +191,17 @@
       $('.biodata').prop('readonly',false);
       $('#btn_edit').hide();
       $('#btn_simpan').show();
+      $('#datepicker').datepicker({
+        format: "dd/mm/yyyy",
+        autoclose: true
+      });
       $('#datepicker').datepicker("enabled");
+      var tgl_lahir = {{.Admin.Tgl_lahir}};
+      var y = tgl_lahir.substr(0,4);
+      var m = tgl_lahir.substr(5,2);
+      var d = tgl_lahir.substr(8,2);
+      var custTgl_lahir = d.concat("/", m, "/", y);
+      $('#datepicker').val(custTgl_lahir);
     });
 
     $("#batal").click(function(){
@@ -204,9 +214,9 @@
       $('#no_hp').val("{{.Admin.No_hp}}");
       $('#nik').val("{{.Admin.Nik}}");
       $('#alamat').val("{{.Admin.Alamat}}");
-      $('#datepicker').val("{{.Admin.Tgl_lahir}}");
+      $('#datepicker').val("{{.Admin.CustTgl_lahir}}");
       $('#succes').hide();
-      $('#error').hide();
+      $('.error').hide();
     });
 
     $('#new_email').keyup(function(){
@@ -244,18 +254,34 @@
       }
     });
 
-    $("#simpan_biodata").on("click", function(e){
+    $("#update_profile").on("click", function(e){
       e.preventDefault();
-      var biodata  =  JSON.stringify({
-        id_admin   :  parseInt($("#id_admin").val()),
-        nama       :  $("#nama").val(),
-        email      :  $("#new_email").val(),
-        no_hp      :  $("#no_hp").val(),
-        nik        :  $("#nik").val(),
-        datepicker :  $("#datepicker").val(),
-        alamat     :  $("#alamat").val()
+      var id_admin   =  parseInt($("#id_admin").val());
+      var nama       =  $("#nama").val();
+      var email      =  $("#new_email").val();
+      var no_hp      =  $("#no_hp").val();
+      var nik        =  $("#nik").val();
+      var alamat     =  $("#alamat").val();
+      var tgl_lahir  =  $("#datepicker").val();
+      var d = tgl_lahir.substr(0,2);
+      var m = tgl_lahir.substr(3,2);
+      var y = tgl_lahir.substr(6,4);
+      var custTgl_lahir = y.concat("-", m, "-", d);
+
+      var data  =  JSON.stringify({
+        id_admin, nama, email, no_hp, nik,
+        custTgl_lahir, alamat
       });
-      if ($(".error").is(":visible")) {
+
+      if (id_admin == "" || nama == "" || email == "" || no_hp == "" || nik == "" || alamat == "" || tgl_lahir == "") {
+        Swal.fire({
+          type: 'warning',
+          title: 'Silahkan lengkapi form dahulu.',
+          showConfirmButton: false,
+          customClass: 'swal-wide',
+          timer: 1500
+        })
+      } else if ($(".error").is(":visible")) {
         Swal.fire({
           type: 'warning',
           title: 'Please fix your email.',
@@ -265,9 +291,9 @@
         })
       } else {
         $.ajax({
-          url:"/admin/update-biodata",
-          type : 'POST',
-          data : biodata,
+          url:"/admin/update-profil",
+          type : 'PUT',
+          data : data,
           contentType: 'application/json',
           success:function(response){
             if (response == "true") {
@@ -291,7 +317,7 @@
       }
     });
 
-    $("#simpan_password").click(function(){
+    $("#update_password").click(function(){
       var id_admin = $("#id_admin").val();
       var password_baru = $("#password_baru").val();
       var konfirmasi_password = $("#konfirmasi_password").val();
@@ -330,7 +356,7 @@
 
         $.ajax({
           url:"/admin/update-password",
-          type : 'POST',
+          type : 'PUT',
           data : {'id_admin':id_admin,'password_baru':password_baru},
           success:function(response){
             $("#password_baru").val("");
@@ -396,7 +422,13 @@
 
         },
         error:function(error){
-          alert(error);
+          Swal.fire({
+            title: "Oops!",
+            text: 'error!',
+            type: 'error',
+            customClass: 'swal-wide',
+            timer: '1500'
+          });
         }
       });
     });

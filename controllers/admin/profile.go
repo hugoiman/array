@@ -10,6 +10,7 @@ import (
   "encoding/json"
   "os"
   "io"
+  "strings"
 )
 
 func ShowProfil(c echo.Context) error {
@@ -61,24 +62,15 @@ func CheckEmail(c echo.Context) error {
   }
 }
 
-func UpdateBiodata(c echo.Context) error {
+func UpdateProfil(c echo.Context) error {
   decoder := json.NewDecoder(c.Request().Body)
-  biodata := structs.Biodata{}
-
-  err := decoder.Decode(&biodata);
+  data    := structs.DataAdmin{}
+  err     := decoder.Decode(&data);
   checkErr(err)
 
-  // nama := biodata.Nama
-  // fmt.Printf("%+v\n",biodata)
-  //
-  // biodata.Slug = nama
+  admin.UpdateProfil(data)
 
-  fmt.Printf("%+v\n",biodata)
-
-  // admin.UpdateBiodata(biodata.Id_admin, biodata.Nama)
-
-  message := "true"
-  return c.String(http.StatusOK, message)
+  return c.String(http.StatusOK, "true")
 }
 
 func UpdateFoto(c echo.Context) error {
@@ -92,12 +84,10 @@ func UpdateFoto(c echo.Context) error {
   defer file.Close()
 
   file_name := id_admin+"_"+handler.Filename
-
   dst, _ := os.OpenFile("assets/images/admin/"+file_name, os.O_WRONLY|os.O_CREATE, 0666)
   defer dst.Close()
 
   io.Copy(dst, file)
-
   os.Remove(path)
 
   admin.UpdateFoto(id_admin, file_name)
