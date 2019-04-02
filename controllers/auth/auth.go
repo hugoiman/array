@@ -37,8 +37,10 @@ func Index(c echo.Context) error{
   } else {
     session, _  :=  store.Get(c.Request(), "session")
     slug        :=  fmt.Sprintf("%v", session.Values["slug"])
-    if session.Values["id_member"] != "" {
+    if session.Values["id_member"] != nil {
       return c.Redirect(http.StatusMovedPermanently, "/informasi/" + slug)
+    } else if session.Values["id_admin"] != nil {
+      return c.Redirect(http.StatusMovedPermanently, "/information/status/aktif")
     } else {
       return c.Redirect(http.StatusMovedPermanently, "/dashboard/" + slug)
     }
