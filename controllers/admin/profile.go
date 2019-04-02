@@ -10,7 +10,6 @@ import (
   "encoding/json"
   "os"
   "io"
-  "strings"
 )
 
 func ShowProfil(c echo.Context) error {

@@ -4,7 +4,7 @@
   {{template "_head" .}}
 
   <!-- External -->
-  <link href="/static/ex/bootoast.css" rel="stylesheet" type="text/css">
+
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -288,6 +288,10 @@
   </div>
   <!-- /.content-wrapper -->
 
+  {{template "_footer" .}}
+
+  <!-- External -->
+
   <script>
   $(document).ready(function(){
     $("#simpan_password").click(function(){
@@ -296,24 +300,37 @@
       var konfirmasi_password = $("#konfirmasi_password").val();
       var jumlah_pass_baru = $('#password_baru').val().length;
       var jumlah_konfirmasi_pass = $('#konfirmasi_password').val().length;
-      // var encrypt_pass = md5(password_baru);
+
       if (password_baru == "" || konfirmasi_password == "") {
-        bootoast.toast({
-          message: 'Mohon lengkapi isi form terlebih dahulu.',
-      	  type: 'warning'
-        });
+        Swal.fire({
+          type: 'warning',
+          title: 'Mohon lengkapi isi form terlebih dahulu.',
+          showConfirmButton: false,
+          customClass: 'swal-wide',
+          timer: 1500
+        })
       }
       if(konfirmasi_password != password_baru){
-        bootoast.toast({
-          message: 'Konfirmasi password tidak sesuai.',
-      	  type: 'warning'
-        });
+        Swal.fire({
+          type: 'warning',
+          title: 'Konfirmasi password tidak sesuai.',
+          showConfirmButton: false,
+          customClass: 'swal-wide',
+          timer: 1500
+        })
       }
       if(jumlah_pass_baru < 6 || jumlah_pass_baru > 18 || jumlah_konfirmasi_pass < 6 || jumlah_konfirmasi_pass > 18){
         bootoast.toast({
           message: 'Password harus berjumlah 6-18 karakter.',
       	  type: 'warning'
         });
+        Swal.fire({
+          type: 'warning',
+          title: 'Password harus berjumlah 6-18 karakter.',
+          showConfirmButton: false,
+          customClass: 'swal-wide',
+          timer: 1500
+        })
       }
       if(konfirmasi_password != "" && konfirmasi_password == password_baru &&
         jumlah_pass_baru >= 6 && jumlah_pass_baru <= 18 && jumlah_konfirmasi_pass >= 6 && jumlah_konfirmasi_pass <= 18){
@@ -326,19 +343,31 @@
             $("#password_baru").val("");
             $("#konfirmasi_password").val("");
             if (response == "false") {
-              bootoast.toast({
-                message: "Gagal! Password baru tidak boleh sama dengan password lama.",
-                type: 'warning'
-              });
+              Swal.fire({
+                type: 'warning',
+                title: 'Gagal! Password baru tidak boleh sama dengan password lama.',
+                showConfirmButton: false,
+                customClass: 'swal-wide',
+                timer: 1500
+              })
             } else {
-              bootoast.toast({
-                message: "Berhasil ganti password.",
-                type: 'success'
-              });
+              Swal.fire({
+                type: 'success',
+                title: 'Berhasil ganti password.',
+                showConfirmButton: false,
+                customClass: 'swal-wide',
+                timer: 1500
+              })
             }
           },
           error:function(error){
-            alert("Gagal ganti password");
+            Swal.fire({
+              title: "Oops!",
+              text: 'Gagal ganti password!',
+              type: 'error',
+              customClass: 'swal-wide',
+              timer: '1500'
+            });
           }
         });
       }
@@ -353,10 +382,13 @@
 
         if (fSize > 1) {
           $('#file').val("");
-          bootoast.toast({
-            message: 'File size is greater than 2MB ',
-            type: 'warning'
-          });
+          Swal.fire({
+            type: 'warning',
+            title: 'File size is greater than 2MB.',
+            showConfirmButton: false,
+            customClass: 'swal-wide',
+            timer: 1500
+          })
         }
       });
 
@@ -377,17 +409,18 @@
 
           },
           error:function(error){
-            alert(error);
+            Swal.fire({
+              title: "Oops!",
+              text: 'Gagal upload foto!',
+              type: 'error',
+              customClass: 'swal-wide',
+              timer: '1500'
+            });
           }
         });
       });
     });
   </script>
-
-  {{template "_footer" .}}
-
-  <!-- External -->
-  <script src="/static/ex/bootoast.min.js"></script>
 
   </body>
   </html>

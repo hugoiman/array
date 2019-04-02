@@ -3,8 +3,6 @@
 <head>
   {{template "_head" .}}
 
-  <!-- External -->
-  <link rel="stylesheet" href="/static/ex/swal.css">
   <!-- bootstrap datepicker -->
   <link rel="stylesheet" href="/static/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
 </head>
@@ -180,8 +178,6 @@
 
   {{template "_footer" .}}
 
-  <!-- External -->
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
   <!-- bootstrap datepicker -->
   <script src="/static/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
 
@@ -300,7 +296,9 @@
               Swal.fire({
                 title: "Biodata Berhasil Diedit!",
                 type: "success",
-                customClass: 'swal-wide'
+                showConfirmButton: false,
+                customClass: 'swal-wide',
+                timer: 1500
               });
               setTimeout(function () {
     						location.reload();
@@ -323,7 +321,7 @@
       var konfirmasi_password = $("#konfirmasi_password").val();
       var jumlah_pass_baru = $('#password_baru').val().length;
       var jumlah_konfirmasi_pass = $('#konfirmasi_password').val().length;
-      // var encrypt_pass = md5(password_baru);
+      
       if (password_baru == "" || konfirmasi_password == "") {
         Swal.fire({
           type: 'warning',

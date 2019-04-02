@@ -3,8 +3,6 @@
 <head>
   {{template "_head" .}}
 
-  <!-- External -->
-  <link href="/static/ex/bootoast.css" rel="stylesheet" type="text/css">
   <!-- bootstrap datepicker -->
   <link rel="stylesheet" href="/static/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
 </head>
@@ -295,8 +293,6 @@
 
   {{template "_footer" .}}
 
-  <!-- External -->
-  <script src="/static/ex/bootoast.min.js"></script>
   <!-- jQuery UI 1.11.4 -->
   <script src="/static/bower_components/jquery-ui/jquery-ui.min.js"></script>
   <!-- bootstrap datepicker -->
@@ -321,16 +317,22 @@
         var alamat = $("#alamat").val();
 
         if (nama == '' || no_hp == '' || nik == '' || tgl_lahir == '' || alamat == '') {
-          bootoast.toast({
-            message: "Silahkan lengkapi form dahulud.",
-            type: 'warning'
-          });
+          Swal.fire({
+            type: 'warning',
+            title: 'Silahkan lengkapi form dahulu.',
+            showConfirmButton: false,
+            customClass: 'swal-wide',
+            timer: 1500
+          })
           break;
         } else if ($(".error").is(":visible")) {
-          bootoast.toast({
-            message: "Please fix your email.",
-            type: 'warning'
-          });
+          Swal.fire({
+            type: 'warning',
+            title: 'Please fix your email.',
+            showConfirmButton: false,
+            customClass: 'swal-wide',
+            timer: 1500
+          })
           break;
         }
         ok(tabIndex, nextTab);
@@ -338,10 +340,13 @@
       case "latar":
         pekerjaan = $("#pekerjaan").val();
         if (pekerjaan == '') {
-          bootoast.toast({
-            message: "Silahkan lengkapi form dahulux.",
-            type: 'warning'
-          });
+          Swal.fire({
+            type: 'warning',
+            title: 'Silahkan lengkapi form dahulu.',
+            showConfirmButton: false,
+            customClass: 'swal-wide',
+            timer: 1500
+          })
           break;
         }
         ok(tabIndex, nextTab);
@@ -353,10 +358,13 @@
         no_hp1 = $("#no_hp1").val();
 
         if (nk1 == '' || hb1 == '' || no_hp1 == '') {
-          bootoast.toast({
-            message: "Silahkan lengkapi form dahuluz.",
-            type: 'warning'
-          });
+          Swal.fire({
+            type: 'warning',
+            title: 'Silahkan lengkapi form dahulu.',
+            showConfirmButton: false,
+            customClass: 'swal-wide',
+            timer: 1500
+          })
           break;
         }
         ok(tabIndex, nextTab);
@@ -368,10 +376,13 @@
         kamar = $("#kamar").val();
 
         if (lokasi == '' || pembayaran == '' || kamar == '') {
-          bootoast.toast({
-            message: "Silahkan lengkapi form dahulub.",
-            type: 'warning'
-          });
+          Swal.fire({
+            type: 'warning',
+            title: 'Silahkan lengkapi form dahulu.',
+            showConfirmButton: false,
+            customClass: 'swal-wide',
+            timer: 1500
+          })
           break;
         }
         ok(tabIndex, nextTab);
@@ -502,6 +513,22 @@
       }
     });
 
+    var fSize = 0;
+    $("#file").bind('change', function() {
+      fSize = $('#file')[0].files[0].size/1024/1024;
+
+      if (fSize > 1) {
+        $('#file').val("");
+        Swal.fire({
+          type: 'warning',
+          title: 'File size is greater than 1MB.',
+          showConfirmButton: false,
+          customClass: 'swal-wide',
+          timer: 1500
+        })
+      }
+    });
+
     $('#register').on("click", function(e) {
       e.preventDefault();
       var tgl_lahir = $("#datepicker").val();
@@ -521,30 +548,57 @@
         username_wifi : $("#uname").val(), no_stnk : $("#stnk").val()
       });
 
-      $.ajax({
-        url:"/admin/create-member",
-        type : 'POST',
-        data : data,
-        contentType: 'application/json',
-        success:function(response){
-          if (response == "true") {
-            bootoast.toast({
-              message: "Biodata berhasil di edit.",
-              type: 'success'
-            });
-            setTimeout(function () {
-  						location.reload();
-  					}, 1500);
-          } else {
-            //  error message
-          }
-        },
-        error:function(error){
-          $('#succes').hide();
-          $('#error').show();
-        }
-      });
+      // $.ajax({
+      //   url:"/admin/create-member",
+      //   type : 'POST',
+      //   data : data,
+      //   contentType: 'application/json',
+      //   success:function(response){
+      //     if (response == "true") {
+      //       Swal.fire({
+      //         title: "Biodata Berhasil Diedit!",
+      //         type: "success",
+      //         customClass: 'swal-wide'
+      //       });
+      //       setTimeout(function () {
+  		// 				location.reload();
+  		// 			}, 1500);
+      //     } else {
+      //       //  error message
+      //     }
+      //   },
+      //   error:function(error){
+      //     $('#succes').hide();
+      //     $('#error').show();
+      //   }
+      // });
 
+      if (fSize != 0) {
+        var formData = new FormData();
+        var files = $('#file')[0].files[0];
+        var $self = $(this);
+        formData.append("files", files[0]);
+        console.log("ada");
+        $.ajax({
+          url: "/admin/upload-foto-member",
+          type: "POST",
+          data: formData,
+          contentType: false,
+          processData: false,
+          success: function(response){
+
+          },
+          error:function(error){
+            Swal.fire({
+              title: "Oops!",
+              text: 'error!',
+              type: 'error',
+              customClass: 'swal-wide',
+              timer: '1500'
+            });
+          }
+        });
+      }
     });
 
   });

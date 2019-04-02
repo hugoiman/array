@@ -3,8 +3,6 @@
 <head>
   {{template "_head" .}}
 
-  <!-- External -->
-  <link href="/static/ex/bootoast.css" rel="stylesheet" type="text/css">
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
@@ -47,6 +45,27 @@
   <!-- /.login-box-body -->
 </div>
 <!-- /.login-box -->
+
+
+<!-- jQuery 3 -->
+<script src="/static/bower_components/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="/static/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- iCheck -->
+<script src="/static/plugins/iCheck/icheck.min.js"></script>
+<!-- Sweet Alert 2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+
+<script>
+  $(document).ready(function () {
+    $('input').iCheck({
+      checkboxClass: 'icheckbox_square-blue',
+      radioClass: 'iradio_square-blue',
+      increaseArea: '20%' /* optional */
+    });
+  });
+</script>
+
 <script>
   $(document).ready(function(){
     $("#login").on("click", function(e) {
@@ -62,10 +81,13 @@
         success:function(response) {
           if (response == "false") {
             $("#password").val("");
-            bootoast.toast({
-              message: "Maaf email/password salah! Silahkan coba lagi.",
-              type: 'warning'
-            });
+            Swal.fire({
+              type: 'warning',
+              title: 'Maaf email/password salah! Silahkan coba lagi.',
+              showConfirmButton: false,
+              customClass: 'swal-wide',
+              timer: 1500
+            })
           } else {
             window.location.href = "/dashboard/"+response;
           }
@@ -75,31 +97,14 @@
         }
       });
     } else if (email == "" || password == "") {
-      bootoast.toast({
-        message: "Harap lengkapi isi form terlebih dahulu.",
-        type: 'warning'
-      });
+      Swal.fire({
+        type: 'warning',
+        title: 'Harap lengkapi isi form terlebih dahulu.',
+        showConfirmButton: false,
+        customClass: 'swal-wide',
+        timer: 1500
+      })
     }
-    });
-  });
-</script>
-
-<!-- jQuery 3 -->
-<script src="/static/bower_components/jquery/dist/jquery.min.js"></script>
-<!-- Bootstrap 3.3.7 -->
-<script src="/static/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- iCheck -->
-<script src="/static/plugins/iCheck/icheck.min.js"></script>
-
-<!-- External -->
-<script src="/static/ex/bootoast.min.js"></script>
-
-<script>
-  $(document).ready(function () {
-    $('input').iCheck({
-      checkboxClass: 'icheckbox_square-blue',
-      radioClass: 'iradio_square-blue',
-      increaseArea: '20%' /* optional */
     });
   });
 </script>

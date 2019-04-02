@@ -3,8 +3,6 @@
 <head>
   {{template "_head" .}}
 
-  <!-- External -->
-  <link rel="stylesheet" href="/static/ex/swal.css">
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="/static/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
 </head>
@@ -106,7 +104,9 @@
               Swal.fire({
                 title: "Informasi Berhasil Dihapus!",
                 type: "success",
-                customClass: 'swal-wide'
+                showConfirmButton: false,
+                customClass: 'swal-wide',
+                timer: 1500
               });
               setTimeout(function () {
                 location.reload();
