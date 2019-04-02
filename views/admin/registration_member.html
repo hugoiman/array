@@ -269,11 +269,11 @@
                         <input type="file" id="file" name="file">
                       </div>
                       <button type="reset" class="btn btn-default"><i class="fa fa-times"></i></button>
-                      <p class="help-block">Max. 1MB</p>
+                      <p class="help-block">Max. 2MB</p>
                     </div>
                   </div>
                   <div align="center">
-                    <button type="button" class="btn btn-default" onclick="changeToTab('', 3, 'foto')">Previous</button>
+                    <button type="button" class="btn btn-default" onclick="changeToTab('', 3, 'data')">Previous</button>
                     <p class="btn btn-success" id="register">Register</p>
                   </div>
                 </form>
@@ -517,14 +517,14 @@
     $("#file").bind('change', function() {
       fSize = $('#file')[0].files[0].size/1024/1024;
 
-      if (fSize > 1) {
+      if (fSize > 2) {
         $('#file').val("");
         Swal.fire({
           type: 'warning',
-          title: 'File size is greater than 1MB.',
+          title: 'File size is greater than 2MB.',
           showConfirmButton: false,
           customClass: 'swal-wide',
-          timer: 1500
+          timer: 2000
         })
       }
     });
