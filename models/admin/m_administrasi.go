@@ -5,31 +5,31 @@ import (
   "array/structs"
 )
 
-func GetAdministrasi() structs.Administrasi {
+func GetAdministrasi() structs.Member {
   con       :=  db.Connect()
-  // query   :=  "SELECT * FROM administrasi"
-  query     :=  "SELECT a.id_administrasi, a.id_member, a.tipe_pembayaran, a.check_in, check_out, a.tgl_pembayaran, a.jumlah_pembayaran, a.total, a.tagihan, a.status, m.nama FROM administrasi a JOIN member m ON a.id_member = m.id_member"
+  query     :=  "SELECT m.nama, m.id_member, m.id_lokasi, l.id_lokasi, a.id_administrasi, a.id_member, a.tipe_pembayaran, a.check_in, a.check_out, a.tgl_pembayaran, a.jumlah_pembayaran, a.total, a.tagihan, a.status FROM member m JOIN administrasi a ON m.id_member = a.id_member JOIN lokasi_kos l ON l.id_lokasi = m.id_lokasi"
   rows, err :=  con.Query(query)
 
   checkErr(err)
   defer rows.Close()
 
-  administrasi  :=  structs.Administrasi{}
-  data          :=  structs.DataAdministrasi{}
+  member    :=  structs.Member{}
+  data      :=  structs.DataMember{}
 
   for rows.Next() {
     err := rows.Scan(
-      &data.Id_administrasi, &data.Id_member, &data.Tipe_pembayaran, &data.Check_in, &data.Check_out,
-      &data.Tgl_pembayaran, &data.Jumlah_pembayaran, &data.Total, &data.Tagihan, &data.Status,
-      &data.Member.Nama,
+      &data.Nama, &data.Id_member, &data.Id_lokasi,
+      &data.Lokasi.Id_lokasi,
+      &data.Administrasi.Id_administrasi, &data.Administrasi.Id_member, &data.Administrasi.Tipe_pembayaran, &data.Administrasi.Check_in, &data.Administrasi.Check_out,
+      &data.Administrasi.Tgl_pembayaran, &data.Administrasi.Jumlah_pembayaran, &data.Administrasi.Total, &data.Administrasi.Tagihan, &data.Administrasi.Status,
     )
-    data.CustCheck_in   = data.Check_in.Format("02-Jan-2006")
-    data.CustCheck_out  = data.Check_out.Format("02-Jan-2006")
+    data.Administrasi.CustCheck_in   = data.Administrasi.Check_in.Format("02 Jan 2006")
+    data.Administrasi.CustCheck_out  = data.Administrasi.Check_out.Format("02 Jan 2006")
 
     checkErr(err)
-    administrasi.Administrasi = append(administrasi.Administrasi, data)
+    member.Member = append(member.Member, data)
   }
   defer con.Close()
 
-  return administrasi
+  return member
 }

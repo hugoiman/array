@@ -47,4 +47,5 @@ type DataMember struct {
   CustTgl_lahir         string         `json:"custTgl_lahir"`
   CustTgl_gabung        string
   Lokasi                DataLokasi     `json:"lokasi"`
+  Administrasi          DataAdministrasi     `json:"administrasi"`
 }

@@ -19,7 +19,7 @@ type DataAdministrasi struct {
   Tagihan               int         `json:"tagihan"`
   Status                string      `json:"status"`
 
-  Member                DataMember  `json:"member"`
+  // Member                DataMember  `json:"member"`
   CustCheck_in          string
   CustCheck_out         string
   CustTgl_pembayaran    string

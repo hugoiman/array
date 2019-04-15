@@ -8,7 +8,7 @@ import (
 
 func GetMembers() structs.Member {
   con     :=  db.Connect()
-  query   :=  "SELECT * FROM member JOIN lokasi_kos ON member.id_lokasi = lokasi_kos.id_lokasi"
+  query   :=  "SELECT m.id_member, m.nama, m.pekerjaan, m.no_hp, m.no_kamar, m.status_member, l.cabang, a.status FROM member m JOIN lokasi_kos l ON m.id_lokasi = l.id_lokasi JOIN administrasi a ON m.id_member = a.id_member"
   rows, err := con.Query(query)
 
   checkErr(err)
@@ -19,16 +19,10 @@ func GetMembers() structs.Member {
 
   for rows.Next() {
     err := rows.Scan(
-      &data.Id_member, &data.Id_lokasi, &data.Email,  &data.Nama, &data.Password, &data.Nik,  &data.No_hp,
-      &data.Foto, &data.Tgl_lahir,  &data.Pekerjaan, &data.Alamat_asal, &data.No_kamar, &data.Tgl_gabung,
-      &data.Status_member, &data.Tipe_pembayaran, &data.Username_wifi, &data.Slug,
-      &data.Universitas, &data.Jurusan, &data.Angkatan,
-      &data.Nama_kerabat1, &data.Nama_kerabat2, &data.Hubungan1, &data.Hubungan2, &data.No_hp1, &data.No_hp2,
-      &data.No_stnk, &data.Perusahaan, &data.Jabatan,
-      &data.Lokasi.Id_lokasi, &data.Lokasi.Cabang, &data.Lokasi.Alamat,
+      &data.Id_member, &data.Nama, &data.Pekerjaan, &data.No_hp, &data.No_kamar, &data.Status_member,
+      &data.Lokasi.Cabang,
+			&data.Administrasi.Status,
     )
-    data.CustTgl_lahir   = data.Tgl_lahir.Format("02 January 2006")
-    data.CustTgl_gabung  = data.Tgl_gabung.Format("02 January 2006")
 
     checkErr(err)
     member.Member = append(member.Member, data)
@@ -94,4 +88,16 @@ func CheckEmailMember(email string) bool {
   } else {
     return true
   }
+}
+
+func GetCountStatusMember() (string, string, string, string) {
+  var total, aktif, non_aktif, selesai string
+  con     :=  db.Connect()
+  query   :=  "SELECT (SELECT COUNT(status_member) FROM member) as total, (SELECT COUNT(status_member) FROM member WHERE status_member = 'aktif') as aktif, (SELECT COUNT(status_member) FROM member WHERE status_member = 'tidak aktif') as non_aktif, (SELECT COUNT(status_member) FROM member WHERE status_member = 'selesai') as selesai"
+  err     :=  con.QueryRow(query).Scan(&total, &aktif, &non_aktif, &selesai)
+
+  checkErr(err)
+  defer con.Close()
+
+  return total, aktif, non_aktif, selesai
 }

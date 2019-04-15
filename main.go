@@ -290,6 +290,10 @@ func main() {
 
   e.POST("/count-information", admin.CountInformasi)
 
+  e.POST("/getPemasukan", admin.HitungPemasukan)
+  e.POST("/getPengeluaran", admin.HitungPengeluaran)
+  e.POST("/getLaba", admin.HitungLaba)
+
   fmt.Println("server started at :9000")
   e.Logger.Fatal(e.Start(":9000"))
 }

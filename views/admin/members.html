@@ -23,6 +23,48 @@
     </section>
     <!-- Main content -->
     <section class="content">
+      <div class="row">
+        <div class="col-md-4 col-sm-6 col-xs-12">
+          <div class="info-box bg-aqua">
+            <span class="info-box-icon"><i class="fa fa-group"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Member</span>
+              <span class="info-box-number">Aktif : {{index .Status 1}}</span>
+
+              <div class="progress">
+                <div class="progress-bar" style="width: 100%"></div>
+              </div>
+                  <span class="progress-description">
+                    Non-Aktif : {{index .Status 2}}, Selesai : {{index .Status 3}}, Total : {{index .Status 0}}
+                  </span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-4 col-sm-6 col-xs-12">
+          <div class="info-box bg-green">
+            <span class="info-box-icon"><i class="fa fa-money"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Pembayaran</span>
+              <span class="info-box-number">Lunas : {{index .Status 1}}</span>
+
+              <div class="progress">
+                <div class="progress-bar" style="width: 100%"></div>
+              </div>
+                  <span class="progress-description">
+                    Belum Lunas: {{index .Status 2}}
+                  </span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+      </div>
       <!-- /.row -->
       <div class="row">
         <div class="col-xs-12">
@@ -48,6 +90,7 @@
                       <th>No Kamar</th>
                       <th>Lokasi</th>
                       <th>Status</th>
+                      <th>Pembayaran</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -60,6 +103,7 @@
                       <td>{{.No_kamar}}</td>
                       <td>{{.Lokasi.Cabang}}</td>
                       <td>{{.Status_member}}</td>
+                      <td>{{.Administrasi.Status}}</td>
                     </tr>
                     {{end}}
                     </tbody>
@@ -72,6 +116,7 @@
                       <th>No Kamar</th>
                       <th>Lokasi</th>
                       <th>Status</th>
+                      <th>Pembayaran</th>
                     </tr>
                     </tfoot>
                   </table>

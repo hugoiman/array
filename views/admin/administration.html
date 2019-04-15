@@ -54,15 +54,14 @@
                         </tr>
                         </thead>
                         <tbody>
-                          {{range $index, $value := .Administrasi.Administrasi}}
+                          {{range $index, $value := .Member.Member}}
                         <tr>
                           <td>{{counter $index 1}}</td>
-                          <td>{{.Member.Nama}}</td>
-                          <td>{{.CustCheck_in}} s.d {{.CustCheck_out}}</td>
-                          <td>{{if eq .Tagihan 0}} -
-                              {{else}} Rp {{.Tagihan}} {{end}}
-                          </td>
-                          <td>{{.Status}}</td>
+                          <td>{{.Nama}}</td>
+                          <td>{{.Administrasi.CustCheck_in}} s.d {{.Administrasi.CustCheck_out}}</td>
+                          <td>{{if eq .Administrasi.Tagihan 0}} -
+                              {{else}} Rp {{.Administrasi.Tagihan}} {{end}}</td>
+                          <td>{{.Administrasi.Status}}</td>
                         </tr>
                         {{end}}
                         </tbody>

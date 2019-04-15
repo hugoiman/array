@@ -8,10 +8,12 @@ import (
   "array/structs"
   "github.com/labstack/echo"
   "strconv"
-  "strings"
+  // "strings"
   "encoding/json"
-  "crypto/sha1"
-  setRandom "github.com/sethvargo/go-password/password"
+  // "crypto/sha1"
+  // setRandom "github.com/sethvargo/go-password/password"
+  "os"
+  "io"
 )
 
 func ShowMembers(c echo.Context) error {
@@ -19,14 +21,18 @@ func ShowMembers(c echo.Context) error {
   slug          :=  fmt.Sprintf("%v", session.Values["slug"])
   data_admin    :=  admin.GetAdmin(slug)
   data_members  :=  admin.GetMembers()
+  total, aktif, non_aktif, selesai :=  admin.GetCountStatusMember()
+  status := []string{total, aktif, non_aktif, selesai}
 
   data := struct {
     Admin     structs.DataAdmin
     Member    structs.Member
+    Status    []string
     Nav       string
   } {
     data_admin,
     data_members,
+    status,
     "Member",
   }
   // return c.JSON(http.StatusOK, data)
@@ -73,40 +79,55 @@ func ShowRegistrationMember(c echo.Context) error {
 }
 
 func CreateMember(c echo.Context) error {
+  fmt.Println("oioia")
   decoder   :=  json.NewDecoder(c.Request().Body)
   data      :=  structs.DataMember{}
   err       :=  decoder.Decode(&data)
   checkErr(err)
+  fmt.Println(data)
 
-  data.Status_member = "Tidak Aktif"
+  // data.Status_member = "Tidak Aktif"
+  //
+  // var password, _ = setRandom.Generate(12, 8, 0, true, true)
+  // // fmt.Println(password)
+  //
+  // var sha = sha1.New()
+  // sha.Write([]byte(password))
+  // var encrypted = sha.Sum(nil)
+  // data.Password = fmt.Sprintf("%x", encrypted)
 
-  var password, _ = setRandom.Generate(12, 8, 0, true, true)
-  fmt.Println(password)
+  // slug      :=  strings.Replace(data.Nama," ","-",-1)
+  // isUnique  :=  admin.CheckUniqueSlug(slug)
+  //
+  // if data.Foto == "" {
+  //   data.Foto = "member.png"
+  // }
+  //
+  // if isUnique == true {
+  //   data.Slug = slug
+  //   // admin.CreateMember(data)
+  // } else {
+  //   data.Slug = strings.Join([]string{slug,data.Nik},"-")
+  //   // admin.CreateMember(data)
+  // }
+  fmt.Println("oioi")
 
-  var sha = sha1.New()
-  sha.Write([]byte(password))
-  var encrypted = sha.Sum(nil)
-  data.Password = fmt.Sprintf("%x", encrypted)
+  file, handler, _ := c.Request().FormFile("file")
+  defer file.Close()
 
-  slug      :=  strings.Replace(data.Nama," ","-",-1)
-  isUnique  :=  admin.CheckUniqueSlug(slug)
+  dst, _ := os.OpenFile("assets/images/test/"+handler.Filename, os.O_WRONLY|os.O_CREATE, 0666)
+  defer dst.Close()
 
-  if data.Foto == "" {
-    data.Foto = "member.png"
-  }
+  io.Copy(dst, file)
 
-  if isUnique == true {
-    data.Slug = slug
-    admin.CreateMember(data)
-  } else {
-    data.Slug = strings.Join([]string{slug,data.Nik},"-")
-    admin.CreateMember(data)
-  }
+  fmt.Println(handler.Filename)
 
-  id_lokasi := fmt.Sprintf("%v", data.Id_lokasi)
-  admin.UpdateKamar(id_lokasi, data.No_kamar)
+  // id_lokasi := fmt.Sprintf("%v", data.Id_lokasi)
+  // admin.UpdateKamar(id_lokasi, data.No_kamar)
+  // fmt.Println(data)
 
-  return c.String(http.StatusOK,"true")
+  return c.String(http.StatusOK,"aa")
+  // return c.Redirect(http.StatusMovedPermanently, "/")
   // return c.JSON(http.StatusOK, data) // <- blum fix
 }
 
@@ -129,7 +150,7 @@ func DeleteMember(c echo.Context) error {
 func CheckEmailMember(c echo.Context) error {
   email     := c.FormValue("email")
   isValid   := admin.CheckEmailMember(email)
-  fmt.Println(isValid)
+
   if isValid == true {
     message := "true"
     return c.String(http.StatusOK, message)
