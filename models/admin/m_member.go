@@ -8,21 +8,22 @@ import (
 
 func GetMembers() structs.Member {
   con     :=  db.Connect()
-  query   :=  "SELECT m.id_member, m.nama, m.pekerjaan, m.no_hp, m.no_kamar, m.status_member, l.cabang, a.status FROM member m JOIN lokasi_kos l ON m.id_lokasi = l.id_lokasi JOIN administrasi a ON m.id_member = a.id_member"
+  query   :=  "SELECT m.id_member, m.nama, m.slug, m.pekerjaan, m.no_hp, m.no_kamar, m.status_member, m.tgl_gabung, l.cabang FROM member m JOIN lokasi_kos l ON m.id_lokasi = l.id_lokasi"
   rows, err := con.Query(query)
 
   checkErr(err)
   defer rows.Close()
 
   member := structs.Member{}
-  data := structs.DataMember{}
+  data 	 := structs.DataMember{}
 
   for rows.Next() {
     err := rows.Scan(
-      &data.Id_member, &data.Nama, &data.Pekerjaan, &data.No_hp, &data.No_kamar, &data.Status_member,
+      &data.Id_member, &data.Nama, &data.Slug, &data.Pekerjaan, &data.No_hp, &data.No_kamar, &data.Status_member, &data.Tgl_gabung,
       &data.Lokasi.Cabang,
-			&data.Administrasi.Status,
     )
+
+		data.CustTgl_gabung   = data.Tgl_gabung.Format("02 January 2006")
 
     checkErr(err)
     member.Member = append(member.Member, data)
