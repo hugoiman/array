@@ -11,7 +11,7 @@ import (
 )
 
 func ShowAllInformasi(c echo.Context) error {
-  status     := c.Param("status")
+  status     := c.QueryParam("status")
   session, _ := store.Get(c.Request(), "session")
   slug       := fmt.Sprintf("%v", session.Values["slug"])
   data_admin := admin.GetAdmin(slug)

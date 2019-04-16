@@ -247,7 +247,7 @@ func main() {
     return nil
   })
 
-  e.GET("/information/status/:status", func(c echo.Context) error{
+  e.GET("/information", func(c echo.Context) error{
     e.Renderer = &Template{ templates: template.Must(template.ParseFiles(
       "views/admin/informations.html",
       "views/admin/head.html", "views/admin/header.html", "views/admin/footer.html",
