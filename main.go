@@ -164,7 +164,7 @@ func main() {
 
   e.POST("/login-admin", auth.LoginAdmin)
 
-  e.GET("/dashboard/:slug", func(c echo.Context) error{
+  e.GET("/dashboard", func(c echo.Context) error{
     e.Renderer = &Template{ templates: template.Must(template.ParseFiles(
       "views/admin/dashboard.html",
       "views/admin/head.html", "views/admin/header.html", "views/admin/footer.html",
@@ -293,6 +293,7 @@ func main() {
   e.POST("/getPemasukan", admin.HitungPemasukan)
   e.POST("/getPengeluaran", admin.HitungPengeluaran)
   e.POST("/getLaba", admin.HitungLaba)
+  e.POST("/getStatistik", admin.CountStatistik)
 
   fmt.Println("server started at :9000")
   e.Logger.Fatal(e.Start(":9000"))
