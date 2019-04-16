@@ -7,30 +7,47 @@ import (
   "array/structs"
   "github.com/labstack/echo"
   "strings"
+  "strconv"
   // "time"
 )
 
+var month = [12]string{"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"}
+
 func ShowAdministrasi(c echo.Context) error {
-  periode       :=  c.Param("periode")
+  from          :=  c.QueryParam("from")
+  to            :=  c.QueryParam("to")
   session, _    :=  store.Get(c.Request(), "session")
   slug          :=  fmt.Sprintf("%v", session.Values["slug"])
   data_admin    :=  admin.GetAdmin(slug)
-  data_administrasi  :=  admin.GetAdministrasi()
 
-  str_periode   :=  strings.Split(periode, "-")
-  fmt.Println(str_periode)
-  month         :=  str_periode[0]
-  year          :=  str_periode[1]
-  fmt.Println(month)
-  fmt.Println(year)
+  data_form    :=  []string{from, to}
+  split_from   :=  strings.Split(from, " ")
+  split_to     :=  strings.Split(to, " ")
+
+  var startDate, endDate string
+  for index, element := range month{
+    if split_from[0] == element {
+      startMonth := strconv.Itoa(index+1)
+      startDate = strings.Join([]string{split_from[1],startMonth,"01"},"-")
+    }
+    if split_to[0] == element {
+      endMonth := strconv.Itoa(index+1)
+      endDate = strings.Join([]string{split_to[1],endMonth,"31"},"-")
+    }
+  }
+  fmt.Println(startDate, endDate)
+
+  data_administrasi  :=  admin.GetAdministrasi(startDate, endDate)
 
   data := struct {
     Admin           structs.DataAdmin
     Member          structs.Member
+    FormValue       []string
     Nav             string
   } {
     data_admin,
     data_administrasi,
+    data_form,
     "Administrasi",
   }
   // return c.JSON(http.StatusOK, data.Member.Member[0].Administrasi)

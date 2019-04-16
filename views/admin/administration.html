@@ -30,12 +30,29 @@
           <div class="box">
             <div class="box-header">
               <h5 class="box-title"><label>Periode </label></h5>
-              <div class="input-group date col-md-3">
-  							<div class="input-group-addon">
-  								<i class="fa fa-calendar"></i>
-  							</div>
-  							<input required type="text" name="periode" class="form-control pull-right" id="datepicker" data-date-format='MM yyyy'>
-  						</div>
+              <form class="" action="/administration" method="GET">
+                <div class="row">
+                  <div class="col-md-3">
+                    <div class="input-group date col-md-12">
+        							<div class="input-group-addon">
+        								<i class="fa fa-calendar"></i>
+        							</div>
+        							<input required type="text" name="from" class="form-control pull-right" id="startDate" value="{{index .FormValue 0}}" data-date-format='MM yyyy'>
+        						</div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="input-group date col-md-12">
+        							<div class="input-group-addon">
+        								<i class="fa fa-calendar"></i>
+        							</div>
+        							<input required type="text" name="to" class="form-control pull-right" id="endDate" value="{{index .FormValue 1}}" data-date-format='MM yyyy'>
+                      <div class="input-group-btn">
+                        <button type="submit" class="btn btn-default" id="formSubmit"><i class="fa fa-search"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
             </div>
             <div class="nav-tabs-custom">
               <div class="tab-content">
@@ -48,7 +65,8 @@
                         <tr>
                           <th>No</th>
                           <th>Nama</th>
-                          <th>Jangka Waktu</th>
+                          <th>Checkin</th>
+                          <th>Checkout</th>
                           <th>Tagihan</th>
                           <th>Status</th>
                         </tr>
@@ -58,7 +76,8 @@
                         <tr>
                           <td>{{counter $index 1}}</td>
                           <td>{{.Nama}}</td>
-                          <td>{{.Administrasi.CustCheck_in}} s.d {{.Administrasi.CustCheck_out}}</td>
+                          <td>{{.Administrasi.CustCheck_in}}</td>
+                          <td>{{.Administrasi.CustCheck_out}}</td>
                           <td>{{if eq .Administrasi.Tagihan 0}} -
                               {{else}} Rp {{.Administrasi.Tagihan}} {{end}}</td>
                           <td>{{.Administrasi.Status}}</td>
@@ -69,7 +88,8 @@
                         <tr>
                           <th>No</th>
                           <th>Nama</th>
-                          <th>Jangka Waktu</th>
+                          <th>Checkin</th>
+                          <th>Checkout</th>
                           <th>Tagihan</th>
                           <th>Status</th>
                         </tr>
@@ -110,12 +130,40 @@
         'autoWidth'   : false
       })
 
-      $("#datepicker").datepicker({
+      $("#startDate").datepicker({
         orientation: 'auto bottom',
         autoclose: true,
         viewMode: "months",
-        minViewMode: "months"
+        minViewMode: "months",
+        startDate: new Date('2018-4'),
+        endDate: '0m'
+      }).on('changeDate', function (selected) {
+          var minDate = new Date(selected.date.valueOf());
+          $('#endDate').datepicker('setStartDate', minDate);
+        });
+      $("#endDate").datepicker({
+        orientation: 'auto bottom',
+        autoclose: true,
+        viewMode: "months",
+        minViewMode: "months",
+        endDate: '0m'
+      }).on('changeDate', function (selected) {
+        var maxDate = new Date(selected.date.valueOf());
+        $('#startDate').datepicker('setEndDate', maxDate);
       });
+
+      // var start, end, startDate, startMonth,endDate, endMonth;
+      // $('#formSubmit').on("click", function(e) {
+      //   e.preventDefault();
+      //   startDate  = $('#startDate').val().split(" ");
+      //   start = startDate[0]+"-"+startDate[1]
+      //
+      //   endDate  = $('#endDate').val().split(" ");
+      //   end = endDate[0]+"-"+endDate[1]
+      //
+      //   window.location.href = "/administration/"+start+"-to-"+end;
+      //
+      // })
     })
   </script>
 

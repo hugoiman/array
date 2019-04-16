@@ -236,7 +236,7 @@ func main() {
   // e.POST("/getKamar",admin.GetKamar)
   e.GET("/getKamarJson",admin.GetKamarJson)
 
-  e.GET("/administration/:periode", func(c echo.Context) error{
+  e.GET("/administration", func(c echo.Context) error{
     funcs := template.FuncMap{"counter": counter}
     e.Renderer = &Template{ templates: template.Must(template.New("views/admin/administration.html").Funcs(funcs).ParseFiles(
       "views/admin/administration.html",

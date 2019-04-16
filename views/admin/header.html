@@ -248,7 +248,10 @@
       var m = month[d.getMonth()];
       var y = d.getFullYear();
 
-      $("#link_Administrasi").attr("href", "/administration/"+m+"-"+y);
+      var start = month[0] + "+" +y
+      var end = m + "+" +y
+
+      $("#link_Administrasi").attr("href", "/administration?from="+ start +"&to="+end);
     });
   </script>
 

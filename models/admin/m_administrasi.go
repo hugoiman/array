@@ -5,10 +5,10 @@ import (
   "array/structs"
 )
 
-func GetAdministrasi() structs.Member {
+func GetAdministrasi(startDate, endDate string) structs.Member {
   con       :=  db.Connect()
-  query     :=  "SELECT m.nama, m.id_member, m.id_lokasi, l.id_lokasi, a.id_administrasi, a.id_member, a.tipe_pembayaran, a.check_in, a.check_out, a.tgl_pembayaran, a.jumlah_pembayaran, a.total, a.tagihan, a.status FROM member m JOIN administrasi a ON m.id_member = a.id_member JOIN lokasi_kos l ON l.id_lokasi = m.id_lokasi"
-  rows, err :=  con.Query(query)
+  query     :=  "SELECT m.nama, m.id_member, m.id_lokasi, l.id_lokasi, a.id_administrasi, a.id_member, a.tipe_pembayaran, a.check_in, a.check_out, a.tgl_pembayaran, a.jumlah_pembayaran, a.total, a.tagihan, a.status FROM member m JOIN administrasi a ON m.id_member = a.id_member JOIN lokasi_kos l ON l.id_lokasi = m.id_lokasi WHERE(check_in BETWEEN ? AND ?)"
+  rows, err :=  con.Query(query, startDate, endDate)
 
   checkErr(err)
   defer rows.Close()
