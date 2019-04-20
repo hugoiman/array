@@ -31,6 +31,7 @@ func ShowAllInformasi(c echo.Context) error {
 
   // fmt.Printf("%+v\n",data.Informasi.Informasi[0].Waktu)
   return c.Render(http.StatusOK, "informations.html", data)
+  // return c.JSON(http.StatusOK,data)
 }
 
 func ShowInformasi(c echo.Context) error {

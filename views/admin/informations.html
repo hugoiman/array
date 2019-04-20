@@ -3,8 +3,6 @@
 <head>
   {{template "_head" .}}
 
-  <!-- bootstrap wysihtml5 - text editor -->
-  <link rel="stylesheet" href="/static/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -71,14 +69,10 @@
 
   <!-- External -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
-  <!-- Bootstrap WYSIHTML5 -->
-  <script src="/static/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
 
   <!-- Page Script -->
   <script>
     $(function () {
-      //Add text editor
-      $("#compose-textarea").wysihtml5();
 
       $("#reset").click(function(){
         $("#files").val("");

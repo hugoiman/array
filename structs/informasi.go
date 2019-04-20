@@ -2,6 +2,7 @@ package structs
 
 import(
   "time"
+  "html/template"
 )
 
 type Informasi struct {
@@ -10,7 +11,7 @@ type Informasi struct {
 type DataInformasi struct {
   Id_informasi          int            `json:"id_informasi"`
   Judul                 string         `json:"judul"`
-  Keterangan            string         `json:"keterangan"`
+  Keterangan            template.HTML  `json:"keterangan"`
   Foto                  string         `json:"foto"`
   Waktu                 time.Time      `json:"waktu"`
   Status                string         `json:"status"`

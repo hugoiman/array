@@ -42,7 +42,7 @@ func Index(c echo.Context) error{
     } else if session.Values["id_admin"] != nil {
       return c.Redirect(http.StatusMovedPermanently, "/information/status/aktif")
     } else {
-      return c.Redirect(http.StatusMovedPermanently, "/dashboard/" + slug)
+      return c.Redirect(http.StatusMovedPermanently, "/dashboard")
     }
   }
 }
