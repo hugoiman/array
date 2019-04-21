@@ -33,3 +33,11 @@ func GetAdministrasi(startDate, endDate string) structs.Member {
 
   return member
 }
+
+func DeleteAdministrasi(id_administrasi string)  {
+  con     :=  db.Connect()
+	_, err 	:=  con.Exec("DELETE FROM administrasi WHERE id_administrasi = ?", id_administrasi)
+
+	checkErr(err)
+	defer con.Close()
+}

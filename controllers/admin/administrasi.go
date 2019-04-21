@@ -8,6 +8,7 @@ import (
   "github.com/labstack/echo"
   "strings"
   "strconv"
+  "encoding/json"
   // "time"
 )
 
@@ -53,6 +54,21 @@ func ShowAdministrasi(c echo.Context) error {
   // return c.JSON(http.StatusOK, data.Member.Member[0].Administrasi)
   // return c.JSON(http.StatusOK, data)
   return c.Render(http.StatusOK, "administration.html", data)
+}
+
+func DeleteAdministrasi(c echo.Context) error  {
+  decoder := json.NewDecoder(c.Request().Body)
+  data    := struct {
+    Id_administrasi   []string  `json:"id_administrasi"`
+  }{}
+
+  err     := decoder.Decode(&data);
+  checkErr(err)
+
+  for i := 0; i < len(data.Id_administrasi); i++ {
+    admin.DeleteAdministrasi(data.Id_administrasi[i])
+  }
+  return nil
 }
 
 // func CreatePembayaran(c echo.Context) error {

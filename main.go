@@ -247,6 +247,8 @@ func main() {
     return nil
   })
 
+  e.POST("/admin/delete-administrasi",admin.DeleteAdministrasi)
+
   e.GET("/information", func(c echo.Context) error{
     e.Renderer = &Template{ templates: template.Must(template.ParseFiles(
       "views/admin/informations.html",
