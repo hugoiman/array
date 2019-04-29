@@ -49,8 +49,9 @@
               <li><a href="#tab_foto" data-toggle="tab" id="foto">Foto</a></li>
             </ul>
             <div class="tab-content">
+              <form class="form-horizontal"  action="/admin/create-member" enctype="multipart/form-data" method="POST">
               <div class="active tab-pane" id="tab_biodata">
-                <form class="form-horizontal">
+                <!-- <form class="form-horizontal"> -->
                   <div class="form-group">
                     <label for="inputName" class="col-sm-2 control-label">Nama *</label>
                     <div class="col-sm-10">
@@ -85,7 +86,7 @@
                         <div class="input-group-addon">
                           <i class="fa fa-calendar"></i>
                         </div>
-                        <input type="text" id="datepicker" class="form-control pull-right" required>
+                        <input type="text" id="datepicker" class="form-control pull-right" >
                       </div>
                     </div>
                   </div>
@@ -98,11 +99,11 @@
                   <div align="center">
                     <button type="button" class="btn btn-info" onclick="changeToTab('biodata',1,'latar')">Next</button>
                   </div>
-                </form>
+                <!-- </form> -->
               </div>
               <!-- /.tab-pane -->
               <div class="tab-pane" id="tab_latar">
-                <form class="form-horizontal">
+                <!-- <form class="form-horizontal"> -->
                   <div class="form-group">
                     <label for="inputName" class="col-sm-2 control-label">Pekerjaan *</label>
                     <div class="col-sm-10">
@@ -160,11 +161,11 @@
                     <button type="button" class="btn btn-default" onclick="changeToTab('', 0, 'biodata')">Previous</button>
                     <button type="button" class="btn btn-info" onclick="changeToTab('latar', 2, 'kerabat')">Next</button>
                   </div>
-                </form>
+                <!-- </form> -->
               </div>
               <!-- /.tab-pane -->
               <div class="tab-pane" id="tab_kerabat">
-                <form class="form-horizontal">
+                <!-- <form class="form-horizontal"> -->
                   <div class="form-group">
                     <label for="inputName" class="col-sm-2 control-label">Nama Kerabat *</label>
                     <div class="col-sm-10">
@@ -205,20 +206,20 @@
                     <button type="button" class="btn btn-default" onclick="changeToTab('', 1, 'latar')">Previous</button>
                     <button type="button" class="btn btn-info" onclick="changeToTab('kerabat', 3, 'data')">Next</button>
                   </div>
-                </form>
+                <!-- </form> -->
               </div>
               <!-- /.tab-pane -->
               <div class="tab-pane" id="tab_data">
-                <form class="form-horizontal">
+                <!-- <form class="form-horizontal"> -->
                   <div class="form-group">
                     <label for="inputName" class="col-sm-2 control-label">Lokasi Kos *</label>
                     <div class="col-sm-10">
-                      <select class="form-control" name="lokasi" id="lokasi">
+                      <!-- <select class="form-control" name="lokasi" id="lokasi">
                         <option value="">Pilih Lokasi *</option>
                         {{range .Lokasi.Lokasi}}
                         <option value="{{.Id_lokasi}}"><b>{{.Cabang}}</b> - {{.Alamat}}</option>
                         {{end}}
-                      </select>
+                      </select> -->
                     </div>
                   </div>
                   <div class="form-group">
@@ -233,14 +234,14 @@
                       </select>
                     </div>
                   </div>
-                  <div class="form-group">
+                  <!-- <div class="form-group">
                     <label for="inputName" class="col-sm-2 control-label">No Kamar *</label>
                     <div class="col-sm-10">
                       <select class="form-control" name="kamar" id="kamar">
                         <option>Pilih kamar</option>
                       </select>
                     </div>
-                  </div>
+                  </div> -->
                   <div class="form-group">
                     <label for="inputName" class="col-sm-2 control-label">Uname Wifi</label>
                     <div class="col-sm-10">
@@ -257,16 +258,16 @@
                     <button type="button" class="btn btn-default" onclick="changeToTab('', 2, 'kerabat')">Previous</button>
                     <button type="button" class="btn btn-info" onclick="changeToTab('data', 4, 'foto')">Next</button>
                   </div>
-                </form>
+                <!-- </form> -->
               </div>
               <!-- /.tab-pane -->
               <div class="tab-pane" id="tab_foto">
-                <form class="form-horizontal" action="/ganti-foto" enctype="multipart/form-data" method="POST">
+                <!-- <form class="form-horizontal upload"> -->
                   <div class="form-group">
                     <div class="col-sm-10">
                       <div class="btn btn-default">
                         <!-- <i class="fa fa-paperclip"></i> Attachment -->
-                        <input type="file" id="file" name="file">
+                        <input type="file" id="file" name="file" accept="image/*">
                       </div>
                       <button type="reset" class="btn btn-default"><i class="fa fa-times"></i></button>
                       <p class="help-block">Max. 2MB</p>
@@ -274,11 +275,14 @@
                   </div>
                   <div align="center">
                     <button type="button" class="btn btn-default" onclick="changeToTab('', 3, 'data')">Previous</button>
-                    <p class="btn btn-success" id="register">Register</p>
+                    <!-- <input type="submit" class="btn btn-success" id="register"> -->
+                    <button type="button" class="btn btn-primary btn-sm" id="register">Register</button>
                   </div>
-                </form>
+                <!-- </form> -->
               </div>
               <!-- /.tab-pane -->
+
+              </form>
             </div>
             <!-- /.tab-content -->
           </div>
@@ -478,7 +482,7 @@
         //   }
         // });
       $.getJSON("/getKamarJson", function(response) {
-        console.log(response);
+        // console.log(response);
         html_code += '<option value="">Pilih '+id+'</option>';
         $.each(response.kamar, function(key, value) {
           if(id == 'lokasi'){
@@ -529,76 +533,86 @@
       }
     });
 
-    $('#register').on("click", function(e) {
-      e.preventDefault();
-      var tgl_lahir = $("#datepicker").val();
-      var d = tgl_lahir.substr(0,2);
-      var m = tgl_lahir.substr(3,2);
-      var y = tgl_lahir.substr(6,4);
-      var custTgl_lahir = y.concat("-", m, "-", d);
+    $('#register').click(function(){
+      // e.preventDefault();
+      // var tgl_lahir = $("#datepicker").val();
+      // var d = tgl_lahir.substr(0,2);
+      // var m = tgl_lahir.substr(3,2);
+      // var y = tgl_lahir.substr(6,4);
+      // var custTgl_lahir = y.concat("-", m, "-", d);
 
       var data  =  JSON.stringify({
-        nama : $("#nama").val(), email : $("#email").val(), no_hp : $("#no_hp").val(), nik : $("#nik").val(), custTgl_lahir, alamat_asal : $("#alamat").val(),
-        pekerjaan : $("#pekerjaan").val(),
-        universitas : $("#kampus").val(), jurusan : $("#jurusan").val(), angkatan : $("#angkatan").val(),
-        perusahaan : $("#kantor").val(), jabatan : $("#alamat_kantor").val(), // lainnya : $("#lainnya").val(),
-        nama_kerabat1 : $("#nk1").val(), hubungan1 : $("#hb1").val(), no_hp1 : $("#no_hp1").val(),
-        nama_kerabat2 : $("#nk2").val(), hubungan2 : $("#hb2").val(), no_hp2 : $("#no_hp2").val(),
-        id_lokasi : parseInt($("#lokasi").val()), tipe_pembayaran : $("#pembayaran").val(), no_kamar : $("#kamar").val(),
-        username_wifi : $("#uname").val(), no_stnk : $("#stnk").val()
+        nama : $("#nama").val(), email : $("#email").val()
+        // , no_hp : $("#no_hp").val(), nik : $("#nik").val(), custTgl_lahir, alamat_asal : $("#alamat").val(),
+        // pekerjaan : $("#pekerjaan").val(),
+        // universitas : $("#kampus").val(), jurusan : $("#jurusan").val(), angkatan : $("#angkatan").val(),
+        // perusahaan : $("#kantor").val(), jabatan : $("#alamat_kantor").val(), // lainnya : $("#lainnya").val(),
+        // nama_kerabat1 : $("#nk1").val(), hubungan1 : $("#hb1").val(), no_hp1 : $("#no_hp1").val(),
+        // nama_kerabat2 : $("#nk2").val(), hubungan2 : $("#hb2").val(), no_hp2 : $("#no_hp2").val(),
+        // id_lokasi : parseInt($("#lokasi").val()), tipe_pembayaran : $("#pembayaran").val(), no_kamar : $("#kamar").val(),
+        // username_wifi : $("#uname").val(), no_stnk : $("#stnk").val()
       });
 
-      // $.ajax({
-      //   url:"/admin/create-member",
-      //   type : 'POST',
-      //   data : data,
-      //   contentType: 'application/json',
-      //   success:function(response){
-      //     if (response == "true") {
-      //       Swal.fire({
-      //         title: "Biodata Berhasil Diedit!",
-      //         type: "success",
-      //         customClass: 'swal-wide'
-      //       });
-      //       setTimeout(function () {
-  		// 				location.reload();
-  		// 			}, 1500);
-      //     } else {
-      //       //  error message
-      //     }
-      //   },
-      //   error:function(error){
-      //     $('#succes').hide();
-      //     $('#error').show();
-      //   }
-      // });
-
-      if (fSize != 0) {
-        var formData = new FormData();
-        var files = $('#file')[0].files[0];
-        var $self = $(this);
-        formData.append("files", files[0]);
-        console.log("ada");
-        $.ajax({
-          url: "/admin/upload-foto-member",
-          type: "POST",
-          data: formData,
-          contentType: false,
-          processData: false,
-          success: function(response){
-
-          },
-          error:function(error){
+      var formData = new FormData();
+      var files = $('#file')[0].files[0];
+      // var $self = $(this);
+      formData.append("files", files[0]);
+      formData.append("data", data);
+      $.ajax({
+        url: "/admin/create-member",
+        type : 'POST',
+        encrypted : 'multipart/form-data',
+        data : formData,
+        processData: false,
+        contentType: false,
+        // data : data,
+        // contentType: 'application/json',
+        success:function(response){
+          if (response == "true") {
             Swal.fire({
-              title: "Oops!",
-              text: 'error!',
-              type: 'error',
-              customClass: 'swal-wide',
-              timer: '1500'
+              title: "Biodata Berhasil Diedit!",
+              type: "success",
+              customClass: 'swal-wide'
             });
+            setTimeout(function () {
+  						location.reload();
+  					}, 1500);
+          } else {
+            //  error message
           }
-        });
-      }
+        },
+        error:function(error){
+          $('#succes').hide();
+          $('#error').show();
+        }
+      });
+
+      // if (fSize != 0) {
+      //   var formData = new FormData();
+      //   var files = $('#file')[0].files[0];
+      //   var $self = $(this);
+      //   formData.append("files", files[0]);
+      //   console.log("ada");
+      //   $.ajax({
+      //     url: "/admin/upload-foto-member",
+      //     type: "POST",
+      //     data: formData,
+      //     contentType: false,
+      //     processData: false,
+      //     success: function(response){
+      //
+      //     },
+      //     error:function(error){
+      //       Swal.fire({
+      //         title: "Oops!",
+      //         text: 'error!',
+      //         type: 'error',
+      //         customClass: 'swal-wide',
+      //         timer: '1500'
+      //       });
+      //     }
+      //   });
+      // }
     });
 
   });

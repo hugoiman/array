@@ -1,6 +1,7 @@
 package admin
 
 import (
+  "fmt"
   "array/db"
   "array/structs"
 )
@@ -34,7 +35,12 @@ func GetAdministrasi(startDate, endDate string) structs.Member {
   return member
 }
 
-func DeleteAdministrasi(id_administrasi string)  {
+func UpdateAdministrasi(administrasi map[string]string) {
+  fmt.Println("oi")
+  fmt.Println(administrasi)
+}
+
+func DeleteAdministrasi(id_administrasi string) {
   con     :=  db.Connect()
 	_, err 	:=  con.Exec("DELETE FROM administrasi WHERE id_administrasi = ?", id_administrasi)
 

@@ -25,7 +25,7 @@ func GetPemasukan() structs.PemasukanBulanan {
 
   for rows.Next() {
     err := rows.Scan(&data.WaktuPemasukan, &data.JumlahPemasukan)
-    data.BulanPemasukan = data.WaktuPemasukan.Format("2006-01")
+    data.BulanPemasukan = data.WaktuPemasukan.Format("2006,01")
     checkErr(err)
     pemasukan_bulanan.PemasukanBulanan = append(pemasukan_bulanan.PemasukanBulanan, data)
   }

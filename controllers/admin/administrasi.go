@@ -56,7 +56,7 @@ func ShowAdministrasi(c echo.Context) error {
   return c.Render(http.StatusOK, "administration.html", data)
 }
 
-func DeleteAdministrasi(c echo.Context) error  {
+func DeleteAdministrasi(c echo.Context) error {
   decoder := json.NewDecoder(c.Request().Body)
   data    := struct {
     Id_administrasi   []string  `json:"id_administrasi"`
@@ -69,6 +69,39 @@ func DeleteAdministrasi(c echo.Context) error  {
     admin.DeleteAdministrasi(data.Id_administrasi[i])
   }
   return nil
+}
+
+func UpdateDeleteAdministrasi(c echo.Context) error {
+  aksi              := c.FormValue("action")
+  id_administrasi   := c.FormValue("id_administrasi")
+  tipe_pembayaran   := c.FormValue("tipe_pembayaran")
+  check_in          := c.FormValue("check_in")
+  check_out         := c.FormValue("check_out")
+  jumlah_pembayaran := c.FormValue("jumlah_pembayaran")
+
+  administrasi := map[string]string{
+    "aksi":aksi,
+    "id_administrasi": id_administrasi,
+    "tipe_pembayaran": tipe_pembayaran,
+    "check_in": check_in,
+    "check_out": check_out,
+    "jumlah_pembayaran" : jumlah_pembayaran,
+  }
+  data := struct {
+    Administrasi    map[string]string
+    Nav             string
+  } {
+    administrasi,
+    "Administrasi",
+  }
+
+  if aksi == "edit" {
+    admin.UpdateAdministrasi(administrasi)
+  } else if aksi == "delete" {
+    admin.DeleteAdministrasi(id_administrasi)
+  }
+
+  return c.JSON(http.StatusOK, data)
 }
 
 // func CreatePembayaran(c echo.Context) error {

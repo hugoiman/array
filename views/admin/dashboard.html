@@ -4,6 +4,8 @@
   {{template "_head" .}}
 
   <!-- External -->
+  <!-- bootstrap datepicker -->
+  <link rel="stylesheet" href="/static/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -20,12 +22,422 @@
       </ol>
     </section>
     <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-md-4 col-sm-6 col-xs-12">
+          <div class="info-box bg-aqua">
+            <span class="info-box-icon"><i class="fa fa-bar-chart-o"></i></span>
 
+            <div class="info-box-content">
+              <span class="info-box-text">Statistik</span>
+              <span class="info-box-number">Aktif : 3</span>
+
+              <div class="progress">
+                <div class="progress-bar" style="width: 100%"></div>
+              </div>
+                <span class="progress-description">
+                  Non Aktif: 32
+                </span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-4 col-sm-6 col-xs-12">
+          <div class="info-box bg-green">
+            <span class="info-box-icon"><i class="fa fa-money"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Pembayaran</span>
+              <span class="info-box-number">Lunas : 40</span>
+
+              <div class="progress">
+                <div class="progress-bar" style="width: 100%"></div>
+              </div>
+                  <span class="progress-description">
+                    Belum Lunas: 10
+                  </span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="box">
+            <div class="box-header with-border">
+              <h3 class="box-title"><b>Laporan Bulanan </b>
+              </h3>
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa fa-wrench"></i></button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Separated link</a></li>
+                  </ul>
+                </div>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+              <!-- /.box -->
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <form class="" action="index.html" method="post">
+                <div class="row">
+                  <div class="col-md-3"><label>Dari</label>
+                    <div class="input-group date col-md-12">
+                      <div class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                      </div>
+                      <input required type="text" name="from" class="form-control pull-right" id="startDate" data-date-format='MM yyyy'>
+                    </div>
+                  </div>
+                  <div class="col-md-3"><label>Sampai</label>
+                    <div class="input-group date col-md-12">
+                      <div class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                      </div>
+                      <input required type="text" name="to" class="form-control pull-right" id="endDate" data-date-format='MM yyyy'>
+                      <div class="input-group-btn">
+                        <button type="button" class="btn btn-default" id="formSubmit"><i class="fa fa-search"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+
+              <div class="row">
+                <div class="col-md-8">
+                  <div class="box-body chart-responsive">
+                    <!-- Sales Chart Canvas -->
+                    <div class="chart" id="chartContainer" style="height: 270px; width: 100%;"></div>
+                  </div>
+                  <!-- /.chart-responsive -->
+                </div>
+                <!-- /.col -->
+                <div class="col-md-4">
+                  <p class="text-center">
+                    <strong>Rata-rata</strong>
+                  </p>
+
+                  <div class="progress-group">
+                    <span class="progress-text">Laba</span>
+                    <span class="progress-number"><b>160</b>/200</span>
+
+                    <div class="progress">
+                      <div class="progress-bar progress-bar-aqua progress-bar-striped" style="width: 80%"></div>
+                    </div>
+                  </div>
+                  <!-- /.progress-group -->
+                  <div class="progress-group">
+                    <span class="progress-text">Pemasukan</span>
+                    <span class="progress-number"><b>310</b>/400</span>
+
+                    <div class="progress">
+                      <div class="progress-bar progress-bar-green progress-bar-striped" style="width: 80%"></div>
+                    </div>
+                  </div>
+                  <!-- /.progress-group -->
+                  <div class="progress-group">
+                    <span class="progress-text">Pengeluaran</span>
+                    <span class="progress-number"><b>480</b>/800</span>
+
+                    <div class="progress">
+                      <div class="progress-bar progress-bar-red progress-bar-striped" style="width: 80%"></div>
+                    </div>
+                  </div>
+                  <!-- /.progress-group -->
+                  <div class="progress-group">
+                    <span class="progress-text">Pelunasan</span>
+                    <span class="progress-number"><b>250</b>/500</span>
+
+                    <div class="progress">
+                      <div class="progress-bar progress-bar-yellow progress-bar-striped" style="width: 80%"></div>
+                    </div>
+                  </div>
+                  <!-- /.progress-group -->
+                </div>
+                <!-- /.col -->
+              </div>
+              <!-- /.row -->
+
+              <div class="row">
+                <div class="col-md-12">
+
+                  <div class="box-body chart-responsive">
+                    <!-- Sales Chart Canvas -->
+                    <div class="chart" id="chartContainer2" style="height: 300px; width: 100%;"></div>
+                  </div>
+                  <!-- /.chart-responsive -->
+                </div>
+              </div>
+            </div>
+            <!-- ./box-body -->
+            <div class="box-footer">
+              <div class="row">
+                <div class="col-sm-3 col-xs-6">
+                  <div class="description-block border-right">
+                    <span class="description-percentage text-green"><i class="fa fa-caret-up"></i> 17%</span>
+                    <h5 class="description-header">Rp 35,210.43</h5>
+                    <span class="description-text">TOTAL PEMASUKAN</span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-3 col-xs-6">
+                  <div class="description-block border-right">
+                    <span class="description-percentage text-yellow"><i class="fa fa-caret-left"></i> 0%</span>
+                    <h5 class="description-header">Rp 10,390.90</h5>
+                    <span class="description-text">TOTAL PENGELUARAN</span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-3 col-xs-6">
+                  <div class="description-block border-right">
+                    <span class="description-percentage text-green"><i class="fa fa-caret-up"></i> 20%</span>
+                    <h5 class="description-header">Rp 24,813.53</h5>
+                    <span class="description-text">TOTAL LABA</span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-3 col-xs-6">
+                  <div class="description-block">
+                    <span class="description-percentage text-red"><i class="fa fa-caret-down"></i> 18%</span>
+                    <h5 class="description-header">1200</h5>
+                    <span class="description-text">TARGET LABA</span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+              </div>
+              <!-- /.row -->
+            </div>
+            <!-- /.box-footer -->
+          </div>
+          <!-- /.box -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
 
   {{template "_footer" .}}
+
+  <!-- External --><!-- bootstrap datepicker -->
+  <script src="/static/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+
+  <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+  <script>
+    $(function() {
+      $("#startDate").datepicker({
+        orientation: 'auto bottom',
+        autoclose: true,
+        viewMode: "months",
+        minViewMode: "months",
+        startDate: new Date('2018-4'),
+        endDate: '0m'
+      }).on('changeDate', function (selected) {
+          var minDate = new Date(selected.date.valueOf());
+          $('#endDate').datepicker('setStartDate', minDate);
+        });
+      $("#endDate").datepicker({
+        orientation: 'auto bottom',
+        autoclose: true,
+        viewMode: "months",
+        minViewMode: "months",
+        endDate: '0m'
+      }).on('changeDate', function (selected) {
+        var maxDate = new Date(selected.date.valueOf());
+        $('#startDate').datepicker('setEndDate', maxDate);
+      });
+
+      var startDate, startMonth, endDate, endMonth;
+      $('#formSubmit').on("click", function(e) {
+        e.preventDefault();
+        startDate  = $('#startDate').val();
+        endDate  = $('#endDate').val();
+
+        $.ajax({
+          url   : "/getStatistik",
+          type  : 'POST',
+          success: function(response){
+            console.log(response);
+            console.log(response.Pemasukan.pemasukan_bulanan[0]);
+          },
+          error:function(error){
+            Swal.fire({
+              title: "Oops!",
+              text: 'error!',
+              type: 'error',
+              customClass: 'swal-wide',
+              timer: '1500'
+            });
+          }
+        })
+
+        loadStatistik();
+
+      })
+    })
+
+    function loadPemasukan() {
+      $.ajax({
+        url   : "/getPemasukan",
+        type  : 'POST',
+        success: function(response){
+          console.log(response);
+          console.log(response.Pemasukan.pemasukan_bulanan[0]);
+        },
+        error:function(error){
+          Swal.fire({
+            title: "Oops!",
+            text: 'error!',
+            type: 'error',
+            customClass: 'swal-wide',
+            timer: '1500'
+          });
+        }
+      })
+    }
+
+    function loadStatistik() {
+      var chart = new CanvasJS.Chart("chartContainer", {
+      	theme: "light2", // "light1", "light2", "dark1", "dark2"
+      	animationEnabled: true,
+      	title:{
+      		text: "Laba"
+      	},
+      	axisX: {
+      		interval: 1,
+      		intervalType: "month",
+      		valueFormatString: "MMM"
+      	},
+      	axisY:{
+      		title: "Rupiah",
+      		valueFormatString: "Rp #0"
+      	},
+      	data: [{
+      		type: "line",
+      		markerSize: 12,
+      		xValueFormatString: "MMM, YYYY",
+      		yValueFormatString: "Rp ###.#",
+      		dataPoints: [
+            { x: new Date(2016, 00) , y: 61, indexLabel: "gain", markerType: "triangle",  markerColor: "#6B8E23" },
+            { x: new Date(2016, 01) , y: 71, indexLabel: "gain", markerType: "triangle",  markerColor: "#6B8E23" },
+            { x: new Date(2016, 02) , y: 55, indexLabel: "loss", markerType: "cross", markerColor: "tomato" },
+            { x: new Date(2016, 03) , y: 50, indexLabel: "loss", markerType: "cross", markerColor: "tomato" },
+            { x: new Date(2016, 04) , y: 65, indexLabel: "gain", markerType: "triangle", markerColor: "#6B8E23" },
+            { x: new Date(2016, 05) , y: 85, indexLabel: "gain", markerType: "triangle", markerColor: "#6B8E23" },
+            { x: new Date(2016, 06) , y: 68, indexLabel: "loss", markerType: "cross", markerColor: "tomato" },
+            { x: new Date(2016, 07) , y: 28, indexLabel: "loss", markerType: "cross", markerColor: "tomato" },
+            { x: new Date(2016, 08) , y: 34, indexLabel: "gain", markerType: "triangle", markerColor: "#6B8E23" },
+            { x: new Date(2016, 09) , y: 24, indexLabel: "loss", markerType: "cross", markerColor: "tomato" },
+            { x: new Date(2016, 10) , y: 44, indexLabel: "gain", markerType: "triangle", markerColor: "#6B8E23" },
+            { x: new Date(2016, 11) , y: 34, indexLabel: "loss", markerType: "cross", markerColor: "tomato" }
+      		]
+      	}]
+      });
+      chart.render();
+
+      var chart2 = new CanvasJS.Chart("chartContainer2", {
+        theme:"light2",
+        animationEnabled: true,
+        title:{
+          text: "Pemasukan & Pengeluaran"
+        },
+          axisX: {
+              interval: 1,
+              intervalType: "month",
+              valueFormatString: "MMM"
+          },
+        axisY :{
+          title: "Rupiah",
+          includeZero: false,
+        },
+        toolTip: {
+          shared: "true"
+        },
+        legend:{
+          cursor:"pointer",
+          itemclick : toggleDataSeries
+        },
+        data: [
+        {
+          type: "spline",
+          showInLegend: true,
+          visible: true,
+          xValueFormatString: "MMM, YYYY",
+          name: "Pemasukan",
+          dataPoints: [
+            { x: new Date(2016, 00, 1), y: 500000 },
+            { x: new Date(2016, 01, 1), y: 300000 },
+            { x: new Date(2016, 02, 1), y: 400000 },
+            { x: new Date(2016, 03, 1), y: 800000 },
+            { x: new Date(2016, 04, 1), y: 500000 },
+            { x: new Date(2016, 05, 1), y: 650000 },
+            { x: new Date(2016, 06, 1), y: 400000 },
+            { x: new Date(2016, 07, 1), y: 500000 },
+            { x: new Date(2016, 08, 1), y: 800000 },
+            { x: new Date(2016, 09, 1), y: 400000 },
+            { x: new Date(2016, 10, 1), y: 750000 },
+            { x: new Date(2016, 11, 1), y: 400000 }
+          ]
+        },
+        {
+          type: "spline",
+          showInLegend: true,
+          visible: true,
+          xValueFormatString: "MMM, YYYY",
+          name: "Pengeluaran",
+          dataPoints: [
+            { x: new Date(2016, 00, 1), y: 500000 },
+            { x: new Date(2016, 01, 1), y: 600000 },
+            { x: new Date(2016, 02, 1), y: 400000 },
+            { x: new Date(2016, 03, 1), y: 200000 },
+            { x: new Date(2016, 04, 1), y: 500000 },
+            { x: new Date(2016, 05, 1), y: 650000 },
+            { x: new Date(2016, 06, 1), y: 900000 },
+            { x: new Date(2016, 07, 1), y: 100000 },
+            { x: new Date(2016, 08, 1), y: 200000 },
+            { x: new Date(2016, 09, 1), y: 650000 },
+            { x: new Date(2016, 10, 1), y: 350000 },
+            { x: new Date(2016, 11, 1), y: 400000 }
+          ]
+        }]
+      });
+      chart2.render();
+
+
+      function toggleDataSeries(e) {
+        if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible ){
+          e.dataSeries.visible = false;
+        } else {
+          e.dataSeries.visible = true;
+        }
+        chart2.render();
+      }
+    }
+
+    window.onload = function () {
+      loadPemasukan();
+      // loadStatistik();
+    }
+  </script>
 
   </body>
   </html>

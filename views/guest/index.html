@@ -2,6 +2,8 @@
 <html>
 <head>
   {{template "_head" .}}
+  <meta name="google-signin-client_id" content="YOUR_CLIENT_ID.apps.googleusercontent.com">
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
 
 </head>
 <body class="hold-transition login-page">
@@ -39,6 +41,9 @@
       </div>
     </form>
 
+    <div class="social-auth-links text-center">
+      <div class="btn btn-block g-signin2" data-width="290" data-longtitle="true" data-onsuccess="onSignIn"></div>
+    </div>
     <a href="/reset">I forgot my password</a><br>
 
   </div>

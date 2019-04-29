@@ -1,6 +1,7 @@
 package admin
 
 import (
+  "fmt"
   "net/http"
   "array/models/admin"
   "array/structs"
@@ -12,9 +13,9 @@ import (
 var store = sessions.NewCookieStore([]byte(os.Getenv("SESSION_KEY")))
 
 func ShowDashboard(c echo.Context) error {
-  slug := c.Param("slug")
-  checkSlug(c, slug)
-  data_admin  := admin.GetAdmin(slug)
+  session, _  :=  store.Get(c.Request(), "session")
+  slug        :=  fmt.Sprintf("%v", session.Values["slug"])
+  data_admin  :=  admin.GetAdmin(slug)
 
   data := struct {
     Admin     structs.DataAdmin
